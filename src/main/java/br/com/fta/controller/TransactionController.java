@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.fta.model.Transaction;
+import br.com.fta.model.ImportInfo;
 import br.com.fta.service.TransactionService;
 
 @Controller
@@ -21,8 +21,8 @@ public class TransactionController {
 	
 	@GetMapping("/")
 	public String transactions(Model model) {
-		List<Transaction> list = transactionService.transactions();
-		model.addAttribute("transactions", list);
+		List<ImportInfo> list = transactionService.transactions();
+		model.addAttribute("importInfo", list);
 		return "transactions";
 	}
 	

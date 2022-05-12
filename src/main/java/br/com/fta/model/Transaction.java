@@ -1,6 +1,7 @@
 package br.com.fta.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
