@@ -47,4 +47,3 @@ services:
       - grafana-data:/var/lib/grafana
     restart: unless-stopped
   
-  
