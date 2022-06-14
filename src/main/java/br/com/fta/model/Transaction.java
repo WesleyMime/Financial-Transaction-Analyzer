@@ -1,13 +1,15 @@
 package br.com.fta.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class Transaction {
 	
 	@Id
@@ -29,6 +31,18 @@ public class Transaction {
 	@NotNull
 	private LocalDateTime date;
 	
+	public Transaction(@NotBlank String bancoOrigem, @NotBlank String agenciaOrigem, @NotBlank String contaOrigem,
+			@NotBlank String bancoDestino, @NotBlank String agenciaDestino, @NotBlank String contaDestino,
+			@NotBlank String valorTransacao, @NotNull LocalDateTime date) {
+		this.bancoOrigem = bancoOrigem;
+		this.agenciaOrigem = agenciaOrigem;
+		this.contaOrigem = contaOrigem;
+		this.bancoDestino = bancoDestino;
+		this.agenciaDestino = agenciaDestino;
+		this.contaDestino = contaDestino;
+		this.valorTransacao = valorTransacao;
+		this.date = date;
+	}
 	public String getId() {
 		return id;
 	}
@@ -57,34 +71,6 @@ public class Transaction {
 		return date;
 	}
 	
-	public void setId(String id) {
-		this.id = id;
-	}
-	public void setBancoOrigem(String bancoOrigem) {
-		this.bancoOrigem = bancoOrigem;
-	}
-	public void setAgenciaOrigem(String agenciaOrigem) {
-		this.agenciaOrigem = agenciaOrigem;
-	}
-	public void setContaOrigem(String contaOrigem) {
-		this.contaOrigem = contaOrigem;
-	}
-	public void setBancoDestino(String bancoDestino) {
-		this.bancoDestino = bancoDestino;
-	}
-	public void setAgenciaDestino(String agenciaDestino) {
-		this.agenciaDestino = agenciaDestino;
-	}
-	public void setContaDestino(String contaDestino) {
-		this.contaDestino = contaDestino;
-	}
-	public void setValorTransacao(String valorTransacao) {
-		this.valorTransacao = valorTransacao;
-	}
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
-	
 	@Override
 	public String toString() {
 		return "Transaction [id=" + id + ", bancoOrigem=" + bancoOrigem + ", agenciaOrigem=" + agenciaOrigem
@@ -92,5 +78,28 @@ public class Transaction {
 				+ agenciaDestino + ", contaDestino=" + contaDestino + ", valorTransacao=" + valorTransacao + ", date="
 				+ date + "]";
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(agenciaDestino, agenciaOrigem, bancoDestino, bancoOrigem, contaDestino, contaOrigem, date,
+				valorTransacao);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Transaction other = (Transaction) obj;
+		return Objects.equals(agenciaDestino, other.agenciaDestino)
+				&& Objects.equals(agenciaOrigem, other.agenciaOrigem)
+				&& Objects.equals(bancoDestino, other.bancoDestino) && Objects.equals(bancoOrigem, other.bancoOrigem)
+				&& Objects.equals(contaDestino, other.contaDestino) && Objects.equals(contaOrigem, other.contaOrigem)
+				&& Objects.equals(date, other.date) && Objects.equals(valorTransacao, other.valorTransacao);
+	}
+	
+	
 	
 }
