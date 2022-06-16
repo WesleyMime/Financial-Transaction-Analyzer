@@ -11,11 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import br.com.fta.exception.InvalidTransactionException;
-import br.com.fta.model.Transaction;
-import br.com.fta.repository.ImportInfoRepository;
-import br.com.fta.repository.TransactionRepository;
-import br.com.fta.service.TransactionAnalyzer;
+import br.com.fta.transaction.exceptions.InvalidTransactionException;
+import br.com.fta.transaction.importinfo.ImportInfoRepository;
 
 @ExtendWith(MockitoExtension.class)
 class TransactionAnalyzerTest {

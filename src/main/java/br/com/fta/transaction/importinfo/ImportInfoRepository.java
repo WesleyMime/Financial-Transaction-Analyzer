@@ -1,8 +1,6 @@
-package br.com.fta.repository;
+package br.com.fta.transaction.importinfo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import br.com.fta.model.ImportInfo;
 
 public interface ImportInfoRepository extends MongoRepository<ImportInfo, String> {
 

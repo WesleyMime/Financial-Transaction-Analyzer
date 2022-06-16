@@ -1,4 +1,4 @@
-package br.com.fta.controller;
+package br.com.fta.transaction;
 
 import java.util.List;
 
@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.fta.model.ImportInfo;
-import br.com.fta.service.TransactionService;
+import br.com.fta.transaction.importinfo.ImportInfo;
 
 @Controller
 public class TransactionController {

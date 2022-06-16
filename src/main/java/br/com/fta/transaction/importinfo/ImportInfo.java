@@ -1,4 +1,4 @@
-package br.com.fta.model;
+package br.com.fta.transaction.importinfo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

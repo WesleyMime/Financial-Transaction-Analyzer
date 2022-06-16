@@ -1,4 +1,4 @@
-package br.com.fta.service;
+package br.com.fta.transaction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,9 +12,8 @@ import javax.validation.ValidatorFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.fta.exception.InvalidFileException;
-import br.com.fta.exception.InvalidTransactionException;
-import br.com.fta.model.Transaction;
+import br.com.fta.transaction.exceptions.InvalidFileException;
+import br.com.fta.transaction.exceptions.InvalidTransactionException;
 
 @Component
 public class TransactionAnalyzer {
