@@ -26,6 +26,7 @@
 							<th>Id</th>
 							<th>Name</th>
 							<th>Email</th>
+							<th>Options</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -33,6 +34,12 @@
 							<td th:text="${user.id}"></td>
 							<td th:text="${user.name}"></td>
 							<td th:text="${user.email}"></td>
+							<td>
+								<a th:href="@{users/{id}/edit (id= ${user.id} ) }" class="waves-effect waves-light btn-small">Edit</a>
+								<a th:href="@{users/{id}/remove (id= ${user.id} ) }" 
+									th:unless="${user.email} == ${principal}"
+									class="waves-effect waves-light btn-small">Remove</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>

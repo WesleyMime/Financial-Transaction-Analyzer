@@ -7,8 +7,8 @@ import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +18,7 @@ public class User implements UserDetails {
 
 	private static final long serialVersionUID = 8511865988408625928L;
 
-	@MongoId
+	@Id
 	private String id;
 	@NotBlank
 	private String name;
@@ -49,17 +49,25 @@ public class User implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public void setUserRoles(Set<UserRole> userRoles) {

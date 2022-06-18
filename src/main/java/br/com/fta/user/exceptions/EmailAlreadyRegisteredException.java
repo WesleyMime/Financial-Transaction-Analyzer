@@ -4,8 +4,8 @@ public class EmailAlreadyRegisteredException extends RuntimeException {
 
 	private static final long serialVersionUID = 9154547206085357863L;
 	
-	public EmailAlreadyRegisteredException(String msg) {
-		super(msg);
+	public EmailAlreadyRegisteredException() {
+		super("Email already registered.");
 	}
 
 }
