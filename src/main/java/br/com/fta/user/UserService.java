@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.fta.email.EmailService;
 import br.com.fta.user.exceptions.EmailAlreadyRegisteredException;
 
 @Service
@@ -21,6 +23,9 @@ public class UserService {
 	@Autowired
 	private UserToDTOMapper userToDTOMapper;
 
+	@Autowired
+	private EmailService emailService;
+
 	public List<UserDTO> allUsers() {
 		List<User> listUsers = repository.findAll();
 		List<UserDTO> listUserDTO = listUsers.stream().map(userToDTOMapper::map).toList();
@@ -28,15 +33,24 @@ public class UserService {
 	}
 
 	public void registerUser(UserDTO userDTO) {
-		Optional<User> registeredEmail = repository.findByEmail(userDTO.getEmail());
+		String email = userDTO.getEmail();
+		
+		Optional<User> registeredEmail = repository.findByEmail(email);
 		
 		if (registeredEmail.isPresent()) {
 			throw new EmailAlreadyRegisteredException();
 		}
 		User user = dtoToUserMapper.map(userDTO);
 
+		String name = user.getName();
+		String password = user.getPassword();
+		emailService.sendMessageWithPassword(name, email, password);
+		
+		user.setPassword(new BCryptPasswordEncoder().encode(password));
 		repository.save(user);
+		
 	}
+
 
 	public UserDTO editUser(String id) {
 		Optional<User> optional = repository.findById(id);
@@ -76,5 +90,4 @@ public class UserService {
 		}
 		repository.deleteById(id);
 	}
-
 }

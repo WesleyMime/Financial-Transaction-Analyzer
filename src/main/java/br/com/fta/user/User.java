@@ -5,13 +5,13 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Document
 public class User implements UserDetails {
@@ -22,7 +22,7 @@ public class User implements UserDetails {
 	private String id;
 	@NotBlank
 	private String name;
-	@NotBlank
+	@NotBlank @Email
 	private String email;
 	@NotBlank
 	private String password;
@@ -41,9 +41,7 @@ public class User implements UserDetails {
 		// Default password is a number between 100000 and 999999
 		// e.g. 123999
 		Integer randomNumber = new Random().nextInt(100000, 1000000);
-		String password = randomNumber.toString();
-		System.out.println(password); //TODO
-		return new BCryptPasswordEncoder().encode(password);
+		return randomNumber.toString();
 	}
 
 	public void setPassword(String password) {
