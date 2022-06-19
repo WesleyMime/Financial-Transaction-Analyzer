@@ -21,4 +21,4 @@ O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam 
 
 ## Deploy
 
-O deploy da aplicação foi realizado em uma instância do EC2 da AWS, podendo ser acessada por esse [link](http://ec2-54-94-215-47.sa-east-1.compute.amazonaws.com/)
+O deploy da aplicação foi realizado em uma instância do EC2 da AWS, podendo ser acessada por esse [link](http://ec2-15-228-79-42.sa-east-1.compute.amazonaws.com/)
