@@ -1,4 +1,4 @@
-package br.com.fta.service;
+package br.com.fta.transaction;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -11,12 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.fta.exception.InvalidFileException;
-import br.com.fta.exception.InvalidTransactionException;
-import br.com.fta.model.ImportInfo;
-import br.com.fta.model.Transaction;
-import br.com.fta.repository.ImportInfoRepository;
-import br.com.fta.repository.TransactionRepository;
+import br.com.fta.transaction.exceptions.InvalidFileException;
+import br.com.fta.transaction.exceptions.InvalidTransactionException;
+import br.com.fta.transaction.importinfo.ImportInfo;
+import br.com.fta.transaction.importinfo.ImportInfoRepository;
 
 @Service
 public class TransactionService {

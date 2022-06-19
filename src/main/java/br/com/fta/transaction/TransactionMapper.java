@@ -1,8 +1,6 @@
-package br.com.fta.service;
+package br.com.fta.transaction;
 
 import java.time.LocalDateTime;
-
-import br.com.fta.model.Transaction;
 
 public class TransactionMapper{
 

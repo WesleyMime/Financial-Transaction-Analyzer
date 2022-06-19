@@ -13,10 +13,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.fta.exception.InvalidFileException;
-import br.com.fta.model.Transaction;
-import br.com.fta.repository.TransactionRepository;
-import br.com.fta.service.TransactionService;
+import br.com.fta.transaction.exceptions.InvalidFileException;
 
 @SpringBootTest
 @TestPropertySource(properties = "spring.mongodb.embedded.version=3.5.5")

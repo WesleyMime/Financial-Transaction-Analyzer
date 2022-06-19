@@ -1,4 +1,4 @@
-package br.com.fta.exception;
+package br.com.fta.transaction.exceptions;
 
 public class InvalidTransactionException extends RuntimeException{
 	
