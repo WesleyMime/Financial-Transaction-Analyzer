@@ -17,6 +17,7 @@
 				<h2 style="color: rgb(99, 255, 240)">IMPORT TRANSACTIONS</h2>
 
 				<form action="" method="POST" enctype="multipart/form-data">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 					<div class="file-field input-field">
 						<div class="btn">
 							<span>CSV File</span> <input name="file" type="file">
