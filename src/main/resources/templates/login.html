@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html class="blue-grey darken-4" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+		<title>New User</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="/css/materialize.min.css"
+			media="screen,projection" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="blue-grey darken-4">
+	<div class="container">
+		<div class="row">
+			<h2 style="color: rgb(99, 255, 240)">SIGN IN</h2>
+			<form name="f" th:action="@{/login}" method="POST" class="col s12">
+				<div class="row">
+					<div style="color: white" th:if="${param.error}" class="alert alert-error">
+						Invalid username and password.
+					</div>
+					<div style="color: white;" th:if="${param.logout}" class="alert alert-success">
+						You have been logged out.
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input style="color: white"
+							class="validate" type="email" id="username" name="username">
+						<label for="username">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input style="color: white" class="validate" type="password" id="password" name="password"/>
+						<label for="password">Password</label>
+					</div>
+				</div>
+				<div class="form-actions">
+					<button type="submit" class="btn waves-effect waves-light">Sign in</button>
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript" src="/js/materialize.min.js"></script>
+	</div>
+</body>
+</html>
