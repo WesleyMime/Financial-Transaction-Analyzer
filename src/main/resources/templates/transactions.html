@@ -2,17 +2,20 @@
 <html class="blue-grey darken-4" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-		<title>Transactions</title>
+		<title>Imports</title>
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 			rel="stylesheet">
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"
 			media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/style.css"
+			media="screen,projection" />
+		<link rel="icon" type="image/x-icon" href="icon/favicon.ico">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body class="blue-grey darken-4">
 	<nav class="teal lighten-1">
 		<div class="nav-wrapper">
-			<a href="#!" class="brand-logo right">TRANSACTIONS</a>
+			<a href="#!" class="brand-logo right">IMPORTS</a>
 			<a href="#" data-target="mobile-demo" class="sidenav-trigger">
 				<i class="material-icons">menu</i></a>
 			<ul class="left hide-on-med-and-down">
@@ -36,7 +39,7 @@
 		<div class="row">
 			<div class="col s12">
 
-				<h2 style="color: rgb(99, 255, 240)">IMPORT TRANSACTIONS</h2>
+				<h2>Import Transactions</h2>
 
 				<form action="" method="POST" enctype="multipart/form-data">
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -55,17 +58,17 @@
 
 				</form>
 
-				<p th:text="${error}" class="center-align cyan darken-4 z-depth-1"
-					style="color: rgb(255, 255, 255)">error</p>
+				<p th:text="${error}" class="center-align z-depth-1 dark-green-line">error</p>
 
-				<h4 style="color: rgb(99, 255, 240)">IMPORTS</h4>
+				<h4>IMPORTS</h4>
 
-				<table class="z-depth-3"
-					style="background-color: rgb(30, 133, 123); color: rgb(255, 255, 255)">
+				<table class="striped responsive-table dark-green-line">
 					<thead>
 						<tr>
 							<th>Transactions Date</th>
 							<th>Import Date</th>
+							<th>Imported By</th>
+							<th>Options</th>
 						</tr>
 					</thead>
 
@@ -75,6 +78,12 @@
 								th:text="${#temporals.format(info.transactionsDate, 'dd/MM/yyyy')}"></td>
 							<td
 								th:text="${#temporals.format(info.importRealized, 'dd/MM/yyyy HH:mm')}"></td>
+							<td
+								th:text="${info.importedBy}"></td>
+							<td>
+								<a th:href="@{/{id} (id= ${info.transactionsDate} ) }" 
+								class="waves-effect waves-light btn-small">Details</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>

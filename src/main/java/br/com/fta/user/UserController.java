@@ -61,7 +61,7 @@ public class UserController {
 	}
 
 	@PostMapping("/{id}/edit")
-	public String updateUser(@PathVariable("id") String id, UserDTO userDTO, BindingResult result, Model model) {
+	public String updateUser(@PathVariable("id") String id, @Valid UserDTO userDTO, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "users/userEditForm";
 		}
