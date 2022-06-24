@@ -13,11 +13,16 @@ public class ImportInfo implements Comparable<ImportInfo>{
 	private String id;
 	private LocalDateTime importRealized;
 	private LocalDate transactionsDate;
+	private String importedBy;
 
-	public ImportInfo(LocalDateTime importRealized, LocalDate transactionsDate) {
+	public ImportInfo(LocalDateTime importRealized, LocalDate transactionsDate, String importedBy) {
 		this.importRealized = importRealized;
 		this.transactionsDate = transactionsDate;
-		
+		this.importedBy = importedBy;		
+	}
+
+	public String getId() {
+		return id;
 	}
 	
 	public LocalDateTime getImportRealized() {
@@ -26,6 +31,10 @@ public class ImportInfo implements Comparable<ImportInfo>{
 	
 	public LocalDate getTransactionsDate() {
 		return transactionsDate;
+	}
+
+	public String getImportedBy() {
+		return importedBy;
 	}
 
 	@Override
