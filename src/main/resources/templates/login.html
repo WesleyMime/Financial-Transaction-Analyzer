@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html class="blue-grey darken-4" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+		<title>FTA</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="/css/materialize.min.css"
+			media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/style.css"
+			media="screen,projection" />
+		<link rel="icon" type="image/x-icon" href="icon/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="blue-grey darken-4">
+	<nav class="teal lighten-1">
+	    <div class="nav-wrapper">
+	    </div>
+  	</nav>
+	<div class="container">
+		<div class="row">
+			<h1>Financial Transaction Analyzer</h1>
+			<form name="f" th:action="@{/login}" method="POST" class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<input class="validate" type="email" id="username" name="username"
+							value="admin@email.com.br">
+						<label for="username">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input placeholder="123999"
+						class="validate" type="password" id="password" name="password"
+						value="123999">
+						<label for="password">Password</label>
+					</div>
+				</div>
+				<div class="form-actions row">
+					<button type="submit" class="btn waves-effect waves-light">Sign in</button>
+				</div>
+				<div class="row">
+					<div th:if="${param.error}" class="center-align z-depth-1 dark-green-line">
+						Invalid username and password.
+					</div>
+					<div th:if="${param.logout}" class="center-align z-depth-1 dark-green-line">
+						You have been logged out.
+					</div>
+				</div>
+			</form>
+		</div>
+		<script type="text/javascript" src="/js/materialize.min.js"></script>
+	</div>
+</body>
+</html>

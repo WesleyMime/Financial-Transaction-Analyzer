@@ -1,48 +1,76 @@
 <!DOCTYPE html>
 <html class="blue-grey darken-4" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Edit User</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="/css/materialize.min.css"
-	media="screen,projection" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
+	<meta charset="UTF-8">
+		<title>Edit User</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="/css/materialize.min.css"
+			media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="/css/style.css"
+			media="screen,projection" />
+		<link rel="icon" type="image/x-icon" href="/icon/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
 <body class="blue-grey darken-4">
+	<nav class="teal lighten-1">
+		<div class="nav-wrapper">
+			<a href="#!" class="brand-logo right">EDIT USER</a>
+			<a href="#" data-target="mobile-demo" class="sidenav-trigger">
+				<i class="material-icons">menu</i></a>
+			<ul class="left hide-on-med-and-down">
+				<li><a href="/users">Users</a></li>
+				<li>
+					<div sec:authorize="isAuthenticated()">
+					    <a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a>
+					    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+					        <input hidden type="submit" value="Sign Out" />
+					    </form>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<ul class="sidenav blue-grey lighten-3" id="mobile-demo">
+		<li><a href="/users">Users</a></li>
+		<li><a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a></li>
+	</ul>
 	<div class="container">
 		<div class="row">
-			<h2 style="color: rgb(99, 255, 240)">EDIT USER</h2>
+			<h2>Edit User</h2>
 			<form th:object="${userDTO}" th:action="@{/users/{id}/edit (id= *{id}) }"
 				method="POST" class="col s12">
 				<div class="row">
 					<div class="input-field col s12">
-			          <input style="color: rgb(255, 255, 255)" disabled th:field="*{id}" id="disabled" type="text" class="validate">
-			          <label for="disabled">Id</label>
+			          <input disabled th:field="*{id}" id="disabled" type="text" class="validate white-text">
+			          <label class="white-text" for="disabled">Id</label>
 			        </div>
 					<div class="input-field col s6">
-						<input style="color: rgb(255, 255, 255)" id="first_name"
+						<input id="first_name"
 							type="text" class="validate" th:field="*{name}"> <label
-							for="first_name">First Name</label> <span
-							style="color: rgb(255, 255, 255)" class="helper-text"
+							for="first_name">First Name</label> <span class="helper-text white-text"
 							th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 					</div>
 				</div>
 				<div class="row">
 					<div class="input-field col s12">
-						<input style="color: rgb(255, 255, 255)"
-							placeholder="real-email@email.com" id="email" type="email"
+						<input placeholder="real-email@email.com" id="email" type="email"
 							class="validate" th:field="*{email}"> <label for="email">Email</label>
-						<span style="color: rgb(255, 255, 255)" class="helper-text"
+						<span class="helper-text white-text"
 							th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 					</div>
 				</div>
-				<button class="btn waves-effect waves-light" type="submit"
-					name="action">Edit</button>
-				<p th:text="${error}" class="center-align cyan darken-4 z-depth-1"
-					style="color: rgb(255, 255, 255)">error</p>
+				<div class="form-actions row">
+					<button class="btn waves-effect waves-light" type="submit"
+						name="action">Edit</button>
+					<p th:text="${error}" class="center-align z-depth-1 dark-green-line">error</p>
+				</div>
 			</form>
 		</div>
 		<script type="text/javascript" src="/js/materialize.min.js"></script>
+		<script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+		    var elems = document.querySelectorAll('.sidenav');
+		    var instances = M.Sidenav.init(elems);
+		  });</script>
 	</div>
 </body>
