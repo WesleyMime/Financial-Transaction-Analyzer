@@ -51,6 +51,11 @@ class TransactionAnalyzerTest {
 		assertThrows(InvalidTransactionException.class, () -> analyzer.analyzeTransaction(DATA_TRANSACTION));
 	}
 	
-	
+	@Test
+	void givenRandonString_whenValidate_thenThrowsException() {
+		final String DATA_TRANSACTION = "43gdsg,w,e,9,c,a,d,5,f1631d2h4955ub52a3ce20946c505a";
+		
+		assertThrows(InvalidTransactionException.class, () -> analyzer.analyzeTransaction(DATA_TRANSACTION));
+	}
 
 }

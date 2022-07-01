@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
+import br.com.fta.shared.exceptions.ResourceNotFoundException;
 import br.com.fta.user.exceptions.EmailAlreadyRegisteredException;
 
 @SpringBootTest
@@ -78,7 +78,7 @@ class UserServiceTest {
 	void givenInvalidId_whenEditUser_thenThrowsException() {
 		String invalidId = "aaaa";
 
-		assertThrows(NoSuchElementException.class, () -> service.editUser(invalidId));
+		assertThrows(ResourceNotFoundException.class, () -> service.editUser(invalidId));
 	}
 
 	@Test

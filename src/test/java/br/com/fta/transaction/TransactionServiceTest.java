@@ -3,14 +3,11 @@ package br.com.fta.transaction;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
-import java.security.Principal;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
@@ -30,12 +27,24 @@ class TransactionServiceTest {
 	private TransactionService service;
 	
 	private static final String USERNAME = "Foo";
+	
+	private static final String VALID_TRANSACTION = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
+			+ "8000,2022-01-02T07:30:00\n";
+	private static final String MISSING_VALUE_TRANSACTION = "BYTE BANK,0001,00001-1,0001,00001-1,"
+			+ "8000,2022-01-02T07:30:00\n";
+	private static final String BLANK_VALUE_TRANSACTION = "BYTE BANK,0001,00001-1,,0001,00001-1,"
+			+ "8000,2022-01-02T07:30:00\n";
+	private static final String VALID_TRANSACTION_DIFF_DATE = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
+			+ "8000,2022-02-02T07:30:00\n";
 
+	@AfterEach
+	void afterEach() {
+		service.deleteTransactions();
+	}
+	
 	@Test
 	void givenValidFile_whenPostTransaction_thenInsertIntoDatabase() {
-		final String FILE_DATA = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
-				+ "8000,2022-01-02T07:30:00";
-		MultipartFile file = new MockMultipartFile("transaction", FILE_DATA.getBytes());
+		MultipartFile file = new MockMultipartFile("transaction", VALID_TRANSACTION.getBytes());
 
 		service.postTransaction(file, USERNAME);
 
@@ -45,61 +54,44 @@ class TransactionServiceTest {
 	
 	@Test
 	void givenFileWithInvalidValue_whenPostTransaction_thenDiscartTransaction() {
-		final String FILE_DATA = "BYTE BANK INVALID,0001,00001-1,,0001,00001-1,"
-				+ "8000,2022-01-02T07:30:00";
-		MultipartFile file = new MockMultipartFile("transaction", FILE_DATA.getBytes());
+		MultipartFile file = new MockMultipartFile("transaction", BLANK_VALUE_TRANSACTION.getBytes());
 
-		service.postTransaction(file, USERNAME);
-
-		List<Transaction> list = transactionRepository.findByBancoOrigem("BYTE BANK INVALID").get();
-		assertTrue(list.isEmpty());
+		assertThrows(InvalidFileException.class, () -> service.postTransaction(file, USERNAME));
 	}
 
 	@Test
 	void givenFileWithMissingInformation_whenPostTransaction_thenDiscartTransaction() {
-		final String FILE_DATA = "BYTE BANK INVALID,0001,00001-1,0001,00001-1,"
-				+ "8000,2022-01-02T07:30:00";
-		MultipartFile file = new MockMultipartFile("transaction", FILE_DATA.getBytes());
+		MultipartFile file = new MockMultipartFile("transaction", MISSING_VALUE_TRANSACTION.getBytes());
 
-		service.postTransaction(file, USERNAME);
-
-		List<Transaction> list = transactionRepository.findByBancoOrigem("BYTE BANK INVALID").get();
-		assertTrue(list.isEmpty());
+		assertThrows(InvalidFileException.class, () -> service.postTransaction(file, USERNAME));
 	}
-	
+
 	@Test
 	void givenEmptyFile_whenPostTransaction_thenThrowsException() {
-		final String FILE_DATA = "";
-		MultipartFile file = new MockMultipartFile("transaction", FILE_DATA.getBytes());
+		MultipartFile file = new MockMultipartFile("transaction", "".getBytes());
 	
 		assertThrows(InvalidFileException.class, () -> service.postTransaction(file, USERNAME));
 	}
-	
+
 	@Test
 	void givenFileWithTransactionsFromDifferentDays_whenPostTransaction_thenIgnoreDatesDifferentThanFirst() {
-		final String FILE_DATA = "BYTE BANK DATE,0001,00001-1,BANK BYTE,0001,00001-1,8000,2021-01-02T01:30:00\n" +
-								"BYTE BANK DATE,0001,00001-1,BANK BYTE,0001,00001-1,8000,2021-01-03T02:30:00\n" +
-								"BYTE BANK DATE,0001,00001-1,BANK BYTE,0001,00001-1,8000,2021-01-02T23:59:59\n" +
-								"BYTE BANK DATE,0001,00001-1,BANK BYTE,0001,00001-1,8000,2021-02-03T04:30:00\n";
+		final String FILE_DATA = VALID_TRANSACTION + VALID_TRANSACTION_DIFF_DATE 
+				+ VALID_TRANSACTION + VALID_TRANSACTION_DIFF_DATE;
 		MultipartFile file = new MockMultipartFile("transaction", FILE_DATA.getBytes());
 	
 		service.postTransaction(file, USERNAME);
 		
-		List<Transaction> list = transactionRepository.findByBancoOrigem("BYTE BANK DATE").get();
+		List<Transaction> list = transactionRepository.findByBancoOrigem("BYTE BANK").get();
 		assertTrue(list.size() == 2);
 	}
 	
 	@Test
 	void givenFileWithTransactionsWithDateAlreadyRegistered_whenPostTransaction_thenThrowsException() {
-		final String OLD_TRANSACTION = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
-				+ "8000,2022-05-05T07:30:00";
-		MultipartFile old_file = new MockMultipartFile("transaction", OLD_TRANSACTION.getBytes());
+		MultipartFile old_file = new MockMultipartFile("transaction", VALID_TRANSACTION.getBytes());
 		
 		service.postTransaction(old_file, USERNAME);
 		
-		final String NEW_TRANSACTION = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
-				+ "8000,2022-05-05T07:30:00";
-		MultipartFile new_file = new MockMultipartFile("transaction", NEW_TRANSACTION.getBytes());
+		MultipartFile new_file = new MockMultipartFile("transaction", VALID_TRANSACTION.getBytes());
 		
 		assertThrows(InvalidFileException.class, () -> service.postTransaction(new_file, USERNAME));
 	}
