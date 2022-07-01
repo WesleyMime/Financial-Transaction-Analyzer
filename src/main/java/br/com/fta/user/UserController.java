@@ -23,7 +23,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@GetMapping
 	public String allUsers(Model model, Principal principal) {
 		List<UserDTO> listUsers =  userService.allUsers();

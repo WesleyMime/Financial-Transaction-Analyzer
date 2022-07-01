@@ -43,8 +43,8 @@ public class TransactionAnalyzer {
 			}
 			return transaction;
 
-		} catch (ArrayIndexOutOfBoundsException e) {
-			throw new InvalidTransactionException("Missing information.");
+		} catch (RuntimeException e) {
+			throw new InvalidTransactionException();
 		}
 	}
 

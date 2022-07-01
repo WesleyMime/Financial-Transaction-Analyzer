@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.fta.email.EmailService;
+import br.com.fta.shared.exceptions.ResourceNotFoundException;
 import br.com.fta.user.exceptions.EmailAlreadyRegisteredException;
 
 @Service
@@ -54,6 +55,9 @@ public class UserService {
 
 	public UserDTO editUser(String id) {
 		Optional<User> optional = repository.findById(id);
+		if (optional.isEmpty()) {
+			throw new ResourceNotFoundException();
+		}
 		User user = optional.get();
 		UserDTO userDTO = userToDTOMapper.map(user);
 		return userDTO;

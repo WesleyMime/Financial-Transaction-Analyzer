@@ -31,14 +31,8 @@ public class TransactionController {
 
 	@PostMapping("/")
 	public String postTransaction(@RequestParam("file") MultipartFile file, Model model, Principal principal) {
-		try {
-			String username = principal.getName();
-			
-			transactionService.postTransaction(file, username);
-		} catch (RuntimeException e) {
-			model.addAttribute("error", e.getMessage());
-			return transactions(model);
-		}		
+		String username = principal.getName();
+		transactionService.postTransaction(file, username);
 		return "redirect:/";
 	}
 

@@ -3,8 +3,10 @@ package br.com.fta.transaction;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.fta.shared.exceptions.ResourceNotFoundException;
 import br.com.fta.transaction.exceptions.InvalidFileException;
 import br.com.fta.transaction.exceptions.InvalidTransactionException;
 import br.com.fta.transaction.importinfo.ImportInfo;
@@ -50,9 +53,14 @@ public class TransactionService {
 					continue;
 				}
 			}
+			
+			LocalDate dateOfTransactions = analyzer.getDateOfTransactions();
+			if (dateOfTransactions == null) {
+				throw new InvalidFileException("Invalid file.");
+			}
 			ImportInfo importInfo = new ImportInfo(
 											LocalDateTime.now(),
-											analyzer.getDateOfTransactions(),
+											dateOfTransactions,
 											username);
 			importInfoRepository.save(importInfo);
 
@@ -92,10 +100,14 @@ public class TransactionService {
 	}
 
 	public ImportInfo detailImport(String dateString) {
-		LocalDate date = LocalDate.parse(dateString);
-
-		Optional<ImportInfo> importInfoOptional = importInfoRepository.findByTransactionsDate(date);
-		ImportInfo importInfo = importInfoOptional.get();
-		return importInfo;
+		try {
+			LocalDate date = LocalDate.parse(dateString);
+			
+			Optional<ImportInfo> importInfoOptional = importInfoRepository.findByTransactionsDate(date);
+			return importInfoOptional.get();
+		}
+		catch (DateTimeParseException | NoSuchElementException e) {
+			throw new ResourceNotFoundException();
+		}
 	}
 }
