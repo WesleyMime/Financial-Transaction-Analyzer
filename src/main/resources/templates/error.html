@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="blue-grey darken-4" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+		<title>Error</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="/css/materialize.min.css"
+			media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="/css/style.css"
+			media="screen,projection" />
+		<link rel="icon" type="image/x-icon" href="/icon/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="blue-grey darken-4">
+	<nav class="teal lighten-1">
+		<div class="nav-wrapper">
+			<a href="#!" class="brand-logo right">Error</a>
+			<a href="#" data-target="mobile-demo" class="sidenav-trigger">
+				<i class="material-icons">menu</i></a>
+			<ul class="left hide-on-med-and-down">
+				<li><a href="/">Imports</a></li>
+				<li><a href="/users">Users</a></li>
+				<li>
+					<div sec:authorize="isAuthenticated()">
+					    <a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a>
+					    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+					        <input hidden type="submit" value="Sign Out" />
+					    </form>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<ul class="sidenav blue-grey lighten-3" id="mobile-demo">
+		<li><a href="/">Imports</a></li>
+		<li><a href="/users">Users</a></li>
+		<li><a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a></li>
+	</ul>
+	<div class="container">
+		<div class="row">
+			<div class="col s12">
+
+				<h2>Error</h2>
+
+				<p th:text="${error}" class="center-align z-depth-1 dark-green-line">error</p>
+
+ 			</div>
+		</div>
+		<script type="text/javascript" src="/js/materialize.min.js"></script>
+		<script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+		    var elems = document.querySelectorAll('.sidenav');
+		    var instances = M.Sidenav.init(elems);
+		  });</script>
+	</div>
+</body>
