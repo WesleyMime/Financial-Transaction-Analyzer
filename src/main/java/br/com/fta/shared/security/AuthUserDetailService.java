@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.fta.user.User;
-import br.com.fta.user.UserRepository;
+import br.com.fta.user.domain.User;
+import br.com.fta.user.infra.UserRepository;
 
 @Service
 public class AuthUserDetailService implements UserDetailsService {
