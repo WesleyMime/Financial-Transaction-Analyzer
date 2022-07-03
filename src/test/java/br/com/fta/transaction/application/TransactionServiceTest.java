@@ -14,7 +14,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.fta.transaction.application.TransactionService;
 import br.com.fta.transaction.domain.InvalidFileException;
 import br.com.fta.transaction.domain.Transaction;
 import br.com.fta.transaction.infra.TransactionRepository;
@@ -53,8 +52,8 @@ class TransactionServiceTest {
 
 		service.postTransaction(file, USERNAME);
 
-		List<Transaction> list = transactionRepository.findByBancoOrigem("BYTE BANK").get();
-		assertEquals("BANK BYTE", list.get(0).getBancoDestino());
+		List<Transaction> list = transactionRepository.findByOriginBank("BYTE BANK").get();
+		assertEquals("BANK BYTE", list.get(0).getDestination().getBank());
 	}
 	
 	@Test
@@ -86,7 +85,7 @@ class TransactionServiceTest {
 	
 		service.postTransaction(file, USERNAME);
 		
-		List<Transaction> list = transactionRepository.findByBancoOrigem("BYTE BANK").get();
+		List<Transaction> list = transactionRepository.findByOriginBank("BYTE BANK").get();
 		assertTrue(list.size() == 2);
 	}
 	

@@ -11,8 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 
 import br.com.fta.shared.infra.Mapper;
-import br.com.fta.transaction.domain.Transaction;
-import br.com.fta.transaction.domain.TransactionMapperCSV;
 
 class TransactionMapperCSVTest {
 	
@@ -29,13 +27,15 @@ class TransactionMapperCSVTest {
 		List<Transaction> transactions = mapper.map(file.getInputStream());
 		
 		Transaction transaction = transactions.get(0);
-		assertEquals("Foo", transaction.getBancoOrigem());
-		assertEquals("0001", transaction.getAgenciaOrigem());
-		assertEquals("00001-1", transaction.getContaOrigem());
-		assertEquals("Bar", transaction.getBancoDestino());
-		assertEquals("0001", transaction.getAgenciaDestino());
-		assertEquals("00001-1", transaction.getContaDestino());
-		assertEquals("100", transaction.getValorTransacao());
+		BankAccount origem = transaction.getOrigin();
+		BankAccount destino = transaction.getDestination();
+		assertEquals("Foo", origem.getBank());
+		assertEquals("0001", origem.getAgency());
+		assertEquals("00001-1", origem.getAccount());
+		assertEquals("Bar", destino.getBank());
+		assertEquals("0001", destino.getAgency());
+		assertEquals("00001-1", destino.getAccount());
+		assertEquals("100", transaction.getValue());
 		assertEquals(LocalDateTime.of(2022, 01, 02, 16, 30), transaction.getDate());
 	}
 	

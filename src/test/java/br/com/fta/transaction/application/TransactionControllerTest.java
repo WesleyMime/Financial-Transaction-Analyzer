@@ -23,19 +23,12 @@ class TransactionControllerTest {
 	
 	private static final String TRANSACTION_CSV = 
 			"Foo,0001,00001-1,Bar,0001,00001-1,8000,2022-01-01T07:30:00";
-	private static final String TRANSACTION_XML = ""
-			+ "<transactions>\r\n"
-			+ "	<transaction>\r\n"
-			+ "		<bancoOrigem>Foo</bancoOrigem>\r\n"
-			+ "		<agenciaOrigem>0001</agenciaOrigem>\r\n"
-			+ "		<contaOrigem>00001-1</contaOrigem>\r\n"
-			+ "		<bancoDestino>Bar</bancoDestino>\r\n"
-			+ "		<agenciaDestino>0001</agenciaDestino>\r\n"
-			+ "		<contaDestino>00001-1</contaDestino>\r\n"
-			+ "		<valorTransacao>100</valorTransacao>\r\n"
-			+ "		<date>2022-02-01T16:30:00</date>\r\n"
-			+ "	</transaction>\r\n"
-			+ "</transactions>";
+	private static final String TRANSACTION_XML = "<transactions><transaction>"
+			+ "<origin><bank>Foo</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></origin><destination>"
+			+ "<bank>Bar</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></destination><value>100</value>"
+			+ "<date>2022-01-02T16:30:00</date></transaction></transactions>";
 
 	@Test
 	void givenUserNotAuthenticated_thenReturn401() throws Exception {

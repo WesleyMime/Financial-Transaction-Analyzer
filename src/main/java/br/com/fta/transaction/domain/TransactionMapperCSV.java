@@ -28,9 +28,11 @@ public class TransactionMapperCSV implements Mapper<InputStream, List<Transactio
 				String contaDestino = transactionInfo[5];
 				String valorTransacao = transactionInfo[6];
 				LocalDateTime date = LocalDateTime.parse(transactionInfo[7]);
+				
+				BankAccount origem = new BankAccount(bancoOrigem, agenciaOrigem, contaOrigem);
+				BankAccount destino = new BankAccount(bancoDestino, agenciaDestino, contaDestino);
 
-				list.add(new Transaction(bancoOrigem, agenciaOrigem, contaOrigem, bancoDestino, agenciaDestino,
-						contaDestino, valorTransacao, date));
+				list.add(new Transaction(origem, destino, valorTransacao, date));
 			} catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
 				continue;
 			}

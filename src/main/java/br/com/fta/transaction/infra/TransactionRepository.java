@@ -14,5 +14,5 @@ public interface TransactionRepository extends MongoRepository<Transaction, Stri
 
 	Optional<List<Transaction>> findByDateBetween(LocalDateTime startDay, LocalDateTime endDay);
 	
-	Optional<List<Transaction>> findByBancoOrigem(String name);
+	Optional<List<Transaction>> findByOriginBank(String name);
 }

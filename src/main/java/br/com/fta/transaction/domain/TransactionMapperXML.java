@@ -20,7 +20,7 @@ public class TransactionMapperXML implements Mapper<InputStream, List<Transactio
 			return (List<Transaction>) xstream.fromXML(source);
 
 		} catch (RuntimeException e) {
-			throw new InvalidTransactionException();
+			throw new InvalidFileException("Malformed xml file.");
 		}
 	}
 

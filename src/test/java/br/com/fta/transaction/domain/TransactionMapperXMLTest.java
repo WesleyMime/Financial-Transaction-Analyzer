@@ -11,70 +11,66 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 
-import br.com.fta.transaction.domain.InvalidTransactionException;
-import br.com.fta.transaction.domain.Transaction;
-import br.com.fta.transaction.domain.TransactionMapperXML;
-
 class TransactionMapperXMLTest {
 	
 	private final TransactionMapperXML mapper = new TransactionMapperXML();
 	
-	private final String VALID = "<transaction>\n<bancoOrigem>Foo</bancoOrigem>\n"
-			+ "<agenciaOrigem>0001</agenciaOrigem>\n<contaOrigem>00001-1</contaOrigem>\n"
-			+ "<bancoDestino>Bar</bancoDestino>\n<agenciaDestino>0001</agenciaDestino>\n"
-			+ "<contaDestino>00001-1</contaDestino>\n<valorTransacao>100</valorTransacao>\n"
-			+ "<date>2022-01-02T16:30:00</date>\n</transaction>";
+	private final String VALID = "<transactions><transaction>"
+			+ "<origin><bank>Foo</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></origin><destination>"
+			+ "<bank>Bar</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></destination><value>100</value>"
+			+ "<date>2022-01-02T16:30:00</date></transaction></transactions>";
 
-	private String MISSING_INFORMATION = "<transaction>\n"
-				+ "	<bancoOrigem>Foo</bancoOrigem>\n<agenciaOrigem>0001</agenciaOrigem>\n"
-				+ "<contaOrigem>00001-1</contaOrigem>\n<bancoDestino>Bar</bancoDestino>\n"
-				+ "<date>2022-01-02T16:30:00</date>\n</transaction>";
+	private final String MISSING_INFORMATION = "<transactions><transaction>"
+			+ "<origin><bank>Foo</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></origin><destination>"
+			+ "</destination><value>100</value>"
+			+ "<date>2022-01-02T16:30:00</date></transaction></transactions>";
 
-	private final String INVALID_DATE = "<transaction>\n<bancoOrigem>Foo</bancoOrigem>\n"
-				+ "<agenciaOrigem>0001</agenciaOrigem>\n<contaOrigem>00001-1</contaOrigem>\n"
-				+ "<bancoDestino>Bar</bancoDestino>\n<agenciaDestino>0001</agenciaDestino>\n"
-				+ "<contaDestino>00001-1</contaDestino>\n<valorTransacao>100</valorTransacao>\n"
-				+ "<date>2022/01/02T16:30:00</date>\n</transaction>";
+	private final String INVALID_DATE = "<transactions><transaction>"
+			+ "<origin><bank>Foo</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></origin><destination>"
+			+ "<bank>Bar</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></destination><value>100</value>"
+			+ "<date>2022/01/02T16:30:00</date></transaction></transactions>";
 
 	@Test
 	void givenValidFile_whenMap_thenReturnTransaction() throws IOException {
-		String file_data = "<transactions>" + VALID + "</transactions>";
-		
 		MockMultipartFile file = 
-				new MockMultipartFile("file", file_data.getBytes());
+				new MockMultipartFile("file", VALID.getBytes());
 		
 		List<Transaction> transactions = mapper.map(file.getInputStream());
+		
 		Transaction transaction = transactions.get(0);
-		assertEquals("Foo", transaction.getBancoOrigem());
-		assertEquals("0001", transaction.getAgenciaOrigem());
-		assertEquals("00001-1", transaction.getContaOrigem());
-		assertEquals("Bar", transaction.getBancoDestino());
-		assertEquals("0001", transaction.getAgenciaDestino());
-		assertEquals("00001-1", transaction.getContaDestino());
-		assertEquals("100", transaction.getValorTransacao());
+		BankAccount origem = transaction.getOrigin();
+		BankAccount destino = transaction.getDestination();
+		assertEquals("Foo", origem.getBank());
+		assertEquals("0001", origem.getAgency());
+		assertEquals("00001-1", origem.getAccount());
+		assertEquals("Bar", destino.getBank());
+		assertEquals("0001", destino.getAgency());
+		assertEquals("00001-1", destino.getAccount());
+		assertEquals("100", transaction.getValue());
 		assertEquals(LocalDateTime.of(2022, 01, 02, 16, 30), transaction.getDate());
 	}
 	
 	@Test
 	void givenInvalidDate_whenMapToTransaction_thenThrowsException() throws IOException {
-		String file_data = "<transactions>" + INVALID_DATE + "</transactions>";
-		
 		MockMultipartFile file = 
-				new MockMultipartFile("file", file_data.getBytes());
+				new MockMultipartFile("file", INVALID_DATE.getBytes());
 		
-		assertThrows(InvalidTransactionException.class, () -> mapper.map(file.getInputStream()));
+		assertThrows(InvalidFileException.class, () -> mapper.map(file.getInputStream()));
 	}
 	
 	@Test
 	void givenMissingInformation_whenMapToTransaction_thenReturnTransactionWithNullValues() throws IOException {
-		String file_data = "<transactions>" + MISSING_INFORMATION + "</transactions>";
-		
 		MockMultipartFile file = 
-				new MockMultipartFile("file", file_data.getBytes());
+				new MockMultipartFile("file", MISSING_INFORMATION.getBytes());
 		List<Transaction> transactions = mapper.map(file.getInputStream());
 		Transaction transaction = transactions.get(0);
 		
-		assertEquals("Foo", transaction.getBancoOrigem());
-		assertNull(transaction.getAgenciaDestino());
+		assertEquals("Foo", transaction.getOrigin().getBank());
+		assertNull(transaction.getDestination().getAgency());
 	}
 }

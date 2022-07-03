@@ -86,9 +86,9 @@
 									</thead>
 									<tbody>
 										<tr th:each="transaction: ${transactions}">
-											<td th:text="${transaction.bancoOrigem}"></td>
-											<td th:text="${transaction.agenciaOrigem}"></td>
-											<td th:text="${transaction.contaOrigem}"></td>
+											<td th:text="${transaction.origin.bank}"></td>
+											<td th:text="${transaction.origin.agency}"></td>
+											<td th:text="${transaction.origin.account}"></td>
 										</tr>
 									</tbody>
 								</table>
@@ -104,9 +104,9 @@
 									</thead>
 									<tbody>
 									<tr th:each="transaction: ${transactions}">
-										<td th:text="${transaction.bancoDestino}"></td>
-										<td th:text="${transaction.agenciaDestino}"></td>
-										<td th:text="${transaction.contaDestino}"></td>
+										<td th:text="${transaction.destination.bank}"></td>
+										<td th:text="${transaction.destination.agency}"></td>
+										<td th:text="${transaction.destination.account}"></td>
 									</tr>
 									</tbody>
 								</table>
@@ -120,7 +120,7 @@
 									</thead>
 									<tbody>
 									<tr th:each="transaction: ${transactions}">
-										<td th:text="${transaction.valorTransacao}"></td>
+										<td th:text="${transaction.value}"></td>
 									</tr>
 									</tbody>
 								</table>

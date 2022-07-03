@@ -18,9 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
-import br.com.fta.transaction.domain.InvalidFileException;
-import br.com.fta.transaction.domain.Transaction;
-import br.com.fta.transaction.domain.TransactionAnalyzer;
 import br.com.fta.transaction.infra.ImportInfoRepository;
 import br.com.fta.transaction.infra.TransactionRepository;
 
@@ -36,31 +33,32 @@ class TransactionAnalyzerTest {
 	@InjectMocks
 	private TransactionAnalyzer analyzer;
 	
-	private final String XML_VALID = "<transactions><transaction>\n"
-				+ "<bancoOrigem>Foo</bancoOrigem>\n<agenciaOrigem>0001</agenciaOrigem>\n"
-				+ "<contaOrigem>00001-1</contaOrigem>\n<bancoDestino>Bar</bancoDestino>\n"
-				+ "<agenciaDestino>0001</agenciaDestino>\n<contaDestino>00001-1</contaDestino>\n"
-				+ "<valorTransacao>100</valorTransacao>\n<date>2022-01-02T16:30:00</date>\n"
-				+ "</transaction></transactions>";
+	private final String XML_VALID = "<transactions><transaction>"
+			+ "<origin><bank>Foo</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></origin><destination>"
+			+ "<bank>Bar</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></destination><value>100</value>"
+			+ "<date>2022-01-02T16:30:00</date></transaction></transactions>";
 
-	private final String XML_MISSING_INFORMATION = "<transactions><transaction>\n"
-				+ "	<bancoOrigem>Foo</bancoOrigem>\n<agenciaOrigem>0001</agenciaOrigem>\n"
-				+ "<contaOrigem>00001-1</contaOrigem>\n<bancoDestino>Bar</bancoDestino>\n"
-				+ "<date>2022-01-02T16:30:00</date>\n</transaction></transactions>";
+	private final String XML_MISSING_INFORMATION = "<transactions><transaction>"
+			+ "<origin><bank>Foo</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></origin><destination>"
+			+ "</destination><value>100</value>"
+			+ "<date>2022-01-02T16:30:00</date></transaction></transactions>";
 
-	private final String XML_INVALID_VALUE = "<transactions><transaction>\n"
-				+ "<bancoOrigem>Foo</bancoOrigem>\n<agenciaOrigem>0001</agenciaOrigem>\n"
-				+ "<contaOrigem>00001-1</contaOrigem>\n<bancoDestino></bancoDestino>\n"
-				+ "<agenciaDestino></agenciaDestino>\n<contaDestino>00001-1</contaDestino>\n"
-				+ "<valorTransacao>100</valorTransacao>\n<date>2022-01-02T16:30:00</date>\n"
-				+ "</transaction></transactions>";
+	private final String XML_INVALID_VALUE = "<transactions><transaction>"
+			+ "<origin><bank>Foo</bank><agency>0001</agency>"
+			+ "<account>00001-1</account></origin><destination></destination><value>100</value>"
+			+ "<date>2022/01/02T16:30:00</date></transaction></transactions>";
 	
 	private final String CSV_VALID = "Foo,0001,00001-1,Bar,0001,00001-1,100,2022-01-02T16:30:00";
 	private final String CSV_MISSING_INFORMATION = "Foo,0001,00001-1,0001,00001-1,100,2022-01-02T16:30:00";
 	private final String CSV_INVALID_VALUE = "Foo,0001,00001-1,,0001,00001-1,100,2022-01-02T16:30:00";
 	
-	private final Transaction TRANSACTION_EXPECTED = new Transaction("Foo", "0001", "00001-1", "Bar", "0001",
-			"00001-1", "100", LocalDateTime.of(2022, 01, 02, 16, 30));
+	private final Transaction TRANSACTION_EXPECTED = new Transaction(
+			new BankAccount("Foo", "0001", "00001-1"), 
+			new BankAccount("Bar", "0001", "00001-1"),
+			"100", LocalDateTime.of(2022, 01, 02, 16, 30));
 	
 	@Test
 	void givenValidCSVFile_whenValidate_thenReturnTransaction() {
