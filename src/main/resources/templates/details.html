@@ -104,9 +104,9 @@
 									</thead>
 									<tbody>
 									<tr th:each="transaction: ${transactions}">
+										<td th:text="${transaction.bancoDestino}"></td>
 										<td th:text="${transaction.agenciaDestino}"></td>
 										<td th:text="${transaction.contaDestino}"></td>
-										<td th:text="${transaction.valorTransacao}"></td>
 									</tr>
 									</tbody>
 								</table>

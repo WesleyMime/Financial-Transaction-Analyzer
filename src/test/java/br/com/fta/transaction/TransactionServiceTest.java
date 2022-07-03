@@ -30,6 +30,8 @@ class TransactionServiceTest {
 	
 	private static final String VALID_TRANSACTION = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
 			+ "8000,2022-01-02T07:30:00\n";
+	private static final String VALID_TRANSACTION_2 = "BYTE BANK,0002,00001-1,BANK BYTE,0001,00001-1,"
+			+ "3000,2022-01-02T07:30:00\n";
 	private static final String MISSING_VALUE_TRANSACTION = "BYTE BANK,0001,00001-1,0001,00001-1,"
 			+ "8000,2022-01-02T07:30:00\n";
 	private static final String BLANK_VALUE_TRANSACTION = "BYTE BANK,0001,00001-1,,0001,00001-1,"
@@ -44,7 +46,7 @@ class TransactionServiceTest {
 	
 	@Test
 	void givenValidFile_whenPostTransaction_thenInsertIntoDatabase() {
-		MultipartFile file = new MockMultipartFile("transaction", VALID_TRANSACTION.getBytes());
+		MultipartFile file = new MockMultipartFile("file", "file", "text/csv", VALID_TRANSACTION.getBytes());
 
 		service.postTransaction(file, USERNAME);
 
@@ -54,21 +56,21 @@ class TransactionServiceTest {
 	
 	@Test
 	void givenFileWithInvalidValue_whenPostTransaction_thenDiscartTransaction() {
-		MultipartFile file = new MockMultipartFile("transaction", BLANK_VALUE_TRANSACTION.getBytes());
+		MultipartFile file = new MockMultipartFile("file", "file", "text/csv", BLANK_VALUE_TRANSACTION.getBytes());
 
 		assertThrows(InvalidFileException.class, () -> service.postTransaction(file, USERNAME));
 	}
 
 	@Test
 	void givenFileWithMissingInformation_whenPostTransaction_thenDiscartTransaction() {
-		MultipartFile file = new MockMultipartFile("transaction", MISSING_VALUE_TRANSACTION.getBytes());
+		MultipartFile file = new MockMultipartFile("file", "file", "text/csv", MISSING_VALUE_TRANSACTION.getBytes());
 
 		assertThrows(InvalidFileException.class, () -> service.postTransaction(file, USERNAME));
 	}
 
 	@Test
 	void givenEmptyFile_whenPostTransaction_thenThrowsException() {
-		MultipartFile file = new MockMultipartFile("transaction", "".getBytes());
+		MultipartFile file = new MockMultipartFile("file", "file", "text/csv", "".getBytes());
 	
 		assertThrows(InvalidFileException.class, () -> service.postTransaction(file, USERNAME));
 	}
@@ -76,8 +78,8 @@ class TransactionServiceTest {
 	@Test
 	void givenFileWithTransactionsFromDifferentDays_whenPostTransaction_thenIgnoreDatesDifferentThanFirst() {
 		final String FILE_DATA = VALID_TRANSACTION + VALID_TRANSACTION_DIFF_DATE 
-				+ VALID_TRANSACTION + VALID_TRANSACTION_DIFF_DATE;
-		MultipartFile file = new MockMultipartFile("transaction", FILE_DATA.getBytes());
+				+ VALID_TRANSACTION_2 + VALID_TRANSACTION_DIFF_DATE;
+		MultipartFile file = new MockMultipartFile("file", "file", "text/csv", FILE_DATA.getBytes());
 	
 		service.postTransaction(file, USERNAME);
 		
@@ -87,11 +89,11 @@ class TransactionServiceTest {
 	
 	@Test
 	void givenFileWithTransactionsWithDateAlreadyRegistered_whenPostTransaction_thenThrowsException() {
-		MultipartFile old_file = new MockMultipartFile("transaction", VALID_TRANSACTION.getBytes());
+		MultipartFile old_file = new MockMultipartFile("file", "file", "text/csv", VALID_TRANSACTION.getBytes());
 		
 		service.postTransaction(old_file, USERNAME);
 		
-		MultipartFile new_file = new MockMultipartFile("transaction", VALID_TRANSACTION.getBytes());
+		MultipartFile new_file = new MockMultipartFile("file", "file", "text/csv", VALID_TRANSACTION.getBytes());
 		
 		assertThrows(InvalidFileException.class, () -> service.postTransaction(new_file, USERNAME));
 	}

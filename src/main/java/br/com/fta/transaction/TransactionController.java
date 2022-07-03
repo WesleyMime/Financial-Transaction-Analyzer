@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.fta.transaction.exceptions.InvalidFileException;
 import br.com.fta.transaction.importinfo.ImportInfo;
 
 @Controller
@@ -32,7 +33,12 @@ public class TransactionController {
 	@PostMapping("/")
 	public String postTransaction(@RequestParam("file") MultipartFile file, Model model, Principal principal) {
 		String username = principal.getName();
-		transactionService.postTransaction(file, username);
+		try {
+			transactionService.postTransaction(file, username);
+		} catch (InvalidFileException e) {
+			model.addAttribute("error", e.getMessage());
+			return transactions(model);
+		}
 		return "redirect:/";
 	}
 

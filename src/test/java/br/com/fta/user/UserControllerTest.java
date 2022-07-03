@@ -1,16 +1,14 @@
 package br.com.fta.user;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,7 +31,8 @@ class UserControllerTest {
 	@BeforeEach
 	void beforeEach() {
 		Optional<User> user = Optional.of(new User("Foo", "bar@email.com"));
-		Mockito.when(repository.findById("1")).thenReturn(user);
+		when(repository.findById("1")).thenReturn(user);
+		when(repository.findByEmail("bar@email.com")).thenReturn(user);
 	}
 	
 	@Test
@@ -46,6 +45,7 @@ class UserControllerTest {
 	@WithMockUser
 	void givenAuthenticatedUser_thenReturn200() throws Exception {
 		mvc.perform(get("/users"))
+			.andExpect(view().name("users/users"))
 			.andExpect(status().isOk());
 	}
 	
@@ -57,16 +57,31 @@ class UserControllerTest {
 				.param("email", "email@email.com")
 				.with(csrf()))
 			.andExpect(status().is3xxRedirection())
+			.andExpect(view().name("redirect:/users"))
 			.andExpect(redirectedUrl("/users"));
 	}
 	
 	@Test
 	@WithMockUser
-	void givenInvalidForm_whenRegisterNewUser_thenStayOnSamePage() throws Exception {
+	void givenInvalidForm_whenRegisterNewUser_thenReturn200() throws Exception {
 		mvc.perform(post("/users/register")
 				.param("name", "")
 				.param("email", "")
 				.with(csrf()))
+			.andExpect(model().hasErrors())
+			.andExpect(view().name("users/userForm"))
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	@WithMockUser
+	void givenFormWithEmailAlreadyRegistered_whenRegisterNewUser_thenReturn200() throws Exception {
+		mvc.perform(post("/users/register")
+				.param("name", "Bar")
+				.param("email", "bar@email.com")
+				.with(csrf()))
+			.andExpect(model().attributeExists("error"))
+			.andExpect(view().name("users/userForm"))
 			.andExpect(status().isOk());
 	}
 	
@@ -74,6 +89,7 @@ class UserControllerTest {
 	@WithMockUser
 	void givenValidId_whenEditUser_thenReturn200() throws Exception {
 		mvc.perform(get("/users/1/edit"))
+			.andExpect(view().name("users/userEditForm"))
 			.andExpect(status().isOk());
 	}
 	
@@ -86,24 +102,43 @@ class UserControllerTest {
 	
 	@Test
 	@WithMockUser
-	void givenValidForm_whenPostEditUser_thenReturn200() throws Exception {
+	void givenValidForm_whenPostEditUser_thenReturn302() throws Exception {
 		mvc.perform(post("/users/1/edit")
 				.param("id", "1")
 				.param("name", "Foo")
 				.param("email", "bar@email.com")
 				.with(csrf()))
 			.andExpect(status().is3xxRedirection())
+			.andExpect(view().name("redirect:/users"))
 			.andExpect(redirectedUrl("/users"));
 	}
 	
 	@Test
 	@WithMockUser
-	void givenInvalidForm_whenPostEditUser_thenStayOnSamePage() throws Exception {
-		mvc.perform(post("/users/2/edit")
-				.param("id", "2")
+	void givenInvalidForm_whenPostEditUser_thenReturn200() throws Exception {
+		mvc.perform(post("/users/1/edit")
+				.param("id", "1")
 				.param("name", "Foo")
-				.param("email", "bar@email.com")
+				.param("email", "")
 				.with(csrf()))
+			.andExpect(model().hasErrors())
+			.andExpect(view().name("users/userEditForm"))
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	@WithMockUser
+	void givenFormWithEmailAlreadyRegistered_whenPostEditUser_thenReturn200() throws Exception {
+		when(repository.findByEmail("foo@email.com"))
+		.thenReturn(Optional.of(new User("Foo", "foo@email.com")));
+		
+		mvc.perform(post("/users/1/edit")
+				.param("id", "1")
+				.param("name", "Foo")
+				.param("email", "foo@email.com")
+				.with(csrf()))
+			.andExpect(model().attributeExists("error"))
+			.andExpect(view().name("users/userEditForm"))
 			.andExpect(status().isOk());
 	}
 }
