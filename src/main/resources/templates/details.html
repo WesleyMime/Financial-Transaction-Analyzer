@@ -122,7 +122,7 @@
 									</thead>
 									<tbody>
 									<tr th:each="transaction: ${transactions}">
-										<td th:text="${transaction.value}"></td>
+										<td th:text="${#numbers.formatCurrency(transaction.value)}"></td>
 									</tr>
 									</tbody>
 								</table>
