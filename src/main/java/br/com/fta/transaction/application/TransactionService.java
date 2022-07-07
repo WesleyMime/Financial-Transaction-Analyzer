@@ -24,6 +24,7 @@ import br.com.fta.transaction.domain.Transaction;
 import br.com.fta.transaction.domain.TransactionAnalyzer;
 import br.com.fta.transaction.infra.ImportInfoRepository;
 import br.com.fta.transaction.infra.TransactionRepository;
+import br.com.fta.transactionsGenerator.TransactionsGenerator;
 
 @Service
 public class TransactionService {
@@ -111,5 +112,17 @@ public class TransactionService {
 			model.addAttribute("noTransactions", true);
 			return;
 		}
+	}
+
+	public void generateTransactions(String username) {
+		List<Transaction> list = TransactionsGenerator.generate();
+		transactionRepository.saveAll(list);
+		
+		ImportInfo importInfo = new ImportInfo(
+				LocalDateTime.now(),
+				TransactionsGenerator.getDateOfTransactions(),
+				username);
+		
+		importInfoRepository.save(importInfo);
 	}
 }
