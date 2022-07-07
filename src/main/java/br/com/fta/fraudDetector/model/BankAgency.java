@@ -17,6 +17,14 @@ public class BankAgency {
 		this.bank = account.getBank();
 		this.agency = account.getAgency();
 	}
+	
+	public String getBank() {
+		return bank;
+	}
+	
+	public String getAgency() {
+		return agency;
+	}
 
 	@Override
 	public int hashCode() {

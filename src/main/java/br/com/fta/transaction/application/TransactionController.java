@@ -67,4 +67,11 @@ public class TransactionController {
 		transactionService.report(date, model);
 		return "report";
 	}
+	
+	@GetMapping("/generate-transactions")
+    public String generateTransactions(Principal principal) {
+		String username = principal.getName();
+    	transactionService.generateTransactions(username);
+    	return "redirect:/";
+    }
 }

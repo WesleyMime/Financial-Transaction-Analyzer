@@ -127,7 +127,7 @@
 											</thead>
 											<tbody>
 											<tr th:each="transaction: ${transactions}">
-												<td th:text="${transaction.value}"></td>
+												<td th:text="${#numbers.formatCurrency(transaction.value)}"></td>
 											</tr>
 											</tbody>
 										</table>
@@ -157,14 +157,14 @@
 									<td th:text="${accountsEntry.key.bank}"></td>
 									<td th:text="${accountsEntry.key.agency}"></td>
 									<td th:text="${accountsEntry.key.account}"></td>
-									<td th:text="${accountsEntry.value}"></td>
+									<td th:text="${#numbers.formatCurrency(accountsEntry.value)}"></td>
 									<td>Entry</td>
 								</tr>
 								<tr th:each="accountsExit: ${entryExitAccounts.get('exit')}">
 									<td th:text="${accountsExit.key.bank}"></td>
 									<td th:text="${accountsExit.key.agency}"></td>
 									<td th:text="${accountsExit.key.account}"></td>
-									<td th:text="${accountsExit.value}"></td>
+									<td th:text="${#numbers.formatCurrency(accountsExit.value)}"></td>
 									<td>Exit</td>
 								</tr>
 							</tbody>
@@ -189,13 +189,13 @@
 								<tr th:each="agenciesEntry: ${entryExitAgencies.get('entry')}">
 									<td th:text="${agenciesEntry.key.bank}"></td>
 									<td th:text="${agenciesEntry.key.agency}"></td>
-									<td th:text="${agenciesEntry.value}"></td>
+									<td th:text="${#numbers.formatCurrency(agenciesEntry.value)}"></td>
 									<td>Entry</td>
 								</tr>
 								<tr th:each="agenciesExit: ${entryExitAgencies.get('exit')}">
 									<td th:text="${agenciesExit.key.bank}"></td>
 									<td th:text="${agenciesExit.key.agency}"></td>
-									<td th:text="${agenciesExit.value}"></td>
+									<td th:text="${#numbers.formatCurrency(agenciesExit.value)}"></td>
 									<td>Exit</td>
 								</tr>
 							</tbody>
