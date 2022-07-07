@@ -95,7 +95,7 @@ class TransactionControllerTest {
 		mvc.perform(multipart("/").file(file).with(csrf()));
 		
 		mvc.perform(get("/2022-01-01"))
-		.andExpect(view().name("details"))
+			.andExpect(view().name("details"))
 			.andExpect(status().isOk());
 	}
 	
@@ -106,4 +106,30 @@ class TransactionControllerTest {
 			.andExpect(status().isNotFound());
 	}
 	
+	@Test
+	@WithMockUser
+	void givenFirstRequest_whenAccessingReport_thenReturn200() throws Exception {
+		mvc.perform(get("/report"))		
+		.andExpect(view().name("report"))
+		.andExpect(model().attributeDoesNotExist("noTransactions"))
+		.andExpect(status().isOk());
+	}
+	
+	@Test
+	@WithMockUser
+	void givenValidDate_whenRequestForReport_thenReturn200() throws Exception {
+		mvc.perform(get("/report").param("date", "2022-01"))		
+			.andExpect(view().name("report"))
+			.andExpect(model().attribute("noTransactions", false))
+			.andExpect(status().isOk());
+	}
+	
+	@Test
+	@WithMockUser
+	void givenInvalidDate_whenRequestForReport_thenReturn200WithErrorMessage() throws Exception {
+		mvc.perform(get("/report").param("date", "2023-01"))		
+			.andExpect(view().name("report"))
+			.andExpect(model().attribute("noTransactions", true))
+			.andExpect(status().isOk());
+	}
 }

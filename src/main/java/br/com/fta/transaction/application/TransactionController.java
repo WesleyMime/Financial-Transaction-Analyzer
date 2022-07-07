@@ -61,4 +61,10 @@ public class TransactionController {
 		
 		return "details";
 	}
+	
+	@GetMapping("/report")
+	public String requestReport(@RequestParam(name = "date", required = false) String date,	Model model) {
+		transactionService.report(date, model);
+		return "report";
+	}
 }
