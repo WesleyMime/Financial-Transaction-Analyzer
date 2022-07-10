@@ -1,14 +1,16 @@
 package br.com.fta.user.domain;
 
-import java.util.Objects;
-
 import org.springframework.security.core.GrantedAuthority;
+
+import java.io.Serial;
+import java.util.Objects;
 
 public class UserRole implements GrantedAuthority {
 
+	@Serial
 	private static final long serialVersionUID = -5624745031630081413L;
 	
-	private String role;
+	private final String role;
 	
 	public UserRole(String role) {
 		this.role = role;

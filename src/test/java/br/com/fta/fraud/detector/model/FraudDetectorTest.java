@@ -1,7 +1,8 @@
-package br.com.fta.fraudDetector.model;
+package br.com.fta.fraud.detector.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import br.com.fta.transaction.domain.BankAccount;
+import br.com.fta.transaction.domain.Transaction;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,17 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
-
-import br.com.fta.transaction.domain.BankAccount;
-import br.com.fta.transaction.domain.Transaction;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FraudDetectorTest {
 
-	private FraudDetector detector = new FraudDetector();
-	private List<Transaction> transactions = new ArrayList<>();
+	private final FraudDetector detector = new FraudDetector();
+	private final List<Transaction> transactions = new ArrayList<>();
 	
-	private static final LocalDateTime DATE = LocalDateTime.of(2022, 01, 01, 15, 30);
+	private static final LocalDateTime DATE = LocalDateTime.of(2022, 1, 1, 15, 30);
 	private static final BankAccount ACCOUNT_1 = new BankAccount("Foo", "0001", "00001-1");
 	private static final BankAccount ACCOUNT_2 = new BankAccount("Bar", "0002", "00002-1");
 	private static final BankAccount ACCOUNT_3 = new BankAccount("FooBar", "0003", "00003-1");
@@ -34,7 +33,7 @@ class FraudDetectorTest {
 	
 	@Test
 	void givenListOfValidTransactions_whenAnalyze_thenReturnEmptyList() {
-		transactions.addAll(List.of(VALID_TRANSACTION));
+		transactions.add(VALID_TRANSACTION);
 		
 		List<Transaction> list = detector.analyzeTransactions(transactions);
 		
@@ -85,7 +84,7 @@ class FraudDetectorTest {
 		
 		assertEquals(0, entry.size());
 		assertEquals(1, exit.size());
-		assertTrue(exit.get(ACCOUNT_1).equals(new BigDecimal("1000001")));
+		assertEquals(exit.get(ACCOUNT_1), new BigDecimal("1000001"));
 	}
 	
 	@Test
@@ -102,7 +101,7 @@ class FraudDetectorTest {
 		
 		assertEquals(1, entry.size());
 		assertEquals(0, exit.size());
-		assertTrue(entry.get(ACCOUNT_1).equals(new BigDecimal("1000001")));
+		assertEquals(entry.get(ACCOUNT_1), new BigDecimal("1000001"));
 		
 	}
 	
@@ -134,7 +133,7 @@ class FraudDetectorTest {
 		
 		assertEquals(0, entry.size());
 		assertEquals(1, exit.size());
-		assertTrue(exit.get(new BankAgency(ACCOUNT_1)).equals(new BigDecimal("1000000001")));
+		assertEquals(exit.get(new BankAgency(ACCOUNT_1)), new BigDecimal("1000000001"));
 	}
 	
 	@Test
@@ -151,7 +150,7 @@ class FraudDetectorTest {
 		
 		assertEquals(1, entry.size());
 		assertEquals(0, exit.size());
-		assertTrue(entry.get(new BankAgency(ACCOUNT_1)).equals(new BigDecimal("1000000001")));
+		assertEquals(entry.get(new BankAgency(ACCOUNT_1)), new BigDecimal("1000000001"));
 		
 	}
 }

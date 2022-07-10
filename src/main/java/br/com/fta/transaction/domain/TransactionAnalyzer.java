@@ -1,5 +1,13 @@
 package br.com.fta.transaction.domain;
 
+import br.com.fta.shared.infra.Mapper;
+import br.com.fta.transaction.infra.TransactionRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -8,26 +16,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import br.com.fta.shared.infra.Mapper;
-import br.com.fta.transaction.infra.TransactionRepository;
-
 @Component
 public class TransactionAnalyzer {
 
-	private Validator validator;
+	private final Validator validator;
 
 	private LocalDate dateOfTransactions;
 	
 	private Mapper<InputStream, List<Transaction>> mapper;
 	
-	private TransactionRepository repository;
+	private final TransactionRepository repository;
 	
 	public TransactionAnalyzer(TransactionRepository repository) {
 		this.validator = Validation.buildDefaultValidatorFactory().getValidator();

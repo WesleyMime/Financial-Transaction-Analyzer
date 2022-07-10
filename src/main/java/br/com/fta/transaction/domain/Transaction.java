@@ -1,14 +1,13 @@
 package br.com.fta.transaction.domain;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Document
 public class Transaction {
@@ -17,15 +16,15 @@ public class Transaction {
 	private String id;
 
 	@Valid
-	private BankAccount origin;
+	private final BankAccount origin;
 
 	@Valid
-	private BankAccount destination;
+	private final BankAccount destination;
 
 	@NotBlank
-	private String value;
+	private final String value;
 	@NotNull
-	private LocalDateTime date;
+	private final LocalDateTime date;
 	
 	public Transaction(BankAccount origin, BankAccount destination, String value,
 			@NotNull LocalDateTime date) {

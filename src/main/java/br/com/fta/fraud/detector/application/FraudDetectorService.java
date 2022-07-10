@@ -1,21 +1,20 @@
-package br.com.fta.fraudDetector.application;
+package br.com.fta.fraud.detector.application;
+
+import br.com.fta.fraud.detector.model.BankAgency;
+import br.com.fta.fraud.detector.model.FraudDetector;
+import br.com.fta.transaction.domain.BankAccount;
+import br.com.fta.transaction.domain.Transaction;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-
-import br.com.fta.fraudDetector.model.BankAgency;
-import br.com.fta.fraudDetector.model.FraudDetector;
-import br.com.fta.transaction.domain.BankAccount;
-import br.com.fta.transaction.domain.Transaction;
-
 @Service
 public class FraudDetectorService {
 	
-	private FraudDetector fraudDetector = new FraudDetector();
+	private final FraudDetector fraudDetector = new FraudDetector();
 	
 	public void detectFrauds(List<Transaction> transactions, Model model) {
 		List<Transaction> fraudTransactions = 

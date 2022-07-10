@@ -1,13 +1,13 @@
 package br.com.fta.transaction.domain;
 
+import br.com.fta.shared.infra.Mapper;
+
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
-import br.com.fta.shared.infra.Mapper;
 
 public class TransactionMapperCSV implements Mapper<InputStream, List<Transaction>> {
 
@@ -20,21 +20,20 @@ public class TransactionMapperCSV implements Mapper<InputStream, List<Transactio
 				String nextLine = scanner.nextLine();
 				String[] transactionInfo = nextLine.split(",");
 
-				String bancoOrigem = transactionInfo[0];
-				String agenciaOrigem = transactionInfo[1];
-				String contaOrigem = transactionInfo[2];
-				String bancoDestino = transactionInfo[3];
-				String agenciaDestino = transactionInfo[4];
-				String contaDestino = transactionInfo[5];
-				String valorTransacao = transactionInfo[6];
+				String originBank = transactionInfo[0];
+				String originAgency = transactionInfo[1];
+				String originAccount = transactionInfo[2];
+				String destinationBank = transactionInfo[3];
+				String destinationAgency = transactionInfo[4];
+				String destinationAccount = transactionInfo[5];
+				String value = transactionInfo[6];
 				LocalDateTime date = LocalDateTime.parse(transactionInfo[7]);
 				
-				BankAccount origem = new BankAccount(bancoOrigem, agenciaOrigem, contaOrigem);
-				BankAccount destino = new BankAccount(bancoDestino, agenciaDestino, contaDestino);
+				BankAccount origin = new BankAccount(originBank, originAgency, originAccount);
+				BankAccount destination = new BankAccount(destinationBank, destinationAgency, destinationAccount);
 
-				list.add(new Transaction(origem, destino, valorTransacao, date));
-			} catch (DateTimeParseException | ArrayIndexOutOfBoundsException e) {
-				continue;
+				list.add(new Transaction(origin, destination, value, date));
+			} catch (DateTimeParseException | ArrayIndexOutOfBoundsException ignored) {
 			}
 		}
 		scanner.close();

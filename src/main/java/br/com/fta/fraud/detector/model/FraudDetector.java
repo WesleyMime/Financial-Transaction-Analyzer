@@ -1,13 +1,13 @@
-package br.com.fta.fraudDetector.model;
+package br.com.fta.fraud.detector.model;
+
+import br.com.fta.transaction.domain.BankAccount;
+import br.com.fta.transaction.domain.Transaction;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import br.com.fta.transaction.domain.BankAccount;
-import br.com.fta.transaction.domain.Transaction;
 
 public class FraudDetector {
 	
@@ -69,10 +69,7 @@ public class FraudDetector {
 	}
 	
 	private boolean isValueGreaterOrEqual(BigDecimal value, BigDecimal limit) {
-		if (limit.compareTo(value) <= 0) {
-			return true;
-		}
-		return false;
+		return limit.compareTo(value) <= 0;
 	}
 }
 
