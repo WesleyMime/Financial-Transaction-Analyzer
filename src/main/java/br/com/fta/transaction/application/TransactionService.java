@@ -1,22 +1,6 @@
 package br.com.fta.transaction.application;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Collections;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
-
-import br.com.fta.fraudDetector.application.FraudDetectorService;
+import br.com.fta.fraud.detector.application.FraudDetectorService;
 import br.com.fta.shared.exceptions.ResourceNotFoundException;
 import br.com.fta.transaction.domain.ImportInfo;
 import br.com.fta.transaction.domain.InvalidFileException;
@@ -24,7 +8,18 @@ import br.com.fta.transaction.domain.Transaction;
 import br.com.fta.transaction.domain.TransactionAnalyzer;
 import br.com.fta.transaction.infra.ImportInfoRepository;
 import br.com.fta.transaction.infra.TransactionRepository;
-import br.com.fta.transactionsGenerator.TransactionsGenerator;
+import br.com.fta.transactions.generator.TransactionsGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.*;
 
 @Service
 public class TransactionService {
@@ -69,8 +64,7 @@ public class TransactionService {
 		LocalDateTime endDay = date.atTime(23, 59, 59);
 
 		Optional<List<Transaction>> optional = transactionRepository.findByDateBetween(startDay, endDay);
-		List<Transaction> transactions = optional.get();
-		return transactions;
+		return optional.get();
 	}
 
 	public ImportInfo detailImport(String dateString) {
@@ -110,7 +104,6 @@ public class TransactionService {
 			model.addAttribute("noTransactions", false);
 		} catch (RuntimeException e) {
 			model.addAttribute("noTransactions", true);
-			return;
 		}
 	}
 

@@ -1,11 +1,8 @@
 package br.com.fta.transaction.application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.List;
-
+import br.com.fta.transaction.domain.InvalidFileException;
+import br.com.fta.transaction.domain.Transaction;
+import br.com.fta.transaction.infra.TransactionRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +11,10 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.multipart.MultipartFile;
 
-import br.com.fta.transaction.domain.InvalidFileException;
-import br.com.fta.transaction.domain.Transaction;
-import br.com.fta.transaction.infra.TransactionRepository;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestPropertySource(properties = "spring.mongodb.embedded.version=3.5.5")
@@ -86,7 +84,7 @@ class TransactionServiceTest {
 		service.postTransaction(file, USERNAME);
 		
 		List<Transaction> list = transactionRepository.findByOriginBank("BYTE BANK").get();
-		assertTrue(list.size() == 2);
+		assertEquals(2, list.size());
 	}
 	
 	@Test

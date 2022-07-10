@@ -1,18 +1,17 @@
 package br.com.fta.transaction.domain;
 
-import java.util.Objects;
-
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 public class BankAccount {
 
 	@NotBlank
-	private String bank;
+	private final String bank;
 	@NotBlank
-	private String agency;
+	private final String agency;
 	@NotBlank
-	private String account;
-	
+	private final String account;
+
 	public BankAccount(String bank, String agency, String account) {
 		this.bank = bank;
 		this.agency = agency;

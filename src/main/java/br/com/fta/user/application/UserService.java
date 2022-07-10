@@ -1,21 +1,16 @@
 package br.com.fta.user.application;
 
-import java.util.List;
-import java.util.Optional;
-
+import br.com.fta.email.EmailService;
+import br.com.fta.shared.exceptions.ResourceNotFoundException;
+import br.com.fta.user.domain.*;
+import br.com.fta.user.infra.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.fta.email.EmailService;
-import br.com.fta.shared.exceptions.ResourceNotFoundException;
-import br.com.fta.user.domain.DtoToUserMapper;
-import br.com.fta.user.domain.EmailAlreadyRegisteredException;
-import br.com.fta.user.domain.User;
-import br.com.fta.user.domain.UserDTO;
-import br.com.fta.user.domain.UserToDTOMapper;
-import br.com.fta.user.infra.UserRepository;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -34,8 +29,7 @@ public class UserService {
 
 	public List<UserDTO> allUsers() {
 		List<User> listUsers = repository.findAll();
-		List<UserDTO> listUserDTO = listUsers.stream().map(userToDTOMapper::map).toList();
-		return listUserDTO;
+		return listUsers.stream().map(userToDTOMapper::map).toList();
 	}
 
 	public void registerUser(UserDTO userDTO) {
@@ -64,8 +58,7 @@ public class UserService {
 			throw new ResourceNotFoundException();
 		}
 		User user = optional.get();
-		UserDTO userDTO = userToDTOMapper.map(user);
-		return userDTO;
+		return userToDTOMapper.map(user);
 	}
 
 	public void updateUser(String id, UserDTO userDTO) {

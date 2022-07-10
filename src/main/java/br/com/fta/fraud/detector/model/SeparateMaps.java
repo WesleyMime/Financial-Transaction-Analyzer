@@ -1,4 +1,4 @@
-package br.com.fta.fraudDetector.model;
+package br.com.fta.fraud.detector.model;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -6,13 +6,13 @@ import java.util.Map;
 
 class SeparateMaps<T> {
 	
-	private Map<T, BigDecimal> deposits = new HashMap<>();
-	private Map<T, BigDecimal> transfers = new HashMap<>();
+	private final Map<T, BigDecimal> deposits = new HashMap<>();
+	private final Map<T, BigDecimal> transfers = new HashMap<>();
 	
-	private Map<T, BigDecimal> fraudDeposits = new HashMap<>();
-	private Map<T, BigDecimal> fraudTransfers = new HashMap<>();
+	private final Map<T, BigDecimal> fraudDeposits = new HashMap<>();
+	private final Map<T, BigDecimal> fraudTransfers = new HashMap<>();
 	
-	private BigDecimal limit;
+	private final BigDecimal limit;
 	
 	SeparateMaps(BigDecimal limit) {
 		this.limit = limit;
@@ -54,10 +54,7 @@ class SeparateMaps<T> {
 	}
 
 	private boolean isValueGreater(BigDecimal value, BigDecimal limit) {
-		if (limit.compareTo(value) < 0) {
-			return true;
-		}
-		return false;
+		return limit.compareTo(value) < 0;
 	}
 
 }

@@ -1,4 +1,7 @@
-package br.com.fta.transactionsGenerator;
+package br.com.fta.transactions.generator;
+
+import br.com.fta.transaction.domain.BankAccount;
+import br.com.fta.transaction.domain.Transaction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,9 +9,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import br.com.fta.transaction.domain.BankAccount;
-import br.com.fta.transaction.domain.Transaction;
 
 public class TransactionsGenerator {
 	
@@ -51,8 +51,7 @@ public class TransactionsGenerator {
             int index = (int) (rnd.nextFloat() * letters.length());
             builder.append(letters.charAt(index));
         }
-        String randomString = builder.toString();
-        return randomString;
+		return builder.toString();
     }
 
 	private static BankAccount randomAccount() {

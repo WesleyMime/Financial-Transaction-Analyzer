@@ -1,16 +1,15 @@
 package br.com.fta.transaction.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import br.com.fta.shared.infra.Mapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.mock.web.MockMultipartFile;
-
-import br.com.fta.shared.infra.Mapper;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TransactionMapperCSVTest {
 	
@@ -27,14 +26,14 @@ class TransactionMapperCSVTest {
 		List<Transaction> transactions = mapper.map(file.getInputStream());
 		
 		Transaction transaction = transactions.get(0);
-		BankAccount origem = transaction.getOrigin();
-		BankAccount destino = transaction.getDestination();
-		assertEquals("Foo", origem.getBank());
-		assertEquals("0001", origem.getAgency());
-		assertEquals("00001-1", origem.getAccount());
-		assertEquals("Bar", destino.getBank());
-		assertEquals("0001", destino.getAgency());
-		assertEquals("00001-1", destino.getAccount());
+		BankAccount origin = transaction.getOrigin();
+		BankAccount destination = transaction.getDestination();
+		assertEquals("Foo", origin.getBank());
+		assertEquals("0001", origin.getAgency());
+		assertEquals("00001-1", origin.getAccount());
+		assertEquals("Bar", destination.getBank());
+		assertEquals("0001", destination.getAgency());
+		assertEquals("00001-1", destination.getAccount());
 		assertEquals("100", transaction.getValue());
 		assertEquals(LocalDateTime.of(2022, 01, 02, 16, 30), transaction.getDate());
 	}

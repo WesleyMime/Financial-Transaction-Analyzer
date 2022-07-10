@@ -1,17 +1,16 @@
-package br.com.fta.fraudDetector.model;
-
-import java.util.Objects;
-
-import javax.validation.constraints.NotBlank;
+package br.com.fta.fraud.detector.model;
 
 import br.com.fta.transaction.domain.BankAccount;
+
+import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 public class BankAgency {
 
 	@NotBlank
-	private String bank;
+	private final String bank;
 	@NotBlank
-	private String agency;
+	private final String agency;
 	
 	public BankAgency(BankAccount account) {
 		this.bank = account.getBank();

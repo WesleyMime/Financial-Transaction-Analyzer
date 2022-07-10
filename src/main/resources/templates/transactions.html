@@ -22,7 +22,7 @@
 				<li><a href="/users">Users</a></li>
 				<li><a href="/report">Report</a></li>
 				<li>
-					<div sec:authorize="isAuthenticated()">
+					<div>
 					    <a href="javascript: document.logoutForm.submit()" class="dropdown-toggle">Sign out</a>
 					    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
 					        <input hidden type="submit" value="Sign Out" />
