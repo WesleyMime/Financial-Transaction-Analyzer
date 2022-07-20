@@ -4,6 +4,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>eureka-server</module>
+		<module>transactions-generator</module>
 	</modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
