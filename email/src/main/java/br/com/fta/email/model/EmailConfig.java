@@ -1,10 +1,10 @@
-package br.com.fta.email;
-
-import java.util.Properties;
+package br.com.fta.email.model;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Properties;
 
 public class EmailConfig {
 

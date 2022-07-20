@@ -1,4 +1,4 @@
-package br.com.fta.email;
+package br.com.fta.email.model;
 
 public interface EmailService {
 

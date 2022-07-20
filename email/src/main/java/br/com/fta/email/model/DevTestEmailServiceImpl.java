@@ -1,4 +1,4 @@
-package br.com.fta.email;
+package br.com.fta.email.model;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
