@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: email-service
+  output:
+    ansi:
+      enabled: ALWAYS
+  mail:
+    host: smtp.gmail.com
+    password: ${MAIL_PASSWORD}
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: ${MAIL_USERNAME}
+server:
+  port: 0
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true

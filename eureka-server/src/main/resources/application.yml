@@ -4,6 +4,8 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
+  server:
+      response-cache-auto-expiration-in-seconds: 30
 spring:
   application:
     name: eureka-server
