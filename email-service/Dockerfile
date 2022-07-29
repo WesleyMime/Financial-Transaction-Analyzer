@@ -14,4 +14,4 @@ COPY --from=build /home/app/target/*.jar app.jar
 VOLUME /main-app
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
-ENTRYPOINT ["java","-Dspring.profiles.active=prod","-DMAIL_USERNAME=changeEmail","-DMAIL_PASSWORD=changePassword","-DEUREKA_URI=http://eureka-server:8761/eureka","-jar","/app.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=dev","-DEUREKA_URI=http://eureka-server:8761","-jar","/app.jar"]
