@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestPropertySource(properties = "spring.mongodb.embedded.version=3.5.5")
+@ActiveProfiles("test")
 class TransactionServiceTest {
 
 	@Autowired

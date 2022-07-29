@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: fta
+  output:
+    ansi:
+      enabled: ALWAYS
+server:
+  port: 80
