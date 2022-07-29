@@ -24,17 +24,17 @@ services:
       - eureka-server
 
   email-service:
-    build: ./email/.
+    build: ./email-service/.
     depends_on:
       - eureka-server
 
   fraud-service:
-    build: ./fraud/.
+    build: ./fraud-service/.
     depends_on:
       - eureka-server
 
   transactions-generator-service:
-    build: ./transactions-generator/.
+    build: ./transactions-generator-service/.
     depends_on:
       - eureka-server
 
