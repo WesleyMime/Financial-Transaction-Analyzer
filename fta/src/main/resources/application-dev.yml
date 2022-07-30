@@ -4,6 +4,10 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  boot:
+    admin:
+      client:
+        url: http://localhost:8761/admin
 server:
   port: 80
 eureka:

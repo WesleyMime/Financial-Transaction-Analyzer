@@ -1,9 +1,20 @@
 spring:
   application:
-    name: fraud-service
+    name: email-service
   output:
     ansi:
       enabled: ALWAYS
+  mail:
+    host: smtp.gmail.com
+    password: ${MAIL_PASSWORD}
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: ${MAIL_USERNAME}
   boot:
     admin:
       client:

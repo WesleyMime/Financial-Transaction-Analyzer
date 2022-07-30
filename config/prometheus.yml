@@ -5,7 +5,7 @@ scrape_configs:
   - job_name: 'fta'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: [fta:8080]
+      - targets: [fta:80]
     basic_auth:
       username: 'admin@email.com.br'
       password: '123999'

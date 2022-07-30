@@ -12,3 +12,6 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  boot:
+    admin:
+      context-path: /admin

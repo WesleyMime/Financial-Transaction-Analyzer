@@ -4,17 +4,10 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
-  mail:
-    host: smtp.gmail.com
-    password: ${MAIL_PASSWORD}
-    port: 587
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-    username: ${MAIL_USERNAME}
+  boot:
+    admin:
+      client:
+        url: ${EUREKA_URI:http://localhost:8761}/admin
 server:
   port: 0
 eureka:
