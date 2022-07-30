@@ -1,7 +1,11 @@
 package br.com.fta.transaction.application;
 
+import br.com.fta.model.Frauds;
 import br.com.fta.shared.exceptions.ResourceNotFoundException;
-import br.com.fta.transaction.domain.*;
+import br.com.fta.transaction.domain.ImportInfo;
+import br.com.fta.transaction.domain.InvalidFileException;
+import br.com.fta.transaction.domain.Transaction;
+import br.com.fta.transaction.domain.TransactionAnalyzer;
 import br.com.fta.transaction.infra.ImportInfoRepository;
 import br.com.fta.transaction.infra.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;

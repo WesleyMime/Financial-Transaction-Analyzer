@@ -1,3 +1,3 @@
-package br.com.fta.generator.model;
+package br.com.fta.model;
 
 public record BankAccount (String bank, String agency, String account) {}

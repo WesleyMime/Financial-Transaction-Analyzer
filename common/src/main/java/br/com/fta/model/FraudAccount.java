@@ -1,4 +1,4 @@
-package br.com.fta.transaction.domain;
+package br.com.fta.model;
 
 import java.math.BigDecimal;
 

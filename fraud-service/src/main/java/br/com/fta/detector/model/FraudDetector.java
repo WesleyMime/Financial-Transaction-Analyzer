@@ -1,5 +1,9 @@
 package br.com.fta.detector.model;
 
+import br.com.fta.model.BankAccount;
+import br.com.fta.model.BankAgency;
+import br.com.fta.model.Transaction;
+
 import java.math.BigDecimal;
 import java.util.*;
 

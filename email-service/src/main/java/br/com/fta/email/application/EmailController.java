@@ -1,7 +1,7 @@
 package br.com.fta.email.application;
 
 import br.com.fta.email.model.EmailService;
-import br.com.fta.email.model.UserDTO;
+import br.com.fta.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

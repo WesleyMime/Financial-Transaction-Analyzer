@@ -1,4 +1,4 @@
-package br.com.fta.transaction.domain;
+package br.com.fta.model;
 
 import java.util.List;
 import java.util.Set;

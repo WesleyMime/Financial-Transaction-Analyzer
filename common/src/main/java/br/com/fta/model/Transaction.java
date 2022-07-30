@@ -1,4 +1,4 @@
-package br.com.fta.generator.model;
+package br.com.fta.model;
 
 import java.time.LocalDateTime;
 

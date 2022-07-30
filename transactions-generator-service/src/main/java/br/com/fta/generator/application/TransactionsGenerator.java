@@ -1,7 +1,7 @@
 package br.com.fta.generator.application;
 
-import br.com.fta.generator.model.BankAccount;
-import br.com.fta.generator.model.Transaction;
+import br.com.fta.model.BankAccount;
+import br.com.fta.model.Transaction;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

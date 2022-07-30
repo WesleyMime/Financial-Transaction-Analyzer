@@ -1,5 +1,7 @@
 package br.com.fta.detector.model;
 
+import br.com.fta.model.BankAccount;
+import br.com.fta.model.Transaction;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -22,7 +24,7 @@ class FraudDetectorTest {
 	
 	private static final String LIMIT_TRANSACTION = "100000";
 	
-	private static final Transaction VALID_TRANSACTION = 
+	private static final Transaction VALID_TRANSACTION =
 			new Transaction(ACCOUNT_1, ACCOUNT_2, "50000", DATE);
 	
 	private static final String MAP_ENTRY = "Entry";

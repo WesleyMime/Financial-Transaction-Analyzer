@@ -1,6 +1,6 @@
 package br.com.fta.generator.application;
 
-import br.com.fta.generator.model.Transaction;
+import br.com.fta.model.Transaction;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
