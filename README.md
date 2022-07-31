@@ -21,4 +21,16 @@ O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam 
 
 ## Deploy
 
-O deploy da aplicação foi realizado em uma instância do EC2 da AWS, podendo ser acessada por esse [link](http://ec2-15-228-79-42.sa-east-1.compute.amazonaws.com/)
+O deploy da aplicação foi realizado em uma instância do EC2 da AWS, podendo ser acessada por esse [link](http://ec2-15-228-229-105.sa-east-1.compute.amazonaws.com/)
+(Versão branch main)
+
+Para rodar localmente é necessário ter instalado o Docker compose.
+
+- Abra o terminal e clone o projeto usando o comando
+"git clone https://github.com/WesleyMime/financial-transaction-analyzer.git"
+
+- Entre na pasta "financial-transaction-analyzer" e use o comando "docker-compose up".
+
+Se tudo estiver funcionando, os links para acessar são: 
+- Aplicação http://localhost/
+- Grafana http://localhost:3000/
