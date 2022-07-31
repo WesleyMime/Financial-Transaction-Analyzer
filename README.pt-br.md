@@ -3,38 +3,39 @@
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/main/README.md)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-g.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/main/README.pt-br.md)
 
-## About the Challenge Backend
 
-Traditional web application (server-side) to perform analysis of thousands of financial transactions and identify possible suspicious transactions.
+## Sobre o desafio proposto no Challenge Backend
 
-## Project objectives
+Aplicação Web tradicional(server-side) para realizar análise de milhares de transações financeiras e identificar possíveis transações suspeitas.
 
-The project was developed in sprints lasting 1 week each, which had certain activities to be implemented. For better management of activities, trello was used.
+## Objetivos do projeto
 
-- [Sprint 1 Trello](https://trello.com/b/6BVMlCYd/challenge-backend-3-semana-1)
-- [Sprint 2 Trello](https://trello.com/b/nUN64cpL/challenge-backend-3-semana-2)
-- [Sprint 3 Trello](https://trello.com/b/Z5fKD7ly/challenge-backend-3-semana-3)
+O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam determinadas atividades a serem implementadas. Para uma melhor gestão das atividades, foi utilizado o trello como ferramenta.
 
-## Technologies
+- [Trello da Sprint 1](https://trello.com/b/6BVMlCYd/challenge-backend-3-semana-1)
+- [Trello da Sprint 2](https://trello.com/b/nUN64cpL/challenge-backend-3-semana-2)
+- [Trello da Sprint 3](https://trello.com/b/Z5fKD7ly/challenge-backend-3-semana-3)
 
-The programming language, frameworks and technologies were of free choice. I chose to develop the project with the following technologies:
+## Tecnologias
 
+ A linguagem de programação, frameworks e tecnologias eram de livre escolha. Eu escolhi desenvolver o projeto com as seguintes tecnologias:
+ 
 <img alt="Java" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50" height="50" /> <img alt="Spring" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50" height="50" /> <img alt="Mongo-DB" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-plain-wordmark.svg" width="50" height="50" /> <img alt="Docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain-wordmark.svg" width="50" height="50" /> <img alt="Amazon Web Services" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" width="50" height="50" /> <img alt="Prometheus" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original-wordmark.svg" width="50" height="50" /> <img alt="Grafana" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original-wordmark.svg" width="50" height="50" />
 
 ## Deploy
 
-The application was deployed on an AWS EC2 instance, which can be accessed through this [link](http://ec2-15-228-229-105.sa-east-1.compute.amazonaws.com/)
-(Branch main version)
+O deploy da aplicação foi realizado em uma instância do EC2 da AWS, podendo ser acessada por esse [link](http://ec2-15-228-229-105.sa-east-1.compute.amazonaws.com/)
+(Versão branch main)
 
-- A version of the project divided into microservices can be found in the ["microservices" branch](https://github.com/WesleyMime/Financial-Transaction-Analyzer/tree/microservices).
+- Uma versão do projeto dividida em microsserviços pode ser encontrada na [branch "microservices"](https://github.com/WesleyMime/Financial-Transaction-Analyzer/tree/microservices).
 
-To run locally, you must have Docker compose installed.
+Para rodar localmente é necessário ter instalado o Docker compose.
 
-- Open the terminal and clone the project using the command
+- Abra o terminal e clone o projeto usando o comando
 "git clone https://github.com/WesleyMime/financial-transaction-analyzer.git"
 
-- Enter the "financial-transaction-analyzer" folder and use the command "docker-compose up".
+- Entre na pasta "financial-transaction-analyzer" e use o comando "docker-compose up".
 
-If everything is working, the links to access are: 
+Se tudo estiver funcionando, os links para acessar são: 
 - Aplicação http://localhost/
 - Grafana http://localhost:3000/
