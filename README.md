@@ -24,14 +24,14 @@ O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam 
 O deploy da aplicação foi realizado usando o código da branch main.
 (A instância gratuita da AWS não aguenta todos os microsserviços)
 
-Para rodar localmente é necessário ter instalado Maven e Docker compose.
+Para rodar localmente é necessário ter Docker instalado.
 
 - Abra o terminal e clone o projeto usando o comando
 "git clone -b microservices https://github.com/WesleyMime/financial-transaction-analyzer.git"
 
-- Entre na pasta "financial-transaction-analyzer" e use o comando "mvn clean package -Dmaven.test.skip".
+- Entre na pasta "financial-transaction-analyzer" e use o comando "docker build .".
 
-- Quando o build terminar, ainda na mesma pasta use o comando "docker-compose -f docker-compose-prod.yml up".
+- Quando o build terminar, use o comando "docker-compose -f docker-compose-prod.yml up".
 
 Se tudo estiver funcionando, os links para acessar são: 
 - Aplicação http://localhost/
