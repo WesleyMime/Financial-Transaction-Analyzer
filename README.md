@@ -21,4 +21,18 @@ O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam 
 
 ## Deploy
 
-O deploy da aplicação foi realizado em uma instância do EC2 da AWS, podendo ser acessada por esse [link](http://ec2-15-228-79-42.sa-east-1.compute.amazonaws.com/)
+O deploy da aplicação foi realizado usando o código da branch main.
+(A instância gratuita da AWS não aguenta todos os microsserviços)
+
+Para rodar localmente é necessário ter instalado Maven e Docker compose.
+
+- Abra o terminal, entre na pasta "financial-transaction-analyzer" e use o comando "mvn clean package -Dmaven.test.skip".
+
+- Quando o build terminar, ainda na mesma pasta use o comando "docker-compose -f docker-compose-prod.yml up".
+
+Se tudo estiver funcionando, os links para acessar são: 
+- Aplicação http://localhost/
+- Grafana http://localhost:3000/
+- Eureka http://localhost:8761
+- Spring Boot Admin http://localhost:8761/admin
+
