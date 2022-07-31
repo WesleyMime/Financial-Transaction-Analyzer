@@ -3,41 +3,40 @@
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.md)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-g.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.pt-br.md)
 
-## About the Challenge Backend
+## Sobre o desafio proposto no Challenge Backend
 
-Traditional web application (server-side) to perform analysis of thousands of financial transactions and identify possible suspicious transactions.
+Aplicação Web tradicional(server-side) para realizar análise de milhares de transações financeiras e identificar possíveis transações suspeitas.
 
-## Project objectives
+## Objetivos do projeto
 
-The project was developed in sprints lasting 1 week each, which had certain activities to be implemented. For better management of activities, trello was used.
+O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam determinadas atividades a serem implementadas. Para uma melhor gestão das atividades, foi utilizado o trello como ferramenta.
 
-- [Sprint 1 Trello](https://trello.com/b/6BVMlCYd/challenge-backend-3-semana-1)
-- [Sprint 2 Trello](https://trello.com/b/nUN64cpL/challenge-backend-3-semana-2)
-- [Sprint 3 Trello](https://trello.com/b/Z5fKD7ly/challenge-backend-3-semana-3)
+- [Trello da Sprint 1](https://trello.com/b/6BVMlCYd/challenge-backend-3-semana-1)
+- [Trello da Sprint 2](https://trello.com/b/nUN64cpL/challenge-backend-3-semana-2)
+- [Trello da Sprint 3](https://trello.com/b/Z5fKD7ly/challenge-backend-3-semana-3)
 
-## Technologies
+## Tecnologias
 
-The programming language, frameworks and technologies were of free choice. I chose to develop the project with the following technologies:
-
+ A linguagem de programação, frameworks e tecnologias eram de livre escolha. Eu escolhi desenvolver o projeto com as seguintes tecnologias:
+ 
 <img alt="Java" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50" height="50" /> <img alt="Spring" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50" height="50" /> <img alt="Mongo-DB" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-plain-wordmark.svg" width="50" height="50" /> <img alt="Docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain-wordmark.svg" width="50" height="50" /> <img alt="Amazon Web Services" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" width="50" height="50" /> <img alt="Prometheus" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original-wordmark.svg" width="50" height="50" /> <img alt="Grafana" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original-wordmark.svg" width="50" height="50" />
 
 ## Deploy
 
+O deploy da aplicação foi realizado usando o código da branch main.
+(A instância gratuita da AWS não aguenta todos os microsserviços)
 
-The application was deployed using the main branch code.
-(Free AWS instance can't handle all microservices)
+Para rodar localmente é necessário ter Docker instalado.
 
-To run locally you need to have Docker installed.
-
-- Open the terminal and clone the project using the command
+- Abra o terminal e clone o projeto usando o comando
 "git clone -b microservices https://github.com/WesleyMime/financial-transaction-analyzer.git"
 
-- Enter the "financial-transaction-analyzer" folder and use the command "docker build .".
+- Entre na pasta "financial-transaction-analyzer" e use o comando "docker build .".
 
-- When the build finishes, use the command "docker-compose -f docker-compose-prod.yml up".
+- Quando o build terminar, use o comando "docker-compose -f docker-compose-prod.yml up".
 
-If everything is working, the links to access are:
-- Web application http://localhost/
+Se tudo estiver funcionando, os links para acessar são: 
+- Aplicação http://localhost/
 - Grafana http://localhost:3000/
 - Eureka http://localhost:8761
 - Spring Boot Admin http://localhost:8761/admin
