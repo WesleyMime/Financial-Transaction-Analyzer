@@ -26,7 +26,10 @@ O deploy da aplicação foi realizado usando o código da branch main.
 
 Para rodar localmente é necessário ter instalado Maven e Docker compose.
 
-- Abra o terminal, entre na pasta "financial-transaction-analyzer" e use o comando "mvn clean package -Dmaven.test.skip".
+- Abra o terminal e clone o projeto usando o comando
+"git clone -b microservices https://github.com/WesleyMime/financial-transaction-analyzer.git"
+
+- Entre na pasta "financial-transaction-analyzer" e use o comando "mvn clean package -Dmaven.test.skip".
 
 - Quando o build terminar, ainda na mesma pasta use o comando "docker-compose -f docker-compose-prod.yml up".
 
