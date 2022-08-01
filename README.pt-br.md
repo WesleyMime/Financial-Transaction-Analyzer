@@ -31,9 +31,7 @@ Para rodar localmente é necessário ter Docker instalado.
 - Abra o terminal e clone o projeto usando o comando
 "git clone -b microservices https://github.com/WesleyMime/financial-transaction-analyzer.git"
 
-- Entre na pasta "financial-transaction-analyzer" e use o comando "docker build .".
-
-- Quando o build terminar, use o comando "docker-compose -f docker-compose-prod.yml up".
+- Entre na pasta "financial-transaction-analyzer" e use o comando "docker-compose up".
 
 Se tudo estiver funcionando, os links para acessar são: 
 - Aplicação http://localhost/

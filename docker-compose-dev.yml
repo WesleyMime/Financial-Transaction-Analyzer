@@ -11,16 +11,12 @@ volumes:
 services:
 
   eureka-server:
-    build:
-      context: ./eureka-server
-      dockerfile: prod.Dockerfile
+    build: ./eureka-server/.
     ports:
       - 8761:8761
 
   fta:
-    build:
-      context: ./fta
-      dockerfile: prod.Dockerfile
+    build: ./fta/.
     ports:
       - 80:80
     depends_on:
@@ -28,23 +24,17 @@ services:
       - eureka-server
 
   email-service:
-    build:
-      context: ./email-service
-      dockerfile: prod.Dockerfile
+    build: ./email-service/.
     depends_on:
       - eureka-server
 
   fraud-service:
-    build:
-      context: ./fraud-service
-      dockerfile: prod.Dockerfile
+    build: ./fraud-service/.
     depends_on:
       - eureka-server
 
   transactions-generator-service:
-    build:
-      context: ./transactions-generator-service
-      dockerfile: prod.Dockerfile
+    build: ./transactions-generator-service/.
     depends_on:
       - eureka-server
 

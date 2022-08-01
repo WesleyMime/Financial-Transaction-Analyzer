@@ -11,12 +11,12 @@ volumes:
 services:
 
   eureka-server:
-    build: ./eureka-server/.
+    image: "wesleymime/eureka"
     ports:
       - 8761:8761
 
   fta:
-    build: ./fta/.
+    image: "wesleymime/fta"
     ports:
       - 80:80
     depends_on:
@@ -24,17 +24,17 @@ services:
       - eureka-server
 
   email-service:
-    build: ./email-service/.
+    image: "wesleymime/email"
     depends_on:
       - eureka-server
 
   fraud-service:
-    build: ./fraud-service/.
+    image: "wesleymime/fraud"
     depends_on:
       - eureka-server
 
   transactions-generator-service:
-    build: ./transactions-generator-service/.
+    image: "wesleymime/generator"
     depends_on:
       - eureka-server
 
