@@ -36,5 +36,5 @@ To run locally, you must have Docker compose installed.
 - Enter the "financial-transaction-analyzer" folder and use the command "docker-compose up".
 
 If everything is working, the links to access are: 
-- Aplicação http://localhost/
+- Web application http://localhost/
 - Grafana http://localhost:3000/
