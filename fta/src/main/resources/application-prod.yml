@@ -27,5 +27,8 @@ eureka:
   instance:
     preferIpAddress: true
 feign:
-  circuitbreaker:
+  circuitBreaker:
     enabled: true
+
+kafka:
+  bootstrapAddress: ${BROKER_URI:http://localhost:9092}

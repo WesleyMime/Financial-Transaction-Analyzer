@@ -1,18 +1,24 @@
 spring:
   application:
-    name: email-service
+    name: fta
   output:
     ansi:
       enabled: ALWAYS
   boot:
     admin:
       client:
-        url: ${EUREKA_URI:http://localhost:8761}/admin
+        url: http://localhost:8761/admin
 server:
-  port: 0
+  port: 80
 eureka:
   client:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761}/eureka
   instance:
     preferIpAddress: true
+feign:
+  circuitBreaker:
+    enabled: true
+
+kafka:
+  bootstrapAddress: ${BROKER_URI:http://localhost:9092}

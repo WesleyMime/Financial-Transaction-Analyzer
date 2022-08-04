@@ -6,3 +6,6 @@ spring:
       enabled: ALWAYS
 server:
   port: 80
+
+kafka:
+  bootstrapAddress: ${BROKER_URI:http://localhost:9092}
