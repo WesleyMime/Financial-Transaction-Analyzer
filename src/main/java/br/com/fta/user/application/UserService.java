@@ -44,8 +44,14 @@ public class UserService {
 
 		String name = user.getName();
 		String password = user.getPassword();
-		emailService.sendMessageWithPassword(name, email, password);
-		
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				emailService.sendMessageWithPassword(name, email, password);
+			}
+		}, "Thread-Email").start();
+
 		user.setPassword(new BCryptPasswordEncoder().encode(password));
 		repository.save(user);
 		
