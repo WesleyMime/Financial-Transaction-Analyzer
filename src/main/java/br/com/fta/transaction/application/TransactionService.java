@@ -10,6 +10,9 @@ import br.com.fta.transaction.infra.ImportInfoRepository;
 import br.com.fta.transaction.infra.TransactionRepository;
 import br.com.fta.transactions.generator.TransactionsGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +22,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TransactionService {
@@ -33,10 +39,9 @@ public class TransactionService {
 	@Autowired
 	private FraudDetectorService fraudDetectorService;
 
-	public List<ImportInfo> transactions() {
-		List<ImportInfo> list = importInfoRepository.findAll();
-		list.sort(Collections.reverseOrder());
-		return list;
+	public Page<ImportInfo> transactions(PageRequest pageRequest) {
+		pageRequest.withSort(Sort.sort(ImportInfo.class).descending());
+		return importInfoRepository.findAll(pageRequest);
 	}
 
 	public void postTransaction(MultipartFile file, String username) {
@@ -59,12 +64,11 @@ public class TransactionService {
 		importInfoRepository.deleteAll();
 	}
 
-	public List<Transaction> detailTransactions(LocalDate date) {
+	public Page<Transaction> detailTransactions(LocalDate date, PageRequest pageRequest) {
 		LocalDateTime startDay = date.atStartOfDay();
 		LocalDateTime endDay = date.atTime(23, 59, 59);
 
-		Optional<List<Transaction>> optional = transactionRepository.findByDateBetween(startDay, endDay);
-		return optional.get();
+		return transactionRepository.findByDateBetween(startDay, endDay, pageRequest);
 	}
 
 	public ImportInfo detailImport(String dateString) {
@@ -94,7 +98,7 @@ public class TransactionService {
 
 			Optional<List<Transaction>> list = transactionRepository.findByDateBetween(start, end);
 			List<Transaction> transactions = list.get();
-		
+
 			model.addAttribute("date", start);
 			if (transactions.isEmpty()) {
 				throw new ResourceNotFoundException();

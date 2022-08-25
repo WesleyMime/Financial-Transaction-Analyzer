@@ -5,11 +5,12 @@ import br.com.fta.shared.exceptions.ResourceNotFoundException;
 import br.com.fta.user.domain.*;
 import br.com.fta.user.infra.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,9 +28,9 @@ public class UserService {
 	@Autowired
 	private EmailService emailService;
 
-	public List<UserDTO> allUsers() {
-		List<User> listUsers = repository.findAll();
-		return listUsers.stream().map(userToDTOMapper::map).toList();
+	public Page<UserDTO> allUsers(PageRequest pageRequest) {
+		Page<User> listUsers = repository.findAll(pageRequest);
+		return listUsers.map(userToDTOMapper::map);
 	}
 
 	public void registerUser(UserDTO userDTO) {

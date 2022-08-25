@@ -71,6 +71,36 @@
 							</tr>
 						</tbody>
 					</table>
+
+					<div th:if="${users.totalPages != 0}" class="card col m2 left dark-green-line">
+						Per page:
+						<a class="white-text" th:href="@{/users(size=5, page=1)}">5</a>
+						<a class="white-text" th:href="@{/users(size=10, page=1)}">10</a>
+						<a class="white-text" th:href="@{/users(size=20, page=1)}">20</a>
+					</div>
+
+					<div th:if="${users.totalPages != 0}" class="card col m2 right dark-green-line">
+						<a th:class="${users.number == 0} ? 'white-text disabled' : 'white-text'"
+						   th:href="@{/users(size=${users.size}, page=1)}">&laquo;&nbsp
+						</a>
+						<a th:class="${users.number == 0} ? 'white-text disabled' : 'white-text'"
+						   th:href="@{/users(size=${users.size}, page=${users.number})}">&larr;&nbsp
+						</a>
+						<a th:class="${users.number == (page - 1)} ?
+							'white-text active pointer-disabled' : 'white-text'"
+						   th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}"
+						   th:href="@{/users(size=${users.size}, page=${page})}"
+						   th:text="${page} + '&nbsp'">
+						</a>
+						<a th:class="${users.number + 1 == users.totalPages} ?
+							'white-text disabled' : 'white-text'"
+						   th:href="@{/users(size=${users.size}, page=${users.number + 2})}">&rarr;&nbsp
+						</a>
+						<a th:class="${users.number + 1 == users.totalPages} ?
+							'white-text disabled' : 'white-text'"
+						   th:href="@{/users(size=${users.size}, page=${users.totalPages})}">&raquo;
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>

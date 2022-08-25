@@ -63,10 +63,10 @@
 
 				<a href="/generate-transactions"><button class="btn waves-effect waves-light right" type="submit"
 					name="action">Generate Random Transactions</button></a>
-				
+
 				<div th:if="${not #lists.isEmpty(importInfo)}">
 					<h4>IMPORTS</h4>
-	
+
 					<table class="striped responsive-table dark-green-line">
 						<thead>
 							<tr>
@@ -76,7 +76,7 @@
 								<th>Options</th>
 							</tr>
 						</thead>
-	
+
 						<tbody>
 							<tr th:each="info: ${importInfo}">
 								<td
@@ -86,21 +86,56 @@
 								<td
 									th:text="${info.importedBy}"></td>
 								<td>
-									<a th:href="@{/{id} (id= ${info.transactionsDate} ) }" 
+									<a th:href="@{/{id} (id= ${info.transactionsDate} ) }"
 									class="waves-effect waves-light btn-small">Details</a>
-									<a th:href="@{/report(date= ${#temporals.format(info.transactionsDate, 'yyyy-MM')} ) }" 
+									<a th:href="@{/report(date= ${#temporals.format(info.transactionsDate, 'yyyy-MM')})}"
 									class="waves-effect waves-light btn-small">Perform Analysis</a>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+
+					<div th:if="${importInfo.totalPages != 0}" class="card col m2 left dark-green-line">
+						Per page:
+						<a class="white-text" th:href="@{/(size=5, page=1)}">5</a>
+						<a class="white-text" th:href="@{/(size=10, page=1)}">10</a>
+						<a class="white-text" th:href="@{/(size=20, page=1)}">20</a>
+					</div>
+
+					<div th:if="${importInfo.totalPages != 0}" class="card col m2 right dark-green-line">
+						<a th:class="${importInfo.number == 0} ? 'white-text disabled' : 'white-text'"
+						   th:href="@{/(size=${importInfo.size}, page=1)}">&laquo;&nbsp
+						</a>
+						<a th:class="${importInfo.number == 0} ? 'white-text disabled' : 'white-text'"
+						   th:href="@{/(size=${importInfo.size}, page=${importInfo.number})}">&larr;&nbsp
+						</a>
+						<a th:class="${importInfo.number == (page - 1)} ?
+							'white-text active pointer-disabled' : 'white-text'"
+						   th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}"
+						   th:href="@{/(size=${importInfo.size}, page=${page})}"
+						   th:text="${page} + '&nbsp'">
+						</a>
+						<a th:class="${importInfo.number + 1 == importInfo.totalPages} ?
+							'white-text disabled' : 'white-text'"
+						   th:href="@{/(size=${importInfo.size}, page=${importInfo.number + 2})}">&rarr;&nbsp
+						</a>
+						<a th:class="${importInfo.number + 1 == importInfo.totalPages} ?
+							'white-text disabled' : 'white-text'"
+						   th:href="@{/(size=${importInfo.size}, page=${importInfo.totalPages})}">&raquo;
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
+
 		<script type="text/javascript" src="js/materialize.min.js"></script>
 		<script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
 		    var elems = document.querySelectorAll('.sidenav');
 		    var instances = M.Sidenav.init(elems);
 		  });</script>
+		<script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+		var elems = document.querySelectorAll('select');
+		var instances = M.FormSelect.init(elems);
+		});</script>
 	</div>
 </body>
