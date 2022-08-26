@@ -4,10 +4,7 @@ import br.com.fta.transaction.domain.BankAccount;
 import br.com.fta.transaction.domain.Transaction;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FraudDetector {
 	
@@ -15,8 +12,8 @@ public class FraudDetector {
 	private static final BigDecimal LIMIT_VALUE_ACCOUNT = new BigDecimal("1000000"); // 1.000.000
 	private static final BigDecimal LIMIT_VALUE_AGENCY = new BigDecimal("1000000000"); // 1.000.000.000
 	
-	private static final String MAP_ENTRY = "entry";
-	private static final String MAP_EXIT = "exit";
+	private static final String MAP_ENTRY = "Entry";
+	private static final String MAP_EXIT = "Exit";
 
 	public List<Transaction> analyzeTransactions(List<Transaction> transactions) {
 		List<Transaction> fraudTransactions = new ArrayList<>();
@@ -31,45 +28,64 @@ public class FraudDetector {
 	}
 
 
-	public Map<String, Map<BankAccount, BigDecimal>> analyzeBankAccounts(List<Transaction> transactions) {
-		Map<String, Map<BankAccount, BigDecimal>> fraudAccounts = new HashMap<>();
-		
-		SeparateMaps<BankAccount> separateMaps = new SeparateMaps<>(LIMIT_VALUE_ACCOUNT);
-		
+	public Set<FraudAccount> analyzeBankAccounts(List<Transaction> transactions) {
+		SeparateMaps<BankAccount> separateMaps = new SeparateMaps<>();
+
 		transactions.forEach(transaction -> {
 			BigDecimal value = new BigDecimal(transaction.getValue());
 			BankAccount origin = transaction.getOrigin();
 			BankAccount destination = transaction.getDestination();
-			
+
 			separateMaps.byTransferAndDeposits(value, origin, destination);
 		});
-		
-		fraudAccounts.put(MAP_ENTRY, separateMaps.getFraudDeposits());
-		fraudAccounts.put(MAP_EXIT, separateMaps.getFraudTransfers());
-		return fraudAccounts;
+
+		Set<FraudAccount> set = new HashSet<>();
+		Set<FraudAccount> setEntry = checkFraudsAccount(set, separateMaps.getDeposits(), MAP_ENTRY);
+		return checkFraudsAccount(setEntry, separateMaps.getTransfers(), MAP_EXIT);
 	}
-	
-	public Map<String, Map<BankAgency, BigDecimal>> analyzeAgency(List<Transaction> transactions) {
-		Map<String, Map<BankAgency, BigDecimal>> fraudAgencies = new HashMap<>();
-		
-		SeparateMaps<BankAgency> separateMaps = new SeparateMaps<>(LIMIT_VALUE_AGENCY);
-		
+
+	public Set<FraudAgency> analyzeAgency(List<Transaction> transactions) {
+		SeparateMaps<BankAgency> separateMaps = new SeparateMaps<>();
+
 		transactions.forEach(transaction -> {
 			BigDecimal value = new BigDecimal(transaction.getValue());
-			BankAgency origin = new BankAgency(transaction.getOrigin());
-			BankAgency destination = new BankAgency(transaction.getDestination());
-			
+			BankAccount accountOrigin = transaction.getOrigin();
+			BankAccount accountDestination = transaction.getDestination();
+			BankAgency origin = new BankAgency(accountOrigin);
+			BankAgency destination = new BankAgency(accountDestination);
+
 			separateMaps.byTransferAndDeposits(value, origin, destination);
 		});
-		
-		fraudAgencies.put(MAP_ENTRY, separateMaps.getFraudDeposits());
-		fraudAgencies.put(MAP_EXIT, separateMaps.getFraudTransfers());
-		
-		return fraudAgencies;
+
+		Set<FraudAgency> set = new HashSet<>();
+		Set<FraudAgency> setEntry = checkFraudsAgency(set, separateMaps.getDeposits(), MAP_ENTRY);
+		return checkFraudsAgency(setEntry, separateMaps.getTransfers(), MAP_EXIT);
+	}
+
+	private Set<FraudAgency> checkFraudsAgency(Set<FraudAgency> set, Map<BankAgency, BigDecimal> map, String type) {
+		map.forEach((k, v) -> {
+			if (isValueGreater(v, LIMIT_VALUE_AGENCY)) {
+				set.add(new FraudAgency(type, k, v));
+			}
+		});
+		return set;
+	}
+
+	private Set<FraudAccount> checkFraudsAccount(Set<FraudAccount> set, Map<BankAccount, BigDecimal> map, String type) {
+		map.forEach((k, v) -> {
+			if (isValueGreater(v, LIMIT_VALUE_ACCOUNT)) {
+				set.add(new FraudAccount(type, k, v));
+			}
+		});
+		return set;
 	}
 	
 	private boolean isValueGreaterOrEqual(BigDecimal value, BigDecimal limit) {
 		return limit.compareTo(value) <= 0;
+	}
+
+	private boolean isValueGreater(BigDecimal value, BigDecimal limit) {
+		return limit.compareTo(value) < 0;
 	}
 }
 

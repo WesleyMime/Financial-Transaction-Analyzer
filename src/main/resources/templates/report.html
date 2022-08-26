@@ -60,13 +60,11 @@
 		        <div th:if="${noTransactions == false}">
 		        
 		        	<h4 th:text="${#temporals.format(date, 'MM/yyyy')}" style="text-align: right;"></h4>
-		        	
-	        		<p th:if="${#lists.isEmpty(transactions) and 
-	        			#maps.isEmpty(entryExitAccounts.get('entry')) and 
-	        			#maps.isEmpty(entryExitAccounts.get('exit')) and
-	        			#maps.isEmpty(entryExitAgencies.get('entry')) and 
-	        			#maps.isEmpty(entryExitAgencies.get('exit'))}" 
-	        			class="center-align z-depth-1 dark-green-line">No frauds detected.</p>
+
+					<p th:if="${#lists.isEmpty(transactions) and
+	        			#lists.isEmpty(accounts) and
+	        			#lists.isEmpty(agencies)}"
+					   class="center-align z-depth-1 dark-green-line">No frauds detected.</p>
         
 					<div th:if="${not #lists.isEmpty(transactions)}">
 					
@@ -136,9 +134,8 @@
 							</tbody>
 						</table>
 					</div>
-					
-					<div th:if="${not #maps.isEmpty(entryExitAccounts.get('entry')) 
-						or not #maps.isEmpty(entryExitAccounts.get('exit'))}">
+
+					<div th:if="${not #lists.isEmpty(accounts)}">
 					
 						<h4>Suspicious Accounts</h4>
 						
@@ -153,26 +150,18 @@
 								<tr>
 							</thead>
 							<tbody>
-								<tr th:each="accountsEntry: ${entryExitAccounts.get('entry')}">
-									<td th:text="${accountsEntry.key.bank}"></td>
-									<td th:text="${accountsEntry.key.agency}"></td>
-									<td th:text="${accountsEntry.key.account}"></td>
-									<td th:text="${#numbers.formatCurrency(accountsEntry.value)}"></td>
-									<td>Entry</td>
-								</tr>
-								<tr th:each="accountsExit: ${entryExitAccounts.get('exit')}">
-									<td th:text="${accountsExit.key.bank}"></td>
-									<td th:text="${accountsExit.key.agency}"></td>
-									<td th:text="${accountsExit.key.account}"></td>
-									<td th:text="${#numbers.formatCurrency(accountsExit.value)}"></td>
-									<td>Exit</td>
+								<tr th:each="fraud: ${accounts}">
+									<td th:text="${fraud.account.bank}"></td>
+									<td th:text="${fraud.account.agency}"></td>
+									<td th:text="${fraud.account.account}"></td>
+									<td th:text="${#numbers.formatCurrency(fraud.value)}"></td>
+									<td th:text="${fraud.type}"></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					
-					<div th:if="${not #maps.isEmpty(entryExitAgencies.get('entry')) 
-						or not #maps.isEmpty(entryExitAgencies.get('exit'))}">
+
+					<div th:if="${not #lists.isEmpty(agencies)}">
 					
 						<h4>Suspicious Agencies</h4>
 						
@@ -186,17 +175,11 @@
 								<tr>
 							</thead>
 							<tbody>
-								<tr th:each="agenciesEntry: ${entryExitAgencies.get('entry')}">
-									<td th:text="${agenciesEntry.key.bank}"></td>
-									<td th:text="${agenciesEntry.key.agency}"></td>
-									<td th:text="${#numbers.formatCurrency(agenciesEntry.value)}"></td>
-									<td>Entry</td>
-								</tr>
-								<tr th:each="agenciesExit: ${entryExitAgencies.get('exit')}">
-									<td th:text="${agenciesExit.key.bank}"></td>
-									<td th:text="${agenciesExit.key.agency}"></td>
-									<td th:text="${#numbers.formatCurrency(agenciesExit.value)}"></td>
-									<td>Exit</td>
+								<tr th:each="fraud: ${agencies}">
+									<td th:text="${fraud.agency.bank}"></td>
+									<td th:text="${fraud.agency.agency}"></td>
+									<td th:text="${#numbers.formatCurrency(fraud.value)}"></td>
+									<td th:text="${fraud.type}"></td>
 								</tr>
 							</tbody>
 						</table>

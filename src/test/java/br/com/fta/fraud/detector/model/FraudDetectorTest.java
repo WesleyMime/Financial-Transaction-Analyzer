@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,8 +27,8 @@ class FraudDetectorTest {
 	private static final Transaction VALID_TRANSACTION = 
 			new Transaction(ACCOUNT_1, ACCOUNT_2, "50000", DATE);
 	
-	private static final String MAP_ENTRY = "entry";
-	private static final String MAP_EXIT = "exit";
+	private static final String MAP_ENTRY = "Entry";
+	private static final String MAP_EXIT = "Exit";
 	
 	@Test
 	void givenListOfValidTransactions_whenAnalyze_thenReturnEmptyList() {
@@ -57,100 +56,86 @@ class FraudDetectorTest {
 	}
 	
 	@Test
-	void givenListOfValidBankAccounts_whenAnalyze_thenReturnEmptyMap() {
+	void givenListOfValidBankAccounts_whenAnalyze_thenReturnEmptyList() {
 		transactions.addAll(List.of(
 				new Transaction(ACCOUNT_1, ACCOUNT_2, "100000", DATE),
 				new Transaction(ACCOUNT_2, ACCOUNT_3, "500000", DATE),
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "500000", DATE)
 				));
-		
-		Map<String, Map<BankAccount, BigDecimal>> entryExit = detector.analyzeBankAccounts(transactions);
-		
-		assertTrue(entryExit.get(MAP_ENTRY).isEmpty());
-		assertTrue(entryExit.get(MAP_EXIT).isEmpty());
+
+		List<FraudAccount> list = detector.analyzeBankAccounts(transactions).stream().toList();
+
+		assertTrue(list.isEmpty());
 	}
 	
 	@Test
-	void givenBankAccountTransferingSuspiciousAmount_whenAnalyze_thenReturnMapWithFraudBankAccount() {
+	void givenBankAccountTransferringSuspiciousAmount_whenAnalyze_thenReturnListWithFraudBankAccount() {
 		transactions.addAll(List.of(
 				new Transaction(ACCOUNT_1, ACCOUNT_2, "500000", DATE),
 				new Transaction(ACCOUNT_1, ACCOUNT_3, "500001", DATE)
 				));
-		
-		Map<String, Map<BankAccount, BigDecimal>> entryExit = detector.analyzeBankAccounts(transactions);
-		
-		Map<BankAccount, BigDecimal> entry = entryExit.get(MAP_ENTRY);
-		Map<BankAccount, BigDecimal> exit = entryExit.get(MAP_EXIT);
-		
-		assertEquals(0, entry.size());
-		assertEquals(1, exit.size());
-		assertEquals(exit.get(ACCOUNT_1), new BigDecimal("1000001"));
+
+		List<FraudAccount> list = detector.analyzeBankAccounts(transactions).stream().toList();
+
+		assertEquals(1, list.size());
+		assertEquals(list.get(0).type(), MAP_EXIT);
+		assertEquals(list.get(0).value(), new BigDecimal("1000001"));
 	}
 	
 	@Test
-	void givenBankAccountReceivingSuspiciousAmount_whenAnalyze_thenReturnMapWithFraudBankAccount() {
+	void givenBankAccountReceivingSuspiciousAmount_whenAnalyze_thenReturnListWithFraudBankAccount() {
 		transactions.addAll(List.of(
 				new Transaction(ACCOUNT_2, ACCOUNT_1, "500000", DATE),
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "500001", DATE)
 				));
+
+		List<FraudAccount> list = detector.analyzeBankAccounts(transactions).stream().toList();
 		
-		Map<String, Map<BankAccount, BigDecimal>> entryExit = detector.analyzeBankAccounts(transactions);
-		
-		Map<BankAccount, BigDecimal> entry = entryExit.get(MAP_ENTRY);
-		Map<BankAccount, BigDecimal> exit = entryExit.get(MAP_EXIT);
-		
-		assertEquals(1, entry.size());
-		assertEquals(0, exit.size());
-		assertEquals(entry.get(ACCOUNT_1), new BigDecimal("1000001"));
+		assertEquals(1, list.size());
+		assertEquals(list.get(0).type(), MAP_ENTRY);
+		assertEquals(list.get(0).value(), new BigDecimal("1000001"));
 		
 	}
 	
 	@Test
-	void givenListOfValidAgencies_whenAnalyze_thenReturnEmptyMap() {
+	void givenListOfValidAgencies_whenAnalyze_thenReturnEmptyList() {
 		transactions.addAll(List.of(
 				new Transaction(ACCOUNT_1, ACCOUNT_2, "10000000", DATE),
 				new Transaction(ACCOUNT_2, ACCOUNT_3, "50000000", DATE),
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "50000000", DATE)
 				));
-		
-		Map<String, Map<BankAgency, BigDecimal>> entryExit = detector.analyzeAgency(transactions);
-		
-		assertTrue(entryExit.get(MAP_ENTRY).isEmpty());
-		assertTrue(entryExit.get(MAP_EXIT).isEmpty());
+
+		List<FraudAgency> list = detector.analyzeAgency(transactions).stream().toList();
+
+		assertTrue(list.isEmpty());
 	}
 
 	@Test
-	void givenAgencyTransferingSuspiciousAmount_whenAnalyze_thenReturnMapWithFraudAgency() {
+	void givenAgencyTransferringSuspiciousAmount_whenAnalyze_thenReturnListWithFraudAgency() {
 		transactions.addAll(List.of(
 				new Transaction(ACCOUNT_1, ACCOUNT_2, "500000000", DATE),
 				new Transaction(ACCOUNT_1, ACCOUNT_3, "500000001", DATE)
 				));
-		
-		Map<String, Map<BankAgency, BigDecimal>> entryExit = detector.analyzeAgency(transactions);
-		
-		Map<BankAgency, BigDecimal> entry = entryExit.get(MAP_ENTRY);
-		Map<BankAgency, BigDecimal> exit = entryExit.get(MAP_EXIT);
-		
-		assertEquals(0, entry.size());
-		assertEquals(1, exit.size());
-		assertEquals(exit.get(new BankAgency(ACCOUNT_1)), new BigDecimal("1000000001"));
+
+		List<FraudAgency> list = detector.analyzeAgency(transactions).stream().toList();
+
+		assertEquals(1, list.size());
+		assertEquals(list.get(0).type(), MAP_EXIT);
+		assertEquals(list.get(0).value(), new BigDecimal("1000000001"));
 	}
 	
 	@Test
-	void givenAgencyReceivingSuspiciousAmount_whenAnalyze_thenReturnMapWithFraudAgency() {
+	void givenAgencyReceivingSuspiciousAmount_whenAnalyze_thenReturnListWithFraudAgency() {
 		transactions.addAll(List.of(
 				new Transaction(ACCOUNT_2, ACCOUNT_1, "500000000", DATE),
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "500000001", DATE)
 				));
-		
-		Map<String, Map<BankAgency, BigDecimal>> entryExit = detector.analyzeAgency(transactions);
-		
-		Map<BankAgency, BigDecimal> entry = entryExit.get(MAP_ENTRY);
-		Map<BankAgency, BigDecimal> exit = entryExit.get(MAP_EXIT);
-		
-		assertEquals(1, entry.size());
-		assertEquals(0, exit.size());
-		assertEquals(entry.get(new BankAgency(ACCOUNT_1)), new BigDecimal("1000000001"));
+
+		List<FraudAgency> list = detector.analyzeAgency(transactions).stream().toList();
+
+		assertEquals(1, list.size());
+		assertEquals(list.get(0).type(), MAP_ENTRY);
+		assertEquals(list.get(0).value(), new BigDecimal("1000000001"));
 		
 	}
 }
