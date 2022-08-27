@@ -1,22 +1,20 @@
 package br.com.fta.user.application;
 
-import java.security.Principal;
-import java.util.List;
-
-import javax.validation.Valid;
-
+import br.com.fta.shared.Pager;
+import br.com.fta.user.domain.EmailAlreadyRegisteredException;
+import br.com.fta.user.domain.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.fta.user.domain.EmailAlreadyRegisteredException;
-import br.com.fta.user.domain.UserDTO;
+import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -26,11 +24,16 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping
-	public String allUsers(Model model, Principal principal) {
-		List<UserDTO> listUsers =  userService.allUsers();
-			
-		model.addAttribute("users", listUsers);
-		model.addAttribute("principal", principal.getName());
+	public String allUsers(Model model,
+						   Principal principal,
+						   @RequestParam("page") Optional<Integer> userPage,
+						   @RequestParam("size") Optional<Integer> userSize) {
+		Integer page = userPage.orElse(1);
+		Integer size = userSize.orElse(5);
+		Page<UserDTO> listUsers =  userService.allUsers(PageRequest.of(page - 1, size));
+
+		var pager = new Pager(listUsers.getTotalPages(), listUsers.getNumber(), 3);
+		model.addAllAttributes(Map.of("users", listUsers, "principal", principal.getName(), "pager", pager));
 		
 		return "users/users";
 	}

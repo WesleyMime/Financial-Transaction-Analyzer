@@ -1,9 +1,12 @@
 package br.com.fta.transaction.application;
 
+import br.com.fta.shared.Pager;
 import br.com.fta.transaction.domain.ImportInfo;
 import br.com.fta.transaction.domain.InvalidFileException;
 import br.com.fta.transaction.domain.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class TransactionController {
@@ -24,9 +27,18 @@ public class TransactionController {
 	private TransactionService transactionService;
 
 	@GetMapping("/")
-	public String transactions(Model model) {
-		List<ImportInfo> list = transactionService.transactions();
-		model.addAttribute("importInfo", list);
+	public String transactions(Model model,
+							   @RequestParam("page") Optional<Integer> userPage,
+							   @RequestParam("size") Optional<Integer> userSize) {
+		Integer page = userPage.orElse(1);
+		Integer size = userSize.orElse(5);
+
+		Page<ImportInfo> importInfoPage = transactionService.transactions(PageRequest.of(page - 1, size));
+		model.addAttribute("importInfo", importInfoPage);
+
+		var pager = new Pager(importInfoPage.getTotalPages(), importInfoPage.getNumber(), 5);
+		model.addAttribute("pager", pager);
+
 		return "transactions";
 	}
 
@@ -37,7 +49,7 @@ public class TransactionController {
 			transactionService.postTransaction(file, username);
 		} catch (InvalidFileException e) {
 			model.addAttribute("error", e.getMessage());
-			return transactions(model);
+			return transactions(model, Optional.empty(), Optional.empty());
 		}
 		return "redirect:/";
 	}
@@ -49,14 +61,21 @@ public class TransactionController {
 	}
 
 	@GetMapping("/{date}")
-	public String detail(@PathVariable("date") String date, Model model) {
+	public String detail(@PathVariable("date") String date,
+						 Model model,
+						 @RequestParam("page") Optional<Integer> userPage,
+						 @RequestParam("size") Optional<Integer> userSize) {
+		Integer page = userPage.orElse(1);
+		Integer size = userSize.orElse(25);
 		ImportInfo importInfo = transactionService.detailImport(date);
 
 		LocalDate transactionsDate = importInfo.getTransactionsDate();
+		PageRequest pageRequest = PageRequest.of(page - 1, size);
 
-		List<Transaction> transactions = transactionService.detailTransactions(transactionsDate);
+		Page<Transaction> transactions = transactionService.detailTransactions(transactionsDate, pageRequest);
 
-		model.addAllAttributes(Map.of("importInfo", importInfo, "transactions", transactions));
+		var pager = new Pager(transactions.getTotalPages(), transactions.getNumber(), 5);
+		model.addAllAttributes(Map.of("importInfo", importInfo, "transactions", transactions, "pager", pager));
 
 		return "details";
 	}
