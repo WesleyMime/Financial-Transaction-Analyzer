@@ -1,5 +1,14 @@
 <h1 align="center"> Financial Transaction Analyzer </h1>
 
+  | :placard: Vitrine.Dev |     |
+  | -------------  | --- |
+  | :sparkles: Name        | **Financial Transaction Analyzer**
+  | :label: Technologies | Java, Spring, Mongo-DB, Docker, Google Cloud, Prometheus, Grafana, Kafka
+  | :rocket: URL         | http://34.176.103.0
+  | :fire: Challenge     | https://www.alura.com.br/challenges/back-end-3/
+
+![](https://user-images.githubusercontent.com/55067868/191625101-32435bfc-0814-4246-8805-a4273e6ce027.png#vitrinedev)
+
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.md)
 [![pt-br](https://img.shields.io/badge/lang-pt--br-g.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.pt-br.md)
 
@@ -24,7 +33,7 @@ The programming language, frameworks and technologies were of free choice. I cho
 ## Deploy
 
 
-The application was deployed on a Google Cloud Compute Engine instance, which can be accessed through this [link](http://34.176.200.24/)
+The application was deployed on a Google Cloud Compute Engine instance, which can be accessed through this [link](http://34.176.103.0/)
 
 To run locally you need to have Docker installed.
 
@@ -38,4 +47,3 @@ If everything is working, the links to access are:
 - Grafana http://localhost:3000/
 - Eureka http://localhost:8761
 - Spring Boot Admin http://localhost:8761/admin
-
