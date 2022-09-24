@@ -4,7 +4,7 @@
   | -------------  | --- |
   | :sparkles: Nome        | **Financial Transaction Analyzer**
   | :label: Tecnologias | Java, Spring, Mongo-DB, Docker, Google Cloud, Prometheus, Grafana, Kafka
-  | :rocket: URL         | http://34.176.103.0
+  | :rocket: URL         | https://financialtransactionanalyzer.app/
   | :fire: Desafio     | https://www.alura.com.br/challenges/back-end-3/
 
 ![](https://user-images.githubusercontent.com/55067868/191625101-32435bfc-0814-4246-8805-a4273e6ce027.png#vitrinedev)
@@ -33,7 +33,7 @@ O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam 
 ## Deploy
 
 
-O deploy da aplicação foi realizado em uma instância da Google Cloud Compute Engine, podendo ser acessada por esse [link](http://34.176.103.0/)
+O deploy da aplicação foi realizado em uma instância da Google Cloud Compute Engine, podendo ser acessada por esse link https://financialtransactionanalyzer.app/
 
 Para rodar localmente é necessário ter Docker instalado.
 

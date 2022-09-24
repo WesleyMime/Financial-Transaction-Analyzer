@@ -27,11 +27,11 @@ public class TransactionsGenerator {
 			
 			// Adds possibility to detect fraud agency.
 			if (date.getMinute() == 0) {
-				valueInt += 265746329;
+				valueInt += randomValueInt(200000000, 600000000);
 			}
 			// Adds possibility to detect fraud account.
 			if (date.getMinute() == 1) {
-				valueInt += 746329;
+				valueInt += randomValueInt(600000, 999999);
 			}
 			String value = String.valueOf(valueInt);
 			

@@ -50,7 +50,7 @@ public class TransactionService {
 		if (file.isEmpty()) {
 			throw new InvalidFileException("Empty file.");
 		}
-		
+
 		Set<Transaction> transaction = analyzer.analyzeTransaction(file);
 
 		ImportInfo importInfo = new ImportInfo(
@@ -76,7 +76,7 @@ public class TransactionService {
 	public ImportInfo detailImport(String dateString) {
 		try {
 			LocalDate date = LocalDate.parse(dateString);
-			
+
 			Optional<ImportInfo> importInfoOptional = importInfoRepository.findByTransactionsDate(date);
 			return importInfoOptional.get();
 		}
@@ -89,6 +89,7 @@ public class TransactionService {
 		if (dateString == null) {
 			return;
 		}
+
 		try {
 			// 2022-01-01
 			LocalDate startOfMonth = LocalDate.parse(dateString + "-01", DateTimeFormatter.ISO_DATE);
@@ -100,7 +101,7 @@ public class TransactionService {
 
 			Optional<List<Transaction>> list = transactionRepository.findByDateBetween(start, end);
 			List<Transaction> transactions = list.get();
-		
+
 			model.addAttribute("date", start);
 			if (transactions.isEmpty()) {
 				throw new ResourceNotFoundException();

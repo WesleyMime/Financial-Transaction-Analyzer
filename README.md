@@ -4,7 +4,7 @@
   | -------------  | --- |
   | :sparkles: Name        | **Financial Transaction Analyzer**
   | :label: Technologies | Java, Spring, Mongo-DB, Docker, Google Cloud, Prometheus, Grafana, Kafka
-  | :rocket: URL         | http://34.176.103.0
+  | :rocket: URL         | https://financialtransactionanalyzer.app/
   | :fire: Challenge     | https://www.alura.com.br/challenges/back-end-3/
 
 ![](https://user-images.githubusercontent.com/55067868/191625101-32435bfc-0814-4246-8805-a4273e6ce027.png#vitrinedev)
@@ -33,7 +33,7 @@ The programming language, frameworks and technologies were of free choice. I cho
 ## Deploy
 
 
-The application was deployed on a Google Cloud Compute Engine instance, which can be accessed through this [link](http://34.176.103.0/)
+The application was deployed on a Google Cloud Compute Engine instance, which can be accessed through this link https://financialtransactionanalyzer.app/
 
 To run locally you need to have Docker installed.
 

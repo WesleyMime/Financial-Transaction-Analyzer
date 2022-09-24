@@ -54,12 +54,6 @@ public class TransactionController {
 		return "redirect:/";
 	}
 
-	@GetMapping("/delete")
-	public String deleteTransactions() {
-		transactionService.deleteTransactions();
-		return "redirect:/";
-	}
-
 	@GetMapping("/{date}")
 	public String detail(@PathVariable("date") String date,
 						 Model model,
