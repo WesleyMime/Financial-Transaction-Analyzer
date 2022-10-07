@@ -1,12 +1,5 @@
 <h1 align="center"> Financial Transaction Analyzer </h1>
 
-  | :placard: Vitrine.Dev |     |
-  | -------------  | --- |
-  | :sparkles: Name        | **Financial Transaction Analyzer**
-  | :label: Technologies | Java, Spring, Mongo-DB, Docker, Google Cloud, Prometheus, Grafana, Kafka
-  | :rocket: URL         | https://financialtransactionanalyzer.app/
-  | :fire: Challenge     | https://www.alura.com.br/challenges/back-end-3/
-
 ![](https://user-images.githubusercontent.com/55067868/191625101-32435bfc-0814-4246-8805-a4273e6ce027.png#vitrinedev)
 
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.md)
