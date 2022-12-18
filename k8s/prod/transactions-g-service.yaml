@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactions-generator
+  labels:
+    app: transactions-generator
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: transactions-generator
+  template:
+    metadata:
+      labels:
+        app: transactions-generator
+    spec:
+      containers:
+        - name: transactions-generator
+          image: wesleymime/generator
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          env:
+            - name: eureka.client.serviceUrl.defaultZone
+              value: http://eureka-service:8761/eureka
+            - name: boot.admin.client.url
+              value: http://eureka-service:8761/admin

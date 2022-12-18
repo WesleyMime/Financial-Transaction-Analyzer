@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fta
+  labels:
+    app: fta
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fta
+  template:
+    metadata:
+      labels:
+        app: fta
+    spec:
+      containers:
+        - name: fta
+          image: wesleymime/fta
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          ports:
+            - containerPort: 8080
+          env:
+            - name: server.port
+              value: "8080"
+            - name: spring.data.mongodb.host
+              value: mongodb-0.mongodb-headless:27017
+            - name: spring.data.mongodb.username
+              value: a
+            - name: spring.data.mongodb.password
+              value: a
+            - name: kafka.bootstrapAddress
+              value: http://kafka:9092
+            - name: eureka.client.serviceUrl.defaultZone
+              value: http://eureka-service:8761/eureka
+            - name: boot.admin.client.url
+              value: http://eureka-service:8761/admin
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fta-service
+spec:
+  selector:
+    app: fta
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
