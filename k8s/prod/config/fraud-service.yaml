@@ -5,7 +5,7 @@ metadata:
   labels:
     app: fraud
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: fraud
@@ -22,10 +22,15 @@ spec:
               cpu: 100m
               memory: 128Mi
             limits:
-              cpu: 250m
-              memory: 256Mi
+              cpu: 500m
+              memory: 500Mi
+          ports:
+            - containerPort: 8080
           env:
+            - name: server.port
+              value: "8080"
             - name: eureka.client.serviceUrl.defaultZone
-              value: http://eureka-service:8761/eureka
-            - name: boot.admin.client.url
-              value: http://eureka-service:8761/admin
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: eureka-url

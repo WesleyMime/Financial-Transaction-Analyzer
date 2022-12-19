@@ -1,6 +1,0 @@
-architecture: replicaset
-replicaCount: 3
-auth:
-  usernames: [a]
-  passwords: [a]
-  databases: [fta]

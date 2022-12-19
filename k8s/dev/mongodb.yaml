@@ -1,5 +1,0 @@
-replicaCount: 1
-auth:
-  usernames: [dev-fta-user]
-  passwords: [dev-safe-password]
-  databases: [fta]

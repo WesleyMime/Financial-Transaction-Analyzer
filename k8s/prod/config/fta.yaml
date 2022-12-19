@@ -5,7 +5,7 @@ metadata:
   labels:
     app: fta
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: fta
@@ -30,23 +30,37 @@ spec:
             - name: server.port
               value: "8080"
             - name: spring.data.mongodb.host
-              value: mongodb-0.mongodb-headless:27017
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: mongodb-url
             - name: spring.data.mongodb.username
-              value: a
+              valueFrom:
+                secretKeyRef:
+                  name: prod-secrets
+                  key: mongodb-user
             - name: spring.data.mongodb.password
-              value: a
+              valueFrom:
+                secretKeyRef:
+                  name: prod-secrets
+                  key: mongodb-password
             - name: kafka.bootstrapAddress
-              value: http://kafka:9092
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: kafka-url
             - name: eureka.client.serviceUrl.defaultZone
-              value: http://eureka-service:8761/eureka
-            - name: boot.admin.client.url
-              value: http://eureka-service:8761/admin
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: eureka-url
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: fta-service
 spec:
+  type: LoadBalancer
   selector:
     app: fta
   ports:

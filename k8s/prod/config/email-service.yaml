@@ -5,7 +5,7 @@ metadata:
   labels:
     app: email
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: email
@@ -22,16 +22,26 @@ spec:
               cpu: 100m
               memory: 128Mi
             limits:
-              cpu: 250m
-              memory: 256Mi
+              cpu: 500m
+              memory: 500Mi
           env:
             - name: MAIL_USERNAME
-              value: a
+              valueFrom:
+                secretKeyRef:
+                  name: prod-secrets
+                  key: email-user
             - name: MAIL_PASSWORD
-              value: a
+              valueFrom:
+                secretKeyRef:
+                  name: prod-secrets
+                  key: email-password
             - name: kafka.bootstrapAddress
-              value: http://kafka:9092
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: kafka-url
             - name: eureka.client.serviceUrl.defaultZone
-              value: http://eureka-service:8761/eureka
-            - name: boot.admin.client.url
-              value: http://eureka-service:8761/admin
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: eureka-url

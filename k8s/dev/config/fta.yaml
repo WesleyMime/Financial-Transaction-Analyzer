@@ -17,28 +17,34 @@ spec:
       containers:
         - name: fta
           image: wesleymime/fta
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 250m
-              memory: 256Mi    
           ports:
             - containerPort: 80
           env:
             - name: spring.data.mongodb.host
-              value: mongodb:27017
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: mongodb-url
             - name: spring.data.mongodb.username
-              value: dev-fta-user
+              valueFrom:
+                secretKeyRef:
+                  name: dev-secrets
+                  key: mongodb-user
             - name: spring.data.mongodb.password
-              value: dev-safe-password
+              valueFrom:
+                secretKeyRef:
+                  name: dev-secrets
+                  key: mongodb-password
             - name: kafka.bootstrapAddress
-              value: http://kafka:9092
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: kafka-url
             - name: eureka.client.serviceUrl.defaultZone
-              value: http://eureka-service:8761/eureka
-            - name: boot.admin.client.url
-              value: http://eureka-service:8761/admin
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: eureka-url
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email
+  labels:
+    app: email
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: email
+  template:
+    metadata:
+      labels:
+        app: email
+    spec:
+      containers:
+        - name: email
+          image: wesleymime/email
+          env:
+            - name: MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dev-secrets
+                  key: email-user
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dev-secrets
+                  key: email-password
+            - name: kafka.bootstrapAddress
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: kafka-url
+            - name: eureka.client.serviceUrl.defaultZone
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: eureka-url
