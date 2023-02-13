@@ -60,7 +60,6 @@ kind: Service
 metadata:
   name: fta-service
 spec:
-  type: LoadBalancer
   selector:
     app: fta
   ports:

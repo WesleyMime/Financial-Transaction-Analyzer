@@ -1,3 +1,4 @@
 helm install mongodb \
-    --set auth.rootPassword=,auth.username=,auth.password=,auth.database=fta \
+    --set architecture=replicaset,replicaCount=1,auth.rootPassword=,auth.username=,auth.password=,auth.database=fta \
     azure-marketplace/mongodb
+sleep 15

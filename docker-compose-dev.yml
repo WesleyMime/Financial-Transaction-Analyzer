@@ -22,7 +22,7 @@ services:
     depends_on:
       - mongo_db
       - eureka-server
-    entrypoint: ["java","-Dspring.profiles.active=dev","-DEUREKA_URI=http://eureka-server:8761","-DBROKER_URI=http://broker:29092","-XX:+UseZGC","-jar","/app.jar"]
+    entrypoint: ["java","-Dspring.profiles.active=dev","-DEUREKA_URI=http://eureka-server:8761","-DBROKER_URI=http://broker:29092","-Dspring.data.mongodb.host=mongo_db","-XX:+UseZGC","-jar","/app.jar"]
 
   email-service:
     build: ./email-service/.
@@ -34,14 +34,16 @@ services:
     build: ./fraud-service/.
     depends_on:
       - eureka-server
+    entrypoint: ["java","-DEUREKA_URI=http://eureka-server:8761","-jar","/app.jar"]
 
   transactions-generator-service:
     build: ./transactions-generator-service/.
     depends_on:
       - eureka-server
+    entrypoint: ["java","-DEUREKA_URI=http://eureka-server:8761","-jar","/app.jar"]
 
   mongo_db:
-    image: "mongo:4.4.3"
+    image: mongo:4.4.3
     restart: always
     ports:
       - 27017:27017
@@ -49,14 +51,14 @@ services:
       - mongo-data:/data/db
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.1
+    image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:7.0.1
+    image: confluentinc/cp-kafka:latest
     container_name: broker
     ports:
       - "9092:9092"

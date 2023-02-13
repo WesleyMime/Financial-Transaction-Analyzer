@@ -11,12 +11,12 @@ volumes:
 services:
 
   eureka-server:
-    image: "wesleymime/eureka"
+    image: wesleymime/eureka:latest
     ports:
       - 8761:8761
 
   fta:
-    image: "wesleymime/fta"
+    image: wesleymime/fta:latest
     ports:
       - 80:80
     depends_on:
@@ -24,23 +24,23 @@ services:
       - eureka-server
 
   email-service:
-    image: "wesleymime/email"
+    image: wesleymime/email:latest
     depends_on:
       - eureka-server
     entrypoint: ["java","-Dspring.profiles.active=prod","-DMAIL_USERNAME=changeEmail","-DMAIL_PASSWORD=changePassword","-DEUREKA_URI=http://eureka-server:8761","-DBROKER_URI=http://broker:29092","-jar","/app.jar"]
 
   fraud-service:
-    image: "wesleymime/fraud"
+    image: wesleymime/fraud:latest
     depends_on:
       - eureka-server
 
   transactions-generator-service:
-    image: "wesleymime/generator"
+    image: wesleymime/generator:latest
     depends_on:
       - eureka-server
 
   mongo_db:
-    image: "mongo:4.4.3"
+    image: mongo:latest
     restart: always
     ports:
       - 27017:27017
@@ -48,14 +48,14 @@ services:
       - mongo-data:/data/db
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.0.1
+    image: confluentinc/cp-zookeeper:latest
     container_name: zookeeper
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
 
   broker:
-    image: confluentinc/cp-kafka:7.0.1
+    image: confluentinc/cp-kafka:latest
     container_name: broker
     ports:
       - "9092:9092"
