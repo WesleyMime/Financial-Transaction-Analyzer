@@ -48,14 +48,14 @@
 				<table class="z-depth-3 striped responsive-table dark-green-line">
 					<thead>
 						<tr>
-							<th>IMPORT IN</th>
+							<th class="first-column">IMPORT IN</th>
 							<th>IMPORT BY</th>
 							<th>TRANSACTIONS DATE</th>
 						<tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td
+							<td class="first-column"
 								th:text="${#temporals.format(importInfo.importRealized, 'dd/MM/yyyy HH:mm')}"></td>
 							<td
 								th:text="${importInfo.importedBy}"></td>
@@ -70,8 +70,8 @@
 				<table class="z-depth-3 striped responsive-table dark-green-line">
 					<thead>
 						<tr>
-							<th>ORIGIN</th>
-							<th>DESTINATION</th>
+							<th class="first-column">ORIGIN</th>
+							<th class="first-column">DESTINATION</th>
 							<th></th>
 						<tr>
 					</thead>
@@ -81,14 +81,14 @@
 								<table class="striped responsive-table dark-green-line">
 									<thead>
 										<tr>
-											<th>BANK</th>
+											<th class="first-column">BANK</th>
 											<th>AGENCY</th>
 											<th>ACCOUNT</th>
 										<tr>
 									</thead>
 									<tbody>
 										<tr th:each="transaction: ${transactions}">
-											<td th:text="${transaction.origin.bank}"></td>
+											<td class="first-column" th:text="${transaction.origin.bank}"></td>
 											<td th:text="${transaction.origin.agency}"></td>
 											<td th:text="${transaction.origin.account}"></td>
 										</tr>
@@ -99,14 +99,14 @@
 								<table class="striped responsive-table dark-green-line">
 									<thead>
 										<tr>
-											<th>BANK</th>
+											<th class="first-column">BANK</th>
 											<th>AGENCY</th>
 											<th>ACCOUNT</th>
 										<tr>
 									</thead>
 									<tbody>
 									<tr th:each="transaction: ${transactions}">
-										<td th:text="${transaction.destination.bank}"></td>
+										<td class="first-column" th:text="${transaction.destination.bank}"></td>
 										<td th:text="${transaction.destination.agency}"></td>
 										<td th:text="${transaction.destination.account}"></td>
 									</tr>
@@ -117,12 +117,12 @@
 								<table class="striped responsive-table dark-green-line">
 									<thead>
 										<tr>
-											<th>VALUE</th>
+											<th class="first-column">VALUE</th>
 										<tr>
 									</thead>
 									<tbody>
 									<tr th:each="transaction: ${transactions}">
-										<td th:text="${#numbers.formatCurrency(transaction.value)}"></td>
+										<td class="first-column" th:text="${#numbers.formatCurrency(transaction.value)}"></td>
 									</tr>
 									</tbody>
 								</table>

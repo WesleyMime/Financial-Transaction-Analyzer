@@ -25,3 +25,7 @@ input {
 .pointer-disabled {
     pointer-events: none;
 }
+
+.first-column {
+    padding-left: 20px;
+}

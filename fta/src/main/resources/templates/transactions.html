@@ -70,7 +70,7 @@
 					<table class="striped responsive-table dark-green-line">
 						<thead>
 							<tr>
-								<th>Transactions Date</th>
+								<th class="first-column">Transactions Date</th>
 								<th>Import Date</th>
 								<th>Imported By</th>
 								<th>Options</th>
@@ -79,7 +79,7 @@
 	
 						<tbody>
 							<tr th:each="info: ${importInfo}">
-								<td
+								<td class="first-column"
 									th:text="${#temporals.format(info.transactionsDate, 'dd/MM/yyyy')}"></td>
 								<td
 									th:text="${#temporals.format(info.importRealized, 'dd/MM/yyyy HH:mm')}"></td>

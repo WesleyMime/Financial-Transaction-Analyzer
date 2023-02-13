@@ -51,7 +51,7 @@
 					<table class="striped responsive-table dark-green-line">
 						<thead>
 							<tr>
-								<th>Id</th>
+								<th class="first-column">Id</th>
 								<th>Name</th>
 								<th>Email</th>
 								<th>Options</th>
@@ -59,7 +59,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="user: ${users}">
-								<td th:text="${user.id}"></td>
+								<td class="first-column" th:text="${user.id}"></td>
 								<td th:text="${user.name}"></td>
 								<td th:text="${user.email}"></td>
 								<td>

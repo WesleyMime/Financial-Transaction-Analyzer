@@ -73,8 +73,8 @@
 						<table class="z-depth-3 striped responsive-table dark-green-line">
 							<thead>
 								<tr>
-									<th>ORIGIN</th>
-									<th>DESTINATION</th>
+									<th class="first-column">ORIGIN</th>
+									<th class="first-column">DESTINATION</th>
 									<th></th>
 								<tr>
 							</thead>
@@ -84,14 +84,14 @@
 										<table class="striped responsive-table dark-green-line">
 											<thead>
 												<tr>
-													<th>BANK</th>
+													<th class="first-column">BANK</th>
 													<th>AGENCY</th>
 													<th>ACCOUNT</th>
 												<tr>
 											</thead>
 											<tbody>
 												<tr th:each="transaction: ${transactions}">
-													<td th:text="${transaction.origin.bank}"></td>
+													<td class="first-column" th:text="${transaction.origin.bank}"></td>
 													<td th:text="${transaction.origin.agency}"></td>
 													<td th:text="${transaction.origin.account}"></td>
 												</tr>
@@ -102,14 +102,14 @@
 										<table class="striped responsive-table dark-green-line">
 											<thead>
 												<tr>
-													<th>BANK</th>
+													<th class="first-column">BANK</th>
 													<th>AGENCY</th>
 													<th>ACCOUNT</th>
 												<tr>
 											</thead>
 											<tbody>
 											<tr th:each="transaction: ${transactions}">
-												<td th:text="${transaction.destination.bank}"></td>
+												<td class="first-column" th:text="${transaction.destination.bank}"></td>
 												<td th:text="${transaction.destination.agency}"></td>
 												<td th:text="${transaction.destination.account}"></td>
 											</tr>
@@ -120,12 +120,12 @@
 										<table class="striped responsive-table dark-green-line">
 											<thead>
 												<tr>
-													<th>VALUE</th>
+													<th class="first-column">VALUE</th>
 												<tr>
 											</thead>
 											<tbody>
 											<tr th:each="transaction: ${transactions}">
-												<td th:text="${#numbers.formatCurrency(transaction.value)}"></td>
+												<td class="first-column" th:text="${#numbers.formatCurrency(transaction.value)}"></td>
 											</tr>
 											</tbody>
 										</table>
@@ -142,7 +142,7 @@
 						<table class="z-depth-3 striped responsive-table dark-green-line">
 							<thead>
 								<tr>
-									<th>BANK</th>
+									<th class="first-column">BANK</th>
 									<th>AGENCY</th>
 									<th>ACCOUNT</th>
 									<th>VALUE</th>
@@ -151,7 +151,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="fraud: ${accounts}">
-									<td th:text="${fraud.account.bank}"></td>
+									<td class="first-column" th:text="${fraud.account.bank}"></td>
 									<td th:text="${fraud.account.agency}"></td>
 									<td th:text="${fraud.account.account}"></td>
 									<td th:text="${#numbers.formatCurrency(fraud.value)}"></td>
@@ -168,7 +168,7 @@
 						<table class="z-depth-3 striped responsive-table dark-green-line">
 							<thead>
 								<tr>
-									<th>BANK</th>
+									<th class="first-column">BANK</th>
 									<th>AGENCY</th>
 									<th>VALUE</th>
 									<th>TYPE</th>
@@ -176,7 +176,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="fraud: ${agencies}">
-									<td th:text="${fraud.agency.bank}"></td>
+									<td class="first-column" th:text="${fraud.agency.bank}"></td>
 									<td th:text="${fraud.agency.agency}"></td>
 									<td th:text="${#numbers.formatCurrency(fraud.value)}"></td>
 									<td th:text="${fraud.type}"></td>
