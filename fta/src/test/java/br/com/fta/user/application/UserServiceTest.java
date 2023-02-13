@@ -1,11 +1,10 @@
 package br.com.fta.user.application;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Optional;
-
+import br.com.fta.shared.exceptions.ResourceNotFoundException;
+import br.com.fta.user.domain.EmailAlreadyRegisteredException;
+import br.com.fta.user.domain.User;
+import br.com.fta.user.domain.UserDTO;
+import br.com.fta.user.infra.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,16 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 
-import br.com.fta.shared.exceptions.ResourceNotFoundException;
-import br.com.fta.user.domain.EmailAlreadyRegisteredException;
-import br.com.fta.user.domain.User;
-import br.com.fta.user.domain.UserDTO;
-import br.com.fta.user.infra.UserRepository;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@TestPropertySource(properties = "spring.mongodb.embedded.version=3.5.5")
 @ActiveProfiles("test")
 class UserServiceTest {
 

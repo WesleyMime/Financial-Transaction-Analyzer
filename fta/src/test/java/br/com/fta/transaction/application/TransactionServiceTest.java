@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@TestPropertySource(properties = "spring.mongodb.embedded.version=3.5.5")
 @ActiveProfiles("test")
 class TransactionServiceTest {
 
@@ -31,13 +29,13 @@ class TransactionServiceTest {
 	private static final String USERNAME = "Foo";
 	
 	private static final String VALID_TRANSACTION = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
-			+ "8000,2022-01-02T07:30:00\n";
+			+ "8000,2022-01-03T07:30:00\n";
 	private static final String VALID_TRANSACTION_2 = "BYTE BANK,0002,00001-1,BANK BYTE,0001,00001-1,"
-			+ "3000,2022-01-02T07:30:00\n";
+			+ "3000,2022-01-03T07:30:00\n";
 	private static final String MISSING_VALUE_TRANSACTION = "BYTE BANK,0001,00001-1,0001,00001-1,"
-			+ "8000,2022-01-02T07:30:00\n";
+			+ "8000,2022-01-03T07:30:00\n";
 	private static final String BLANK_VALUE_TRANSACTION = "BYTE BANK,0001,00001-1,,0001,00001-1,"
-			+ "8000,2022-01-02T07:30:00\n";
+			+ "8000,2022-01-03T07:30:00\n";
 	private static final String VALID_TRANSACTION_DIFF_DATE = "BYTE BANK,0001,00001-1,BANK BYTE,0001,00001-1,"
 			+ "8000,2022-02-02T07:30:00\n";
 
