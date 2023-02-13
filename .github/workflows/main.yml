@@ -1,0 +1,53 @@
+name: Maven CI/CD
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ microservices ]
+
+jobs:
+  build_test_deploy:
+    name: Build, Test and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 19
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Cache the Maven packages to speed up build
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Run Mongo and Kafka containers
+        run: docker compose -f docker-compose-dev.yml up zookeeper broker mongo_db -d
+
+      - name: Build project with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Container images
+        run: docker compose -f docker-compose-dev.yml build
+
+      - name: Tag Docker images
+        run: |
+          docker tag financial-transaction-analyzer-eureka-server wesleymime/eureka
+          docker tag financial-transaction-analyzer-fta wesleymime/fta
+          docker tag financial-transaction-analyzer-email-service wesleymime/email
+          docker tag financial-transaction-analyzer-fraud-service wesleymime/fraud
+          docker tag financial-transaction-analyzer-transactions-generator-service wesleymime/generator
+
+      - name: Publish Docker images
+        run: |
+          docker push wesleymime/eureka
+          docker push wesleymime/fta
+          docker push wesleymime/email
+          docker push wesleymime/fraud
+          docker push wesleymime/generator
