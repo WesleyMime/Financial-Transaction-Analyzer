@@ -2,6 +2,7 @@ package br.com.fta.transaction.application;
 
 import br.com.fta.model.Frauds;
 import br.com.fta.shared.exceptions.ResourceNotFoundException;
+import br.com.fta.shared.exceptions.ServiceUnavailableException;
 import br.com.fta.transaction.domain.ImportInfo;
 import br.com.fta.transaction.domain.InvalidFileException;
 import br.com.fta.transaction.domain.Transaction;
@@ -118,7 +119,7 @@ public class TransactionService {
 
 			model.addAttribute("noTransactions", false);
 		} catch (FeignException e) {
-			throw new RuntimeException("Unable to analyze transactions, please try again later.");
+			throw new ServiceUnavailableException("Unable to analyze transactions, please try again later.");
 		} catch (RuntimeException e) {
 			model.addAttribute("noTransactions", true);
 		}
@@ -129,7 +130,7 @@ public class TransactionService {
 		try {
 			list = generatorClient.generateTransactions();
 		} catch (RuntimeException e) {
-			throw new RuntimeException("Unable to generate transactions, please try again later.");
+			throw new ServiceUnavailableException("Unable to generate transactions, please try again later.");
 		}
 		transactionRepository.saveAll(list);
 
