@@ -1,5 +1,6 @@
 package br.com.fta.detector.application;
 
+import br.com.fta.detector.model.FraudDetector;
 import br.com.fta.detector.model.Frauds;
 import br.com.fta.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,10 @@ import java.util.List;
 public class FraudController {
 
     @Autowired
-    private FraudDetectorService fraudDetectorService;
+    private FraudDetector fraudDetector;
 
     @PostMapping("/detect-frauds")
     public Frauds detectFrauds(@RequestBody List<Transaction> list) {
-        return fraudDetectorService.detectFrauds(list);
+        return fraudDetector.analyzeTransactions(list);
     }
 }

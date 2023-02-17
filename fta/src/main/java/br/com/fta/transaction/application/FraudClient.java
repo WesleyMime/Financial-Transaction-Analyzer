@@ -23,7 +23,7 @@ public interface FraudClient {
 
         @Override
         public Frauds detectFrauds(List<Transaction> list) {
-            return new Frauds(List.of(), Set.of(), Set.of());
+            return new Frauds(Set.of(), Set.of(), Set.of());
         }
     }
 }

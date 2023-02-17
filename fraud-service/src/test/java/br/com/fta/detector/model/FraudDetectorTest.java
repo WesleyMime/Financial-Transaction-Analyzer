@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,13 +35,13 @@ class FraudDetectorTest {
 	void givenListOfValidTransactions_whenAnalyze_thenReturnEmptyList() {
 		transactions.add(VALID_TRANSACTION);
 		
-		List<Transaction> list = detector.analyzeTransactions(transactions);
+		Set<Transaction> set = detector.analyzeTransactions(transactions).fraudTransactions();
 		
-		assertTrue(list.isEmpty());
+		assertTrue(set.isEmpty());
 	}
 	
 	@Test
-	void givenListWithSuspiciusTransaction_whenAnalyze_thenReturnListWithFraudTransaction() {
+	void givenListWithSuspiciousTransaction_whenAnalyze_thenReturnListWithFraudTransaction() {
 		Transaction suspiciousTransaction = new Transaction(ACCOUNT_1, ACCOUNT_2, LIMIT_TRANSACTION, DATE);
 		
 		transactions.addAll(List.of(
@@ -49,10 +50,10 @@ class FraudDetectorTest {
 				VALID_TRANSACTION
 				));
 		
-		List<Transaction> list = detector.analyzeTransactions(transactions);
+		Set<Transaction> set = detector.analyzeTransactions(transactions).fraudTransactions();
 		
-		assertEquals(1, list.size());
-		assertEquals(suspiciousTransaction, list.get(0));
+		assertEquals(1, set.size());
+		assertTrue(set.contains(suspiciousTransaction));
 	}
 	
 	@Test
@@ -63,7 +64,7 @@ class FraudDetectorTest {
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "500000", DATE)
 				));
 
-		List<FraudAccount> list = detector.analyzeBankAccounts(transactions).stream().toList();
+		List<FraudAccount> list = detector.analyzeTransactions(transactions).fraudAccounts().stream().toList();
 		
 		assertTrue(list.isEmpty());
 	}
@@ -75,7 +76,7 @@ class FraudDetectorTest {
 				new Transaction(ACCOUNT_1, ACCOUNT_3, "500001", DATE)
 				));
 
-		List<FraudAccount> list = detector.analyzeBankAccounts(transactions).stream().toList();
+		List<FraudAccount> list = detector.analyzeTransactions(transactions).fraudAccounts().stream().toList();
 
 		assertEquals(1, list.size());
 		assertEquals(list.get(0).type(), MAP_EXIT);
@@ -89,7 +90,7 @@ class FraudDetectorTest {
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "500001", DATE)
 				));
 
-		List<FraudAccount> list = detector.analyzeBankAccounts(transactions).stream().toList();
+		List<FraudAccount> list = detector.analyzeTransactions(transactions).fraudAccounts().stream().toList();
 
 		assertEquals(1, list.size());
 		assertEquals(list.get(0).type(), MAP_ENTRY);
@@ -105,7 +106,7 @@ class FraudDetectorTest {
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "50000000", DATE)
 				));
 
-		List<FraudAgency> list = detector.analyzeAgency(transactions).stream().toList();
+		List<FraudAgency> list = detector.analyzeTransactions(transactions).fraudAgencies().stream().toList();
 
 		assertTrue(list.isEmpty());
 	}
@@ -117,7 +118,7 @@ class FraudDetectorTest {
 				new Transaction(ACCOUNT_1, ACCOUNT_3, "500000001", DATE)
 				));
 
-		List<FraudAgency> list = detector.analyzeAgency(transactions).stream().toList();
+		List<FraudAgency> list = detector.analyzeTransactions(transactions).fraudAgencies().stream().toList();
 
 		assertEquals(1, list.size());
 		assertEquals(list.get(0).type(), MAP_EXIT);
@@ -131,7 +132,7 @@ class FraudDetectorTest {
 				new Transaction(ACCOUNT_3, ACCOUNT_1, "500000001", DATE)
 				));
 
-		List<FraudAgency> list = detector.analyzeAgency(transactions).stream().toList();
+		List<FraudAgency> list = detector.analyzeTransactions(transactions).fraudAgencies().stream().toList();
 
 		assertEquals(1, list.size());
 		assertEquals(list.get(0).type(), MAP_ENTRY);

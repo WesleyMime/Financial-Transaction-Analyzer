@@ -4,23 +4,29 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-class SeparateMaps<T> {
+class DepositAndTransferValues<T> {
 	
 	private final Map<T, BigDecimal> deposits = new HashMap<>();
 	private final Map<T, BigDecimal> transfers = new HashMap<>();
 
-	void byTransferAndDeposits(BigDecimal value, T origin, T destination) {
-		
-		BigDecimal totalValueOrigin = transfers.putIfAbsent(origin, value);
+	void add(BigDecimal value, T origin, T destination) {
+		addToDeposits(value, destination);
+		addToTransfers(value, origin);
+	}
+
+	private void addToDeposits(BigDecimal value, T destination) {
 		BigDecimal totalValueDestination = deposits.putIfAbsent(destination, value);
-		if (totalValueOrigin != null) {
-			BigDecimal oldValue = transfers.get(origin);
-			transfers.put(origin, oldValue.add(value));
-		}
-		
 		if (totalValueDestination != null) {
 			BigDecimal oldValue = deposits.get(destination);
 			deposits.put(destination, oldValue.add(value));
+		}
+	}
+
+	private void addToTransfers(BigDecimal value, T origin) {
+		BigDecimal totalValueOrigin = transfers.putIfAbsent(origin, value);
+		if (totalValueOrigin != null) {
+			BigDecimal oldValue = transfers.get(origin);
+			transfers.put(origin, oldValue.add(value));
 		}
 	}
 

@@ -19,6 +19,13 @@ eureka:
 feign:
   circuitBreaker:
     enabled: true
+  client:
+    config:
+      default:
+        loggerLevel: BASIC
+logging:
+  level:
+    br.com.fta.transaction.application: DEBUG
 
 kafka:
   bootstrapAddress: ${BROKER_URI:http://localhost:9092}
