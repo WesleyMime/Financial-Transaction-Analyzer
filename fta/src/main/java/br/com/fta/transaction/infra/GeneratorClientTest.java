@@ -1,4 +1,4 @@
-package br.com.fta.transaction.application;
+package br.com.fta.transaction.infra;
 
 import br.com.fta.transaction.domain.BankAccount;
 import br.com.fta.transaction.domain.Transaction;

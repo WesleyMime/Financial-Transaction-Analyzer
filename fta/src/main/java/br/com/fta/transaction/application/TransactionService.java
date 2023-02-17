@@ -6,8 +6,11 @@ import br.com.fta.transaction.domain.ImportInfo;
 import br.com.fta.transaction.domain.InvalidFileException;
 import br.com.fta.transaction.domain.Transaction;
 import br.com.fta.transaction.domain.TransactionAnalyzer;
+import br.com.fta.transaction.infra.FraudClient;
+import br.com.fta.transaction.infra.GeneratorClient;
 import br.com.fta.transaction.infra.ImportInfoRepository;
 import br.com.fta.transaction.infra.TransactionRepository;
+import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -114,13 +117,20 @@ public class TransactionService {
 			model.addAttribute("agencies", frauds.fraudAgencies());
 
 			model.addAttribute("noTransactions", false);
+		} catch (FeignException e) {
+			throw new RuntimeException("Unable to analyze transactions, please try again later.");
 		} catch (RuntimeException e) {
 			model.addAttribute("noTransactions", true);
 		}
 	}
 
 	public void generateTransactions(String username) {
-		List<Transaction> list = generatorClient.generateTransactions();
+		List<Transaction> list = List.of();
+		try {
+			list = generatorClient.generateTransactions();
+		} catch (RuntimeException e) {
+			throw new RuntimeException("Unable to generate transactions, please try again later.");
+		}
 		transactionRepository.saveAll(list);
 
 		ImportInfo importInfo = new ImportInfo(

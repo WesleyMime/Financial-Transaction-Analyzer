@@ -1,4 +1,4 @@
-package br.com.fta.transaction.application;
+package br.com.fta.transaction.infra;
 
 import br.com.fta.model.Frauds;
 import br.com.fta.transaction.domain.Transaction;
@@ -13,6 +13,6 @@ import java.util.Set;
 public class FraudClientTest implements FraudClient {
 
     public Frauds detectFrauds(List<Transaction> list) {
-        return new Frauds(List.of(), Set.of(), Set.of());
+        return new Frauds(Set.of(), Set.of(), Set.of());
     }
 }

@@ -1,4 +1,4 @@
-package br.com.fta.user.application;
+package br.com.fta.user.infra;
 
 import br.com.fta.user.domain.UserDTO;
 import org.springframework.web.bind.annotation.RequestBody;

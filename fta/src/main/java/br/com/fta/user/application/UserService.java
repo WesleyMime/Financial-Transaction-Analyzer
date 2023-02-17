@@ -2,6 +2,7 @@ package br.com.fta.user.application;
 
 import br.com.fta.shared.exceptions.ResourceNotFoundException;
 import br.com.fta.user.domain.*;
+import br.com.fta.user.infra.EmailClient;
 import br.com.fta.user.infra.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
