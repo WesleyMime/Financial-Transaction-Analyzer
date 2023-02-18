@@ -47,7 +47,7 @@
 					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 					<div class="file-field input-field">
 						<div class="btn">
-							<span>CSV File</span> <input name="file" type="file">
+							<span>Choose File</span> <input name="file" type="file">
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate" type="text"
@@ -62,7 +62,7 @@
 				<p th:text="${error}" class="center-align z-depth-1 dark-green-line">error</p>
 
 				<a href="/generate-transactions"><button class="btn waves-effect waves-light right" type="submit"
-					name="action">Generate Random Transactions</button></a>
+					name="action">Random Transactions</button></a>
 				
 				<div th:if="${not #lists.isEmpty(importInfo)}">
 					<h4>IMPORTS</h4>

@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,7 +87,8 @@ public class TransactionAnalyzer {
 		
 			mapper = type.mapper();
 		} catch (RuntimeException e){
-			throw new InvalidFileException("File not supported.");
+			List<String> fileTypesNameList = Arrays.stream(FileTypes.values()).map(Enum::name).toList();
+			throw new InvalidFileException("File not supported. Supported files: " + fileTypesNameList);
 		}
 	}
 

@@ -33,7 +33,7 @@ public class TransactionController {
 		Integer page = userPage.orElse(1);
 		Integer size = userSize.orElse(5);
 
-		Page<ImportInfo> importInfoPage = transactionService.transactions(PageRequest.of(page - 1, size));
+		Page<ImportInfo> importInfoPage = transactionService.transactions(page, size);
 		model.addAttribute("importInfo", importInfoPage);
 
 		var pager = new Pager(importInfoPage.getTotalPages(), importInfoPage.getNumber(), 5);

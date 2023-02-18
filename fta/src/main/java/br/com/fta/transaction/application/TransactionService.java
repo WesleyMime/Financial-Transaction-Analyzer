@@ -45,8 +45,8 @@ public class TransactionService {
 	@Autowired
 	private GeneratorClient generatorClient;
 
-	public Page<ImportInfo> transactions(PageRequest pageRequest) {
-		pageRequest.withSort(Sort.sort(ImportInfo.class).descending());
+	public Page<ImportInfo> transactions(int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page -1, size, Sort.by("transactionsDate").descending());
 		return importInfoRepository.findAll(pageRequest);
 	}
 
