@@ -6,7 +6,6 @@ import br.com.fta.transaction.domain.InvalidFileException;
 import br.com.fta.transaction.domain.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -55,21 +55,14 @@ public class TransactionController {
 	}
 
 	@GetMapping("/{date}")
-	public String detail(@PathVariable("date") String date,
-						 Model model,
-						 @RequestParam("page") Optional<Integer> userPage,
-						 @RequestParam("size") Optional<Integer> userSize) {
-		Integer page = userPage.orElse(1);
-		Integer size = userSize.orElse(25);
+	public String detail(@PathVariable("date") String date, Model model) {
 		ImportInfo importInfo = transactionService.detailImport(date);
 
 		LocalDate transactionsDate = importInfo.getTransactionsDate();
-		PageRequest pageRequest = PageRequest.of(page - 1, size);
 
-		Page<Transaction> transactions = transactionService.detailTransactions(transactionsDate, pageRequest);
+		List<Transaction> transactions = transactionService.detailTransactions(transactionsDate);
 
-		var pager = new Pager(transactions.getTotalPages(), transactions.getNumber(), 5);
-		model.addAllAttributes(Map.of("importInfo", importInfo, "transactions", transactions, "pager", pager));
+		model.addAllAttributes(Map.of("importInfo", importInfo, "transactions", transactions));
 
 		return "details";
 	}

@@ -131,45 +131,6 @@
 					</tbody>
 				</table>
 
-				<div th:if="${transactions.totalPages != 0}" class="card col m3 left dark-green-line">
-					Per page:
-					<a class="white-text" th:href="@{/{date} (date= ${importInfo.transactionsDate}, size=25, page=1)}">25</a>
-					<a class="white-text" th:href="@{/{date} (date= ${importInfo.transactionsDate}, size=50, page=1)}">50</a>
-					<a class="white-text" th:href="@{/{date} (date= ${importInfo.transactionsDate}, size=100, page=1)}">100</a>
-				</div>
-
-				<div th:if="${transactions.totalPages != 0}" class="card col m3 right dark-green-line">
-					<a th:class="${transactions.number == 0} ? 'white-text disabled' : 'white-text'"
-					   th:href="@{/{date} (date= ${importInfo.transactionsDate}, size=${transactions.size}, page=1)}">&laquo;&nbsp
-					</a>
-					<a th:class="${transactions.number == 0} ? 'white-text disabled' : 'white-text'"
-					   th:href="@{/{date} (
-					   		date= ${importInfo.transactionsDate},
-					   		size=${transactions.size},
-					   		page=${transactions.number})}">&larr;&nbsp
-					</a>
-					<a th:class="${transactions.number == (page - 1)} ?
-							'white-text active pointer-disabled' : 'white-text'"
-					   th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}"
-					   th:href="@{/{date} (date= ${importInfo.transactionsDate}, size=${transactions.size}, page=${page})}"
-					   th:text="${page} + '&nbsp'">
-					</a>
-					<a th:class="${transactions.number + 1 == transactions.totalPages} ?
-							'white-text disabled' : 'white-text'"
-					   th:href="@{/{date} (
-					   		date= ${importInfo.transactionsDate},
-					   		size=${transactions.size},
-					   		page=${transactions.number + 2})}">&rarr;&nbsp
-					</a>
-					<a th:class="${transactions.number + 1 == transactions.totalPages} ?
-							'white-text disabled' : 'white-text'"
-					   th:href="@{/{date} (
-					   		date= ${importInfo.transactionsDate},
-					   		size=${transactions.size},
-					   		page=${transactions.totalPages})}"
-					   th:text="'&raquo;&nbsp' + ${transactions.totalPages}">
-					</a>
-				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="js/materialize.min.js"></script>

@@ -70,11 +70,11 @@ public class TransactionService {
 		importInfoRepository.deleteAll();
 	}
 
-	public Page<Transaction> detailTransactions(LocalDate date, PageRequest pageRequest) {
+	public List<Transaction> detailTransactions(LocalDate date) {
 		LocalDateTime startDay = date.atStartOfDay();
 		LocalDateTime endDay = date.atTime(23, 59, 59);
 
-		return transactionRepository.findByDateBetween(startDay, endDay, pageRequest);
+		return transactionRepository.findByDateBetween(startDay, endDay).get();
 	}
 
 	public ImportInfo detailImport(String dateString) {
