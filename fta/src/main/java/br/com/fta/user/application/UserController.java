@@ -5,7 +5,6 @@ import br.com.fta.user.domain.EmailAlreadyRegisteredException;
 import br.com.fta.user.domain.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +29,7 @@ public class UserController {
 						   @RequestParam("size") Optional<Integer> userSize) {
 		Integer page = userPage.orElse(1);
 		Integer size = userSize.orElse(5);
-		Page<UserDTO> listUsers =  userService.allUsers(PageRequest.of(page - 1, size));
+		Page<UserDTO> listUsers = userService.allUsers(page, size);
 
 		var pager = new Pager(listUsers.getTotalPages(), listUsers.getNumber(), 3);
 		model.addAllAttributes(Map.of("users", listUsers, "principal", principal.getName(), "pager", pager));

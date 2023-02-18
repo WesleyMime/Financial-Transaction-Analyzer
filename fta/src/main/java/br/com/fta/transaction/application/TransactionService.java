@@ -11,22 +11,18 @@ import br.com.fta.transaction.infra.FraudClient;
 import br.com.fta.transaction.infra.GeneratorClient;
 import br.com.fta.transaction.infra.ImportInfoRepository;
 import br.com.fta.transaction.infra.TransactionRepository;
-import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -79,50 +75,28 @@ public class TransactionService {
 
 	public ImportInfo detailImport(String dateString) {
 		try {
-			LocalDate date = LocalDate.parse(dateString);
+			LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ISO_DATE);
 
 			Optional<ImportInfo> importInfoOptional = importInfoRepository.findByTransactionsDate(date);
 			return importInfoOptional.get();
-		}
-		catch (DateTimeParseException | NoSuchElementException e) {
+		} catch (RuntimeException e) {
 			throw new ResourceNotFoundException();
 		}
 	}
 
-	public void report(String dateString, Model model) {
-		if (dateString == null) {
-			return;
+	public Frauds report(LocalDate startOfMonth) {
+		LocalDateTime start = LocalDateTime.of(startOfMonth, LocalTime.of(0, 0));
+
+		LocalDate endOfMonth = LocalDate.of(
+				startOfMonth.getYear(), startOfMonth.getMonthValue(), startOfMonth.lengthOfMonth());
+		LocalDateTime end = LocalDateTime.of(endOfMonth, LocalTime.of(23, 59));
+
+		List<Transaction> transactions = transactionRepository.findByDateBetween(start, end).get();
+		if (transactions.isEmpty()) {
+			throw new ResourceNotFoundException();
 		}
+		return fraudClient.detectFrauds(transactions);
 
-		try {
-			// 2022-01-01
-			LocalDate startOfMonth = LocalDate.parse(dateString + "-01", DateTimeFormatter.ISO_DATE);
-			LocalDateTime start = LocalDateTime.of(startOfMonth, LocalTime.of(0, 0));
-
-			LocalDate endOfMonth = LocalDate.of(
-					startOfMonth.getYear(), startOfMonth.getMonthValue(), startOfMonth.lengthOfMonth());
-			LocalDateTime end = LocalDateTime.of(endOfMonth, LocalTime.of(23, 59));
-
-			Optional<List<Transaction>> list = transactionRepository.findByDateBetween(start, end);
-			List<Transaction> transactions = list.get();
-
-			model.addAttribute("date", start);
-			if (transactions.isEmpty()) {
-				throw new ResourceNotFoundException();
-			}
-
-			Frauds frauds = fraudClient.detectFrauds(transactions);
-
-			model.addAttribute("transactions", frauds.fraudTransactions());
-			model.addAttribute("accounts", frauds.fraudAccounts());
-			model.addAttribute("agencies", frauds.fraudAgencies());
-
-			model.addAttribute("noTransactions", false);
-		} catch (FeignException e) {
-			throw new ServiceUnavailableException("Unable to analyze transactions, please try again later.");
-		} catch (RuntimeException e) {
-			model.addAttribute("noTransactions", true);
-		}
 	}
 
 	public void generateTransactions(String username) {

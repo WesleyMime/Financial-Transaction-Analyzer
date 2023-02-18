@@ -28,16 +28,17 @@ public class UserService {
 	@Autowired
 	private EmailClient emailClient;
 
-	public Page<UserDTO> allUsers(PageRequest pageRequest) {
+	public Page<UserDTO> allUsers(int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page - 1, size);
 		Page<User> listUsers = repository.findAll(pageRequest);
 		return listUsers.map(userToDTOMapper::map);
 	}
 
 	public void registerUser(UserDTO userDTO) {
 		String email = userDTO.getEmail();
-		
+
 		Optional<User> registeredEmail = repository.findByEmail(email);
-		
+
 		if (registeredEmail.isPresent()) {
 			throw new EmailAlreadyRegisteredException();
 		}

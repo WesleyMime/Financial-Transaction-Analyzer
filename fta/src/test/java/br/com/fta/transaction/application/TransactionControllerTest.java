@@ -124,13 +124,21 @@ class TransactionControllerTest {
 			.andExpect(model().attribute("noTransactions", false))
 			.andExpect(status().isOk());
 	}
-	
+
 	@Test
 	@WithMockUser
 	void givenInvalidDate_whenRequestForReport_thenReturn200WithErrorMessage() throws Exception {
-		mvc.perform(get("/report").param("date", "2023-01"))		
-			.andExpect(view().name("report"))
-			.andExpect(model().attribute("noTransactions", true))
-			.andExpect(status().isOk());
+		mvc.perform(get("/report").param("date", "2023-01"))
+				.andExpect(view().name("report"))
+				.andExpect(model().attribute("noTransactions", true))
+				.andExpect(status().isOk());
+	}
+
+	@Test
+	@WithMockUser
+	void givenAuthenticatedUser_whenRequestForRandomTransactions_thenReturn200() throws Exception {
+		mvc.perform(get("/generate-transactions"))
+				.andExpect(view().name("redirect:/"))
+				.andExpect(redirectedUrl("/"));
 	}
 }
