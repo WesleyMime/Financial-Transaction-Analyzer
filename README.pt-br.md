@@ -7,7 +7,7 @@
 
 ## Sobre o desafio proposto no Challenge Backend
 
-Aplicação Web tradicional(server-side) para realizar análise de milhares de transações financeiras e identificar possíveis transações suspeitas.
+Aplicação Web tradicional (server-side) para realizar análise de milhares de transações financeiras e identificar possíveis transações suspeitas.
 
 ## Objetivos do projeto
 
@@ -26,14 +26,12 @@ O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam 
 ## Deploy
 
 
-O deploy da aplicação foi realizado no Azure Kubernetes Service (AKS), podendo ser acessada por esse link https://financialtransactionanalyzer.app/
-
 Para rodar localmente é necessário ter Docker instalado.
 
 - Abra o terminal e clone o projeto usando o comando
-"git clone https://github.com/WesleyMime/financial-transaction-analyzer.git"
+`git clone https://github.com/WesleyMime/financial-transaction-analyzer.git`
 
-- Entre na pasta "financial-transaction-analyzer" e use o comando "docker-compose up".
+- Entre na pasta "financial-transaction-analyzer" e use o comando `docker compose up`.
 
 Se tudo estiver funcionando, os links para acessar são: 
 - Aplicação http://localhost/

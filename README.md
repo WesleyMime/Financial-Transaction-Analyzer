@@ -26,14 +26,12 @@ The programming language, frameworks and technologies were of free choice. I cho
 ## Deploy
 
 
-The application was deployed on Azure Kubernetes Service (AKS), which can be accessed through this link https://financialtransactionanalyzer.app/
-
 To run locally you need to have Docker installed.
 
 - Open the terminal and clone the project using the command
-"git clone https://github.com/WesleyMime/financial-transaction-analyzer.git"
+`git clone https://github.com/WesleyMime/financial-transaction-analyzer.git`
 
-- Enter the "financial-transaction-analyzer" folder and use the command "docker-compose up".
+- Enter the "financial-transaction-analyzer" folder and use the command `docker compose up`.
 
 If everything is working, the links to access are:
 - Web application http://localhost/
