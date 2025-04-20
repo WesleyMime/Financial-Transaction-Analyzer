@@ -1,6 +1,7 @@
 package br.com.fta.transaction.domain;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Objects;
 
 public class BankAccount {

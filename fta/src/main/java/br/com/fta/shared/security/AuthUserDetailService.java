@@ -8,24 +8,29 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-@Service
 public class AuthUserDetailService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
+	private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
+
+	public AuthUserDetailService(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
+		this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> userOptional = userRepository.findByEmail(username);
 		if (userOptional.isEmpty()) {
-			
-			throw new UsernameNotFoundException("Email not registered.");
+			// If not in memory, throws UsernameNotFoundException
+			return inMemoryUserDetailsManager.loadUserByUsername(username);
 		}
 		User user = userOptional.get();
 		

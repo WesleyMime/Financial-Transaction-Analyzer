@@ -2,12 +2,12 @@ package br.com.fta.transaction.domain;
 
 import br.com.fta.shared.infra.Mapper;
 import br.com.fta.transaction.infra.TransactionRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;

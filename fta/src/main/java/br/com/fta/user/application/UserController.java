@@ -3,6 +3,7 @@ package br.com.fta.user.application;
 import br.com.fta.shared.Pager;
 import br.com.fta.user.domain.EmailAlreadyRegisteredException;
 import br.com.fta.user.domain.UserDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Map;
 import java.util.Optional;

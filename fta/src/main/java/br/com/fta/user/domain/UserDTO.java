@@ -1,6 +1,6 @@
 package br.com.fta.user.domain;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class UserDTO {
 

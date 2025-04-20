@@ -41,7 +41,7 @@ services:
     entrypoint: ["java","-DEUREKA_URI=http://eureka-server:8761","-jar","/app.jar"]
 
   mongo_db:
-    image: mongo:4.4.3
+    image: mongo:latest
     restart: always
     ports:
       - 27017:27017
