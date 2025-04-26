@@ -1,5 +1,4 @@
-helm repo add azure-marketplace https://marketplace.azurecr.io/helm/v1/repo
 helm install kafka \
     --set persistence.enabled=false,zookeeper.persistence.enabled=false \
-    azure-marketplace/kafka
+    oci://registry-1.docker.io/bitnamicharts/kafka
 sleep 15
