@@ -23,3 +23,8 @@ spec:
                 configMapKeyRef:
                   name: configmap
                   key: eureka-url
+            - name: spring.boot.admin.client.url
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: bootadmin-url

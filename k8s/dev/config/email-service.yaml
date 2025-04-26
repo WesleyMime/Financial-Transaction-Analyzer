@@ -18,16 +18,8 @@ spec:
         - name: email
           image: wesleymime/email
           env:
-            - name: MAIL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: dev-secrets
-                  key: email-user
-            - name: MAIL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: dev-secrets
-                  key: email-password
+            - name: spring.profiles.active
+              value: "dev"
             - name: kafka.bootstrapAddress
               valueFrom:
                 configMapKeyRef:
@@ -38,3 +30,8 @@ spec:
                 configMapKeyRef:
                   name: configmap
                   key: eureka-url
+            - name: spring.boot.admin.client.url
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: bootadmin-url
