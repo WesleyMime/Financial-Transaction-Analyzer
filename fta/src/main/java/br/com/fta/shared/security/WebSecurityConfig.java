@@ -23,7 +23,7 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests((authorize) -> authorize
 						.requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/img/**", "/icon/**")
 						.permitAll()
-						.requestMatchers("/actuator/health")
+						.requestMatchers("/actuator/**")
 						.permitAll()
 						.anyRequest()
 						.authenticated()

@@ -29,6 +29,8 @@ spec:
           env:
             - name: server.port
               value: "8080"
+            - name: spring.profiles.active
+              value: "prod"
             - name: spring.data.mongodb.host
               valueFrom:
                 configMapKeyRef:
@@ -54,6 +56,13 @@ spec:
                 configMapKeyRef:
                   name: configmap
                   key: eureka-url
+            - name: spring.boot.admin.client.url
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: bootadmin-url
+            - name: spring.boot.admin.client.instance.service-url
+              value: http://fta-service:8080
 ---
 apiVersion: v1
 kind: Service

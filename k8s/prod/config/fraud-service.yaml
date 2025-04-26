@@ -34,3 +34,23 @@ spec:
                 configMapKeyRef:
                   name: configmap
                   key: eureka-url
+            - name: spring.boot.admin.client.url
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: bootadmin-url
+            - name: spring.boot.admin.client.instance.service-url
+              value: http://fraud-service:8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fraud-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: fraud
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

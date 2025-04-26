@@ -25,8 +25,30 @@ spec:
               cpu: 500m
               memory: 500Mi
           env:
+            - name: server.port
+              value: "8080"
             - name: eureka.client.serviceUrl.defaultZone
               valueFrom:
                 configMapKeyRef:
                   name: configmap
                   key: eureka-url
+            - name: spring.boot.admin.client.url
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: bootadmin-url
+            - name: spring.boot.admin.client.instance.service-url
+              value: http://transactions-generator-service:8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactions-generator-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: transactions-generator
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
