@@ -1,3 +1,10 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  security:
+    enabled: false
 spring:
   application:
     name: fta
@@ -7,7 +14,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8761/admin
+        url: ${EUREKA_URI:http://localhost:8761}/admin
 server:
   port: 80
 eureka:
