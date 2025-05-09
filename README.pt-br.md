@@ -1,41 +1,99 @@
-<h1 align="center"> Financial Transaction Analyzer </h1>
+<div align="center">
+<h1> Aluraflix </h1>
+
+[![en][en-shield]][en-url]
+[![pt-br][pt-br-shield]][pt-br-url]
+[![project_license][license-shield]][license-url]
+[![last-commit][commit-shield]][commit-url]
+![workflow][workflow-shield]
+
+</div>
 
 ![](https://user-images.githubusercontent.com/55067868/191625101-32435bfc-0814-4246-8805-a4273e6ce027.png#vitrinedev)
 
-[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.md)
-[![pt-br](https://img.shields.io/badge/lang-pt--br-g.svg)](https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.pt-br.md)
+## Descrição
 
-## Sobre o desafio proposto no Challenge Backend
-
-Aplicação Web tradicional (server-side) para realizar análise de milhares de transações financeiras e identificar possíveis transações suspeitas.
+Financial Transaction Analyzer é uma aplicação web projetada para analisar transações financeiras usando arquitetura de
+microsserviços.
+Ela aproveita tecnologias modernas como Java, Spring Boot, MongoDB, Kafka, Docker e Kubernetes para fornecer uma solução
+escalável e eficiente.
 
 ## Objetivos do projeto
 
-O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam determinadas atividades a serem implementadas. Para uma melhor gestão das atividades, foi utilizado o trello como ferramenta.
+O projeto foi desenvolvido em sprints com duração 1 semana cada, que possuiam determinadas atividades a serem
+implementadas.
+Para uma melhor gestão das atividades, foi utilizado o trello como ferramenta.
 
 - [Trello da Sprint 1](https://trello.com/b/6BVMlCYd/challenge-backend-3-semana-1)
 - [Trello da Sprint 2](https://trello.com/b/nUN64cpL/challenge-backend-3-semana-2)
 - [Trello da Sprint 3](https://trello.com/b/Z5fKD7ly/challenge-backend-3-semana-3)
 
+## Características principais
+
+- Construído com **Java** e **Spring Boot** Para serviços de back-end robustos.
+- Usa **MongoDB** para armazenamento de dados flexível e escalável.
+- Implementa **Kafka** para comunicação orientada a eventos entre microsserviços.
+- Totalmente contêinerzado com **Docker** para deploy sem problemas.
+- Orquestrado usando **Kubernetes** para alta disponibilidade e escalabilidade.
+- Arquitetura de microsserviços para modularidade e escalabilidade.
+
 ## Tecnologias
 
- A linguagem de programação, frameworks e tecnologias eram de livre escolha. Eu escolhi desenvolver o projeto com as seguintes tecnologias:
+![java] ![spring] ![mongodb] ![docker] ![kubernetes] ![kafka] ![prometheus] ![grafana]
 
-<img alt="Java" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50" height="50" /> <img alt="Spring" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50" height="50" /> <img alt="Mongo-DB" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-plain-wordmark.svg" width="50" height="50" /> <img alt="Docker" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain-wordmark.svg" width="50" height="50" /> <img alt="Prometheus" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prometheus/prometheus-original-wordmark.svg" width="50" height="50" /> <img alt="Grafana" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original-wordmark.svg" width="50" height="50" /> <img alt="Kafka" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original-wordmark.svg" width="50" height="50" /> <img alt="Kubernetes" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain-wordmark.svg" width="50" height="50" />
+## Rode localmente
 
-## Deploy
+Para rodar é necessário ter Docker instalado.
 
+- Clone o projeto
 
-Para rodar localmente é necessário ter Docker instalado.
+```
+git clone https://github.com/WesleyMime/financial-transaction-analyzer.git
+```
 
-- Abra o terminal e clone o projeto usando o comando
-`git clone https://github.com/WesleyMime/financial-transaction-analyzer.git`
+- Entre na pasta do projeto
 
-- Entre na pasta "financial-transaction-analyzer" e use o comando `docker compose up`.
+```
+cd financial-transaction-analyzer
+```
 
-Se tudo estiver funcionando, os links para acessar são: 
+- Inicie os serviços
+
+```
+docker compose up
+```
+
+### Uso
+
+Depois que o aplicativo estiver em execução, você pode usá -lo para analisar transações financeiras. O aplicativo
+fornece
+uma interface web para processar e visualizar os dados de transações. Os links para o acesso são:
+
 - Aplicação http://localhost/
 - Grafana http://localhost:3000/
 - Eureka http://localhost:8761
 - Spring Boot Admin http://localhost:8761/admin
 
+## Licença
+
+Distribuído sob a licença do MIT. Consulte LICENSE.txt para obter mais informações.
+
+[en-shield]: https://img.shields.io/badge/lang-en-green.svg?style=for-the-badge
+[en-url]: https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.md
+[pt-br-shield]: https://img.shields.io/badge/lang-pt--br-lightdarkgreen.svg?style=for-the-badge
+[pt-br-url]: https://github.com/WesleyMime/Financial-Transaction-Analyzer/blob/microservices/README.pt-br.md
+[commit-shield]: https://img.shields.io/github/last-commit/wesleymime/Financial-Transaction-Analyzer.svg?style=for-the-badge
+[commit-url]: https://github.com/wesleymime/Financial-Transaction-Analyzer/commit
+[license-shield]: https://img.shields.io/github/license/wesleymime/Financial-Transaction-Analyzer.svg?style=for-the-badge
+[license-url]: https://github.com/wesleymime/Financial-Transaction-Analyzer/blob/master/LICENSE.txt
+[workflow-shield]: https://img.shields.io/github/actions/workflow/status/wesleymime/Financial-Transaction-Analyzer/.github/workflows/main.yml?style=for-the-badge
+[workflow-url]: https://img.shields.io/github/actions/workflow/status/wesleymime/Financial-Transaction-Analyzer/.github/workflows/main.yml
+
+[java]: https://img.shields.io/badge/Java-000000?logo=openjdk&logoColor=white&style=for-the-badge
+[spring]: https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=fff&style=for-the-badge
+[mongodb]: https://img.shields.io/badge/MongoDB-47A248.svg?logo=mongodb&logoColor=white&style=for-the-badge
+[docker]: https://img.shields.io/badge/docker-2496ED?logo=docker&logoColor=white&style=for-the-badge
+[kubernetes]: https://img.shields.io/badge/kubernetes-326CE5?logo=kubernetes&logoColor=white&style=for-the-badge
+[kafka]: https://img.shields.io/badge/apache%20kafka-231F20?style=for-the-badge
+[prometheus]: https://img.shields.io/badge/prometheus-E6522C?&logo=prometheus&logoColor=white&style=for-the-badge
+[grafana]: https://img.shields.io/badge/grafana-F46800?logo=grafana&logoColor=white&style=for-the-badge
