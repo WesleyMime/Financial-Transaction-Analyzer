@@ -27,6 +27,8 @@ spec:
           env:
             - name: server.port
               value: "8080"
+            - name: spring.profiles.active
+              value: "prod"
             - name: MAIL_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -60,7 +62,6 @@ kind: Service
 metadata:
   name: email-service
 spec:
-  type: LoadBalancer
   selector:
     app: email
   ports:
