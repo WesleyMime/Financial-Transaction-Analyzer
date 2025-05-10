@@ -47,7 +47,6 @@ kind: Service
 metadata:
   name: fraud-service
 spec:
-  type: LoadBalancer
   selector:
     app: fraud
   ports:

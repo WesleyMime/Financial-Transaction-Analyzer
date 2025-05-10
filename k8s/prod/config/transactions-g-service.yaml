@@ -45,7 +45,6 @@ kind: Service
 metadata:
   name: transactions-generator-service
 spec:
-  type: LoadBalancer
   selector:
     app: transactions-generator
   ports:

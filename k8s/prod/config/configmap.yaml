@@ -3,8 +3,8 @@ kind: ConfigMap
 metadata:
   name: configmap
 data:
-  mongodb-url: mongodb
-  kafka-url: http://kafka:9092
+  mongodb-url: mongodb-headless
+  kafka-url: kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092
   eureka-url: http://eureka-server:8761/eureka
   bootadmin-url: http://eureka-server:8761/admin
 
