@@ -11,12 +11,12 @@ services:
   eureka-server:
     image: wesleymime/eureka:latest
     ports:
-      - 8761:8761
+      - "8761:8761"
 
   fta:
     image: wesleymime/fta:latest
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - mongo_db
       - eureka-server
@@ -26,7 +26,9 @@ services:
     depends_on:
       - eureka-server
     # dev profile to run without errors
-    entrypoint: [ "java","-Dspring.profiles.active=dev","-DMAIL_USERNAME=changeEmail","-DMAIL_PASSWORD=changePassword","-DEUREKA_URI=http://eureka-server:8761","-DBROKER_URI=http://broker:29092","-jar","/app.jar" ]
+    entrypoint: [ "java","-Dspring.profiles.active=dev","-DMAIL_USERNAME=changeEmail","-DMAIL_PASSWORD=changePassword",
+                  "-DMAIL_FROM=changeEmail","-DEUREKA_URI=http://eureka-server:8761","-DBROKER_URI=http://broker:29092",
+                  "-jar","/app.jar" ]
 
   fraud-service:
     image: wesleymime/fraud:latest
@@ -42,7 +44,7 @@ services:
     image: mongo:latest
     restart: always
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
 

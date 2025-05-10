@@ -15,8 +15,8 @@ public class ProdEmailServiceImpl implements EmailService {
 
     @Autowired
     private JavaMailSender emailSender;
-    
-    @Value("${spring.mail.username}")
+
+	@Value("${MAIL_FROM}")
     private String EMAIL_FROM;
 
     @Override
@@ -30,9 +30,10 @@ public class ProdEmailServiceImpl implements EmailService {
 	       	helper.setSubject(subject); 
 	       	helper.setText(text);
        	} catch (MessagingException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
         emailSender.send(message);
+		System.out.printf("%1$s E-mail sent to %2$s\n", subject, emailTo);
     }
 
 	@Override

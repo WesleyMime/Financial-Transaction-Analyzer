@@ -39,6 +39,11 @@ spec:
                 secretKeyRef:
                   name: prod-secrets
                   key: email-password
+            - name: MAIL_FROM
+              valueFrom:
+                secretKeyRef:
+                  name: prod-secrets
+                  key: email-from
             - name: kafka.bootstrapAddress
               valueFrom:
                 configMapKeyRef:

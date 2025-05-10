@@ -11,12 +11,12 @@ services:
   eureka-server:
     build: ./eureka-server/.
     ports:
-      - 8761:8761
+      - "8761:8761"
 
   fta:
     build: ./fta/.
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - mongo_db
       - eureka-server
@@ -44,7 +44,7 @@ services:
     image: mongo:latest
     restart: always
     ports:
-      - 27017:27017
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
 
