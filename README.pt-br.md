@@ -1,5 +1,5 @@
 <div align="center">
-<h1> Aluraflix </h1>
+<h1> Financial Transaction Analyzer </h1>
 
 [![en][en-shield]][en-url]
 [![pt-br][pt-br-shield]][pt-br-url]
@@ -41,6 +41,18 @@ Para uma melhor gestão das atividades, foi utilizado o trello como ferramenta.
 
 ![java] ![spring] ![mongodb] ![docker] ![kubernetes] ![kafka] ![prometheus] ![grafana]
 
+## Deploy
+
+A Aplicação web está rodando em um Cluster Kubernetes da Oracle Cloud Infrastructure, com DNS e HTTPS da Cloudflare.
+
+Os links para o acesso são:
+
+- Aplicação Web https://fta.marujo.site
+- Eureka https://fta-ops.marujo.site
+- Spring Boot Admin https://fta-ops.marujo.site/admin
+
+![kubernetes-grafana](https://github.com/user-attachments/assets/eaac0c8b-87f6-483b-b85a-f1a8dacf7133)
+
 ## Rode localmente
 
 Para rodar é necessário ter Docker instalado.
@@ -65,11 +77,12 @@ docker compose up
 
 ### Uso
 
-Depois que o aplicativo estiver em execução, você pode usá -lo para analisar transações financeiras. O aplicativo
-fornece
-uma interface web para processar e visualizar os dados de transações. Os links para o acesso são:
+Depois que o aplicativo estiver em execução, você pode usá-lo para analisar transações financeiras. O aplicativo
+fornece uma interface web para processar e visualizar os dados de transações.
 
-- Aplicação http://localhost/
+Os links para o acesso são:
+
+- Aplicação Web http://localhost/
 - Grafana http://localhost:3000/
 - Eureka http://localhost:8761
 - Spring Boot Admin http://localhost:8761/admin
