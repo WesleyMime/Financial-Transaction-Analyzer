@@ -6,7 +6,7 @@
 [![project_license][license-shield]][license-url]
 [![last-commit][commit-shield]][commit-url]
 ![workflow][workflow-shield]
-![deploy-status]
+[![deploy][deploy-status]][deploy-url]
 
 </div>
 
@@ -37,7 +37,7 @@ The project was developed in sprints lasting 1 week each, which had certain acti
 
 ## Technologies
 
-![java] ![spring] ![mongodb] ![docker] ![kubernetes] ![kafka] ![prometheus] ![grafana]
+![java] ![spring] ![mongodb] ![docker] ![kubernetes] ![kafka] ![prometheus] ![grafana] ![oracle] ![cloudflare]
 
 ## Deploy
 
@@ -100,8 +100,9 @@ Distributed under the MIT license. See `LICENSE.txt` for more information.
 [license-url]: https://github.com/wesleymime/Financial-Transaction-Analyzer/blob/master/LICENSE.txt
 [workflow-shield]: https://img.shields.io/github/actions/workflow/status/wesleymime/Financial-Transaction-Analyzer/.github/workflows/main.yml?style=for-the-badge
 [workflow-url]: https://img.shields.io/github/actions/workflow/status/wesleymime/Financial-Transaction-Analyzer/.github/workflows/main.yml
-
 [deploy-status]: http://167.234.233.130:3001/api/badge/4/status?upColor=lightdarkgreen&style=for-the-badge
+
+[deploy-url]: https://fta.marujo.site
 
 [java]: https://img.shields.io/badge/Java-000000?logo=openjdk&logoColor=white&style=for-the-badge
 [spring]: https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=fff&style=for-the-badge
@@ -111,3 +112,7 @@ Distributed under the MIT license. See `LICENSE.txt` for more information.
 [kafka]: https://img.shields.io/badge/apache%20kafka-231F20?style=for-the-badge
 [prometheus]: https://img.shields.io/badge/prometheus-E6522C?&logo=prometheus&logoColor=white&style=for-the-badge
 [grafana]: https://img.shields.io/badge/grafana-F46800?logo=grafana&logoColor=white&style=for-the-badge
+
+[oracle]: https://custom-icon-badges.demolab.com/badge/Oracle%20Cloud-F80000?logo=oracle&logoColor=white&style=for-the-badge
+
+[cloudflare]: https://img.shields.io/badge/Cloudflare-F38020?logo=Cloudflare&logoColor=white&style=for-the-badge
