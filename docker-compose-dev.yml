@@ -20,13 +20,16 @@ services:
     depends_on:
       - mongo_db
       - eureka-server
-    entrypoint: ["java","-Dspring.profiles.active=dev","-DEUREKA_URI=http://eureka-server:8761","-DBROKER_URI=http://broker:29092","-Dspring.data.mongodb.host=mongo_db","-XX:+UseZGC","-jar","/app.jar"]
+    entrypoint: [ "java","-Dspring.profiles.active=dev","-DEUREKA_URI=http://eureka-server:8761",
+                  "-DBROKER_URI=http://broker:29092","-Dspring.data.mongodb.host=mongo_db",
+                  "-XX:+UseZGC","-jar","/app.jar" ]
 
   email-service:
     build: ./email-service/.
     depends_on:
       - eureka-server
-    entrypoint: ["java","-Dspring.profiles.active=dev","-DEUREKA_URI=http://eureka-server:8761","-DBROKER_URI=http://broker:29092","-XX:+UseZGC","-jar","/app.jar"]
+    entrypoint: [ "java","-Dspring.profiles.active=dev","-DEUREKA_URI=http://eureka-server:8761",
+                  "-DBROKER_URI=http://broker:29092","-XX:+UseZGC","-jar","/app.jar" ]
 
   fraud-service:
     build: ./fraud-service/.
